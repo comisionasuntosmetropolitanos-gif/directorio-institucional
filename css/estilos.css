@@ -942,3 +942,159 @@ width:100%;
 .lista-actualizacion-previa th {
     padding: 12px;
 }
+/* ==========================================================
+   DISEÑO RESPONSIVO DEL DIRECTORIO
+========================================================== */
+
+/* Evita que elementos anchos desborden la pantalla */
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+
+    .encabezado-contenido {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .encabezado-identidad {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .logo-directorio {
+        width: 230px;
+        max-width: 100%;
+    }
+
+    .titulo-principal {
+        font-size: 2rem;
+    }
+
+    .tarjeta-estadistica {
+        height: 100%;
+    }
+
+    .seccion-busqueda .row > div {
+        width: 100%;
+    }
+
+    .acciones-busqueda {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .acciones-busqueda .btn {
+        flex: 1;
+        min-width: 170px;
+    }
+
+    .contenedor-tabla .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tabla-directorio {
+        min-width: 950px;
+    }
+}
+
+/* Celular */
+@media (max-width: 576px) {
+
+    .container-fluid {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+    }
+
+    .encabezado-principal {
+        padding: 22px 0;
+    }
+
+    .logo-directorio {
+        width: 190px;
+    }
+
+    .texto-superior {
+        font-size: 0.72rem;
+        letter-spacing: 1.3px;
+    }
+
+    .titulo-principal {
+        font-size: 1.65rem;
+    }
+
+    .subtitulo-principal {
+        font-size: 0.95rem;
+    }
+
+    .usuario-activo {
+        width: 100%;
+        padding-top: 16px;
+        padding-left: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.25);
+        border-left: 0;
+    }
+
+    .tarjeta-estadistica {
+        padding: 18px;
+    }
+
+    .icono-estadistica {
+        width: 52px;
+        height: 52px;
+        font-size: 22px;
+    }
+
+    .seccion-busqueda {
+        padding: 18px;
+    }
+
+    .form-control,
+    .form-select,
+    .input-group-text,
+    .btn {
+        min-height: 46px;
+        font-size: 0.95rem;
+    }
+
+    .acciones-busqueda {
+        flex-direction: column;
+    }
+
+    .acciones-busqueda .btn {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .informacion-resultados {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .tabla-directorio {
+        min-width: 850px;
+        font-size: 0.88rem;
+    }
+
+    .tabla-directorio th,
+    .tabla-directorio td {
+        padding: 12px 10px;
+    }
+}

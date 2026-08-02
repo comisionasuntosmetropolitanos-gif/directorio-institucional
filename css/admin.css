@@ -1163,3 +1163,188 @@ width:100%;
     max-width: 100%;
     overflow-wrap: anywhere;
 }
+/* ==========================================================
+   DISEÑO RESPONSIVO DEL PANEL ADMINISTRATIVO
+========================================================== */
+
+@media (max-width: 992px) {
+
+    .barra-admin-contenido {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .identidad-admin {
+        width: 100%;
+    }
+
+    .acciones-barra-admin {
+        width: 100%;
+    }
+
+    .acciones-barra-admin .btn {
+        flex: 1;
+    }
+
+    .usuario-administrador {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .datos-usuario-admin {
+        width: 100%;
+        min-width: 0;
+        padding-top: 18px;
+        padding-left: 0;
+        border-top: 1px solid #dddddd;
+        border-left: 0;
+    }
+
+    .barra-herramientas-admin .row > div {
+        width: 100%;
+    }
+
+    .tabla-admin {
+        min-width: 1050px;
+    }
+
+    .contenedor-tabla-admin .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .barra-admin {
+        padding: 18px 0;
+    }
+
+    .identidad-admin {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .logo-admin {
+        width: 180px;
+        max-width: 100%;
+        height: auto;
+        max-height: none;
+    }
+
+    .titulo-admin {
+        font-size: 1.55rem;
+    }
+
+    .texto-admin-superior {
+        font-size: 0.72rem;
+        letter-spacing: 1.3px;
+    }
+
+    .acciones-barra-admin {
+        flex-direction: column;
+    }
+
+    .acciones-barra-admin .btn {
+        width: 100%;
+    }
+
+    .contenido-admin {
+        padding-top: 20px;
+    }
+
+    .usuario-administrador {
+        padding: 18px;
+    }
+
+    .usuario-administrador h2 {
+        font-size: 1.45rem;
+    }
+
+    .datos-usuario-admin strong {
+        font-size: 0.85rem;
+    }
+
+    .tarjeta-resumen {
+        padding: 18px;
+    }
+
+    .icono-resumen {
+        width: 54px;
+        height: 54px;
+        font-size: 22px;
+    }
+
+    .barra-herramientas-admin {
+        padding: 18px;
+    }
+
+    .acciones-herramientas-admin {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .acciones-herramientas-admin .btn {
+        width: 100%;
+    }
+
+    #contadorAdmin {
+        text-align: center;
+    }
+
+    .tabla-admin {
+        min-width: 950px;
+        font-size: 0.86rem;
+    }
+
+    .tabla-admin th,
+    .tabla-admin td {
+        padding: 11px 9px;
+    }
+
+    /* Modal en celular */
+    #modalRegistro .modal-dialog {
+        width: calc(100% - 12px);
+        margin: 6px auto;
+    }
+
+    #modalRegistro .modal-content {
+        height: calc(100dvh - 12px);
+        max-height: calc(100dvh - 12px);
+        border-radius: 12px;
+    }
+
+    #modalRegistro .modal-header {
+        padding: 15px;
+    }
+
+    #modalRegistro .modal-body {
+        padding: 16px;
+    }
+
+    #modalRegistro .modal-footer {
+        padding: 14px;
+        flex-direction: column-reverse;
+        gap: 8px;
+    }
+
+    #modalRegistro .modal-footer .btn {
+        width: 100%;
+        margin: 0;
+    }
+
+    .categorias-relacionadas {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .form-control,
+    .form-select,
+    .input-group-text,
+    .btn {
+        min-height: 46px;
+        font-size: 0.95rem;
+    }
+}
