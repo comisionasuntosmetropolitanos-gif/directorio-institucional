@@ -774,3 +774,73 @@ img {
         margin: 0;
     }
 }
+/* ==========================
+   BOTONES DEL MODAL
+========================== */
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 24px;
+}
+
+/* Cancelar */
+
+.modal-footer .btn-secondary,
+.modal-footer .btn-cancelar {
+    background: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 10px 22px;
+    font-weight: 600;
+    transition: .25s;
+}
+
+.modal-footer .btn-secondary:hover,
+.modal-footer .btn-cancelar:hover {
+    background: #e5e7eb;
+}
+
+/* Actualizar */
+
+.modal-footer .btn-primary,
+.modal-footer .btn-guardar,
+.modal-footer button[type="submit"]{
+
+    background: #00594b;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+
+    padding: 11px 24px;
+
+    font-weight: 700;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    cursor: pointer;
+
+    transition: .25s;
+}
+
+.modal-footer .btn-primary:hover,
+.modal-footer .btn-guardar:hover,
+.modal-footer button[type="submit"]:hover{
+
+    background:#00725f;
+    transform: translateY(-2px);
+
+    box-shadow:0 8px 18px rgba(0,89,75,.25);
+}
+
+.modal-footer .btn-primary:active,
+.modal-footer .btn-guardar:active,
+.modal-footer button[type="submit"]:active{
+
+    transform:scale(.98);
+}
