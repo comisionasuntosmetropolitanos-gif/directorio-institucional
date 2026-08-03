@@ -881,3 +881,214 @@ img {
         border-radius: 9px;
     }
 }
+/* ==========================================================
+   AJUSTES FINALES DEL PANEL EN CELULAR
+========================================================== */
+
+@media (max-width: 768px) {
+
+    html,
+    body,
+    #panelAdministracion,
+    .barra-admin,
+    .contenido-admin {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* ENCABEZADO */
+
+    .barra-admin .container-fluid {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 18px !important;
+        padding-right: 18px !important;
+    }
+
+    .barra-admin-contenido {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 22px;
+    }
+
+    .identidad-admin {
+        width: 100%;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+    }
+
+    .identidad-admin > div {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .logo-admin {
+        width: 100%;
+        max-width: 340px;
+        height: auto;
+        margin: 0 auto;
+        align-self: center;
+    }
+
+    .texto-admin-superior {
+        width: 100%;
+        margin: 0 0 8px;
+        font-size: 0.76rem;
+        line-height: 1.45;
+        letter-spacing: 1.7px;
+        text-align: left;
+    }
+
+    .titulo-admin {
+        width: 100%;
+        margin: 0;
+        font-size: 1.85rem;
+        line-height: 1.2;
+        overflow-wrap: normal;
+        word-break: normal;
+    }
+
+    .acciones-barra-admin {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .acciones-barra-admin .btn {
+        width: 100%;
+        min-height: 52px;
+        margin: 0;
+        font-size: 1rem;
+    }
+
+    /* TARJETA DEL USUARIO */
+
+    .usuario-administrador {
+        width: 100%;
+        min-width: 0;
+        padding: 22px;
+        overflow: hidden;
+    }
+
+    .datos-usuario-admin {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .datos-usuario-admin > div {
+        width: 100%;
+        min-width: 0;
+    }
+
+    #correoUsuarioAdmin {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        font-size: 0.86rem;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    /* FILTROS */
+
+    .barra-herramientas-admin {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .barra-herramientas-admin .row {
+        margin-left: 0;
+        margin-right: 0;
+        row-gap: 16px;
+    }
+
+    .barra-herramientas-admin .row > div {
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .barra-herramientas-admin .form-control,
+    .barra-herramientas-admin .form-select,
+    .barra-herramientas-admin .input-group,
+    .btn-nuevo-registro {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .acciones-herramientas-admin {
+        width: 100%;
+        margin-top: 18px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .btn-limpiar-admin {
+        width: 100%;
+        min-height: 48px;
+        margin: 0;
+    }
+
+    #contadorAdmin {
+        display: block;
+        width: 100%;
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.45;
+        text-align: center;
+    }
+
+    /* TARJETAS DE REGISTROS */
+
+    .lista-admin-movil {
+        width: 100%;
+        padding: 0;
+    }
+
+    .tarjeta-registro-movil {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .encabezado-registro-movil {
+        gap: 12px;
+    }
+
+    .encabezado-registro-movil h3 {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+}
+
+@media (max-width: 390px) {
+
+    .barra-admin .container-fluid {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+    }
+
+    .logo-admin {
+        max-width: 300px;
+    }
+
+    .titulo-admin {
+        font-size: 1.65rem;
+    }
+
+    .usuario-administrador,
+    .barra-herramientas-admin {
+        padding: 18px;
+    }
+}
