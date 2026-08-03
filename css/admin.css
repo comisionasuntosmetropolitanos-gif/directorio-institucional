@@ -382,3 +382,236 @@ img {
         font-weight: 600;
     }
 }
+/* ==========================================================
+   RESTAURAR DISEÑO DEL INICIO DE SESIÓN
+========================================================== */
+
+.contenedor-login {
+    width: 100%;
+    min-height: 100vh;
+    padding: 32px 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tarjeta-login {
+    width: 100%;
+    max-width: 480px;
+    padding: 38px;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 12px 38px rgba(0, 0, 0, 0.12);
+}
+
+.icono-login {
+    width: 86px;
+    height: 86px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: var(--verde);
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 38px;
+}
+
+.texto-login-superior {
+    margin: 0 0 8px;
+    color: #777777;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.titulo-login {
+    margin: 0 0 10px;
+    color: #17191b;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.descripcion-login {
+    margin: 0 0 28px;
+    color: #666666;
+    line-height: 1.55;
+    text-align: center;
+}
+
+.tarjeta-login .form-label {
+    font-weight: 600;
+}
+
+.tarjeta-login .input-group-text {
+    width: 48px;
+    justify-content: center;
+    background: #f7f9f9;
+}
+
+.tarjeta-login .form-control,
+.tarjeta-login .input-group-text,
+.tarjeta-login .btn-outline-secondary {
+    min-height: 50px;
+}
+
+.btn-iniciar-sesion {
+    min-height: 50px;
+    border: 0;
+    background: var(--verde);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.btn-iniciar-sesion:hover,
+.btn-iniciar-sesion:focus {
+    background: var(--verde-oscuro);
+    color: #ffffff;
+}
+
+.btn-iniciar-sesion:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.aviso-acceso {
+    margin: 24px 0 0;
+    padding-top: 18px;
+    border-top: 1px solid #e1e5e6;
+    color: #696969;
+    font-size: 0.86rem;
+    text-align: center;
+}
+
+.aviso-acceso i {
+    margin-right: 5px;
+    color: var(--verde);
+}
+
+@media (max-width: 576px) {
+
+    .contenedor-login {
+        padding: 20px 14px;
+    }
+
+    .tarjeta-login {
+        padding: 28px 20px;
+        border-radius: 16px;
+    }
+
+    .icono-login {
+        width: 74px;
+        height: 74px;
+        font-size: 32px;
+    }
+
+    .titulo-login {
+        font-size: 1.7rem;
+    }
+
+    .descripcion-login {
+        font-size: 0.94rem;
+    }
+}
+
+
+/* ==========================================================
+   TABLA COMPLETA EN COMPUTADORA SIN SCROLL HORIZONTAL
+========================================================== */
+
+@media (min-width: 992px) {
+
+    .contenedor-tabla-admin {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .contenedor-tabla-admin .table-responsive {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .tabla-admin {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        table-layout: fixed;
+    }
+
+    .tabla-admin th,
+    .tabla-admin td {
+        padding: 12px 9px;
+        font-size: 0.82rem;
+        white-space: normal;
+        word-break: normal;
+        overflow-wrap: anywhere;
+        hyphens: none;
+    }
+
+    .tabla-admin th:nth-child(1),
+    .tabla-admin td:nth-child(1) {
+        width: 4%;
+    }
+
+    .tabla-admin th:nth-child(2),
+    .tabla-admin td:nth-child(2) {
+        width: 11%;
+    }
+
+    .tabla-admin th:nth-child(3),
+    .tabla-admin td:nth-child(3) {
+        width: 11%;
+    }
+
+    .tabla-admin th:nth-child(4),
+    .tabla-admin td:nth-child(4) {
+        width: 13%;
+    }
+
+    .tabla-admin th:nth-child(5),
+    .tabla-admin td:nth-child(5) {
+        width: 17%;
+    }
+
+    .tabla-admin th:nth-child(6),
+    .tabla-admin td:nth-child(6) {
+        width: 14%;
+    }
+
+    .tabla-admin th:nth-child(7),
+    .tabla-admin td:nth-child(7) {
+        width: 23%;
+    }
+
+    .tabla-admin th:nth-child(8),
+    .tabla-admin td:nth-child(8) {
+        width: 7%;
+    }
+
+    .contactos-admin {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .contactos-admin span,
+    .correo-admin {
+        width: 100%;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+    }
+
+    .botones-acciones {
+        min-width: 0;
+    }
+
+    .botones-acciones .btn {
+        width: 34px;
+        height: 34px;
+        min-height: 34px;
+    }
+}
