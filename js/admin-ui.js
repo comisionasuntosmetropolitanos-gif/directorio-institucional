@@ -31,6 +31,10 @@ let funcionCambiarEstado = null;
 const tablaAdmin =
     document.getElementById("tablaAdmin");
 
+const listaAdminMovil =
+    document.getElementById(
+        "listaAdminMovil"
+    );
 const buscadorAdmin =
     document.getElementById("buscadorAdmin");
 
@@ -671,7 +675,382 @@ function ordenarRegistrosAdmin(registros) {
     );
 }
 
+/* =========================================================
+   CREAR CONTACTO PARA TARJETA MÓVIL
+========================================================= */
 
+function crearContactoMovil(registro) {
+
+    const elementos = [];
+
+    if (registro.telefono) {
+
+        elementos.push(`
+            <a
+                href="tel:${escaparHTML(
+                    registro.telefono.replace(
+                        /[^\d+]/g,
+                        ""
+                    )
+                )}"
+                class="dato-contacto-movil"
+            >
+                <i class="bi bi-telephone-fill"></i>
+
+                <span>
+                    ${escaparHTML(
+                        registro.telefono
+                    )}
+                </span>
+            </a>
+        `);
+    }
+
+    if (registro.whatsapp) {
+
+        const numeroWhatsApp =
+            String(registro.whatsapp)
+                .replace(/\D/g, "");
+
+        elementos.push(`
+            <a
+                href="https://wa.me/52${escaparHTML(
+                    numeroWhatsApp
+                )}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="dato-contacto-movil"
+            >
+                <i class="bi bi-whatsapp"></i>
+
+                <span>
+                    ${escaparHTML(
+                        registro.whatsapp
+                    )}
+                </span>
+            </a>
+        `);
+    }
+
+    if (registro.correo) {
+
+        elementos.push(`
+            <a
+                href="mailto:${escaparHTML(
+                    registro.correo
+                )}"
+                class="dato-contacto-movil"
+            >
+                <i class="bi bi-envelope-fill"></i>
+
+                <span>
+                    ${escaparHTML(
+                        registro.correo
+                    )}
+                </span>
+            </a>
+        `);
+    }
+
+    if (
+        Array.isArray(
+            registro.correosAdicionales
+        )
+    ) {
+
+        registro.correosAdicionales
+            .filter(Boolean)
+            .forEach(correo => {
+
+                elementos.push(`
+                    <a
+                        href="mailto:${escaparHTML(
+                            correo
+                        )}"
+                        class="dato-contacto-movil secundario"
+                    >
+                        <i class="bi bi-envelope"></i>
+
+                        <span>
+                            ${escaparHTML(
+                                correo
+                            )}
+                        </span>
+                    </a>
+                `);
+            });
+    }
+
+    if (elementos.length === 0) {
+
+        return `
+            <span class="sin-informacion">
+                Sin información de contacto
+            </span>
+        `;
+    }
+
+    return elementos.join("");
+}
+/* =========================================================
+   CREAR TARJETA MÓVIL
+========================================================= */
+
+function crearTarjetaAdminMovil(
+    registro,
+    numero
+) {
+
+    const activo =
+        registro.activo !== false;
+
+    const categorias =
+        obtenerCategoriasRegistro(
+            registro
+        );
+
+    const categoriaHTML =
+        categorias.length > 0
+            ? categorias.map(categoria => `
+                <span
+                    class="etiqueta-categoria
+                    ${obtenerClaseCategoria(
+                        categoria
+                    )}"
+                >
+                    ${escaparHTML(
+                        obtenerNombreCategoria(
+                            categoria
+                        )
+                    )}
+                </span>
+            `).join("")
+            : `
+                <span class="sin-informacion">
+                    Sin categoría
+                </span>
+            `;
+
+    const cargoComision = [
+        registro.cargo,
+        registro.comision
+    ]
+        .filter(Boolean)
+        .map(valor =>
+            escaparHTML(valor)
+        )
+        .join("<br>");
+
+    return `
+        <article
+            class="tarjeta-registro-movil
+            ${
+                activo
+                    ? ""
+                    : "registro-inactivo-movil"
+            }"
+            data-id="${escaparHTML(
+                registro.id
+            )}"
+        >
+
+            <div class="encabezado-registro-movil">
+
+                <div>
+
+                    <span class="numero-registro-movil">
+                        Registro ${numero}
+                    </span>
+
+                    <h3>
+                        ${
+                            escaparHTML(
+                                registro.nombre
+                            ) ||
+                            "Sin nombre"
+                        }
+                    </h3>
+
+                </div>
+
+                <span
+                    class="${
+                        activo
+                            ? "estado-activo-movil"
+                            : "estado-inactivo-movil"
+                    }"
+                >
+                    <i
+                        class="bi ${
+                            activo
+                                ? "bi-check-circle-fill"
+                                : "bi-pause-circle-fill"
+                        }"
+                    ></i>
+
+                    ${
+                        activo
+                            ? "Activo"
+                            : "Inactivo"
+                    }
+                </span>
+
+            </div>
+
+
+            <div class="categorias-registro-movil">
+                ${categoriaHTML}
+            </div>
+
+
+            <dl class="datos-registro-movil">
+
+                <div>
+                    <dt>Estado</dt>
+
+                    <dd>
+                        ${
+                            escaparHTML(
+                                registro.estado
+                            ) ||
+                            "Sin especificar"
+                        }
+
+                        ${
+                            registro.legislatura
+                                ? `
+                                    <span class="legislatura-movil">
+                                        ${escaparHTML(
+                                            registro.legislatura
+                                        )}
+                                    </span>
+                                `
+                                : ""
+                        }
+                    </dd>
+                </div>
+
+
+                <div>
+                    <dt>Cargo o comisión</dt>
+
+                    <dd>
+                        ${
+                            cargoComision ||
+                            "Sin información"
+                        }
+                    </dd>
+                </div>
+
+
+                <div>
+                    <dt>Institución</dt>
+
+                    <dd>
+                        ${
+                            escaparHTML(
+                                registro.institucion
+                            ) ||
+                            "Sin especificar"
+                        }
+                    </dd>
+                </div>
+
+
+                <div>
+                    <dt>Contacto</dt>
+
+                    <dd class="contactos-registro-movil">
+                        ${crearContactoMovil(
+                            registro
+                        )}
+                    </dd>
+                </div>
+
+            </dl>
+
+
+            <div class="acciones-registro-movil">
+
+                <button
+                    type="button"
+                    class="btn btn-editar-registro"
+                    data-id="${escaparHTML(
+                        registro.id
+                    )}"
+                >
+                    <i class="bi bi-pencil-square"></i>
+                    Editar
+                </button>
+
+
+                ${
+                    activo
+                        ? `
+                            <button
+                                type="button"
+                                class="btn btn-desactivar-registro"
+                                data-id="${escaparHTML(
+                                    registro.id
+                                )}"
+                            >
+                                <i class="bi bi-eye-slash-fill"></i>
+                                Ocultar
+                            </button>
+                        `
+                        : `
+                            <button
+                                type="button"
+                                class="btn btn-activar-registro"
+                                data-id="${escaparHTML(
+                                    registro.id
+                                )}"
+                            >
+                                <i class="bi bi-eye-fill"></i>
+                                Activar
+                            </button>
+                        `
+                }
+
+
+                <button
+                    type="button"
+                    class="btn btn-eliminar-registro"
+                    data-id="${escaparHTML(
+                        registro.id
+                    )}"
+                >
+                    <i class="bi bi-trash-fill"></i>
+                    Eliminar
+                </button>
+
+            </div>
+
+        </article>
+    `;
+}
+/* =========================================================
+   MOSTRAR TARJETAS EN CELULAR
+========================================================= */
+
+function mostrarRegistrosAdminMovil(
+    registros
+) {
+
+    if (!listaAdminMovil) {
+
+        return;
+    }
+
+    listaAdminMovil.innerHTML =
+        registros.map(
+            (registro, indice) =>
+                crearTarjetaAdminMovil(
+                    registro,
+                    indice + 1
+                )
+        ).join("");
+}
 /* =========================================================
    MOSTRAR REGISTROS EN LA TABLA
 ========================================================= */
@@ -690,14 +1069,31 @@ function mostrarRegistrosAdmin(registros) {
     const registrosOrdenados =
         ordenarRegistrosAdmin(registros);
 
+mostrarRegistrosAdminMovil(
+    registrosOrdenados
+);
     if (contadorAdmin) {
 
         contadorAdmin.textContent =
             `Registros encontrados: ${registrosOrdenados.length}`;
     }
 
-    if (registrosOrdenados.length === 0) {
+   if (registrosOrdenados.length === 0) {
 
+    if (listaAdminMovil) {
+
+        listaAdminMovil.innerHTML = "";
+    }
+
+    if (mensajeAdminVacio) {
+
+        mensajeAdminVacio.classList.remove(
+            "d-none"
+        );
+    }
+
+    return;
+}
         if (mensajeAdminVacio) {
 
             mensajeAdminVacio.classList.remove(
@@ -784,7 +1180,7 @@ function mostrarRegistrosAdmin(registros) {
             tablaAdmin.appendChild(fila);
         }
     );
-}
+
 
 
 /* =========================================================
@@ -1222,84 +1618,96 @@ function configurarAccionesAdmin({
    EVENTOS DE LA TABLA
 ========================================================= */
 
+/* =========================================================
+   PROCESAR ACCIONES DE TABLA Y TARJETAS
+========================================================= */
+
+function procesarAccionRegistro(evento) {
+
+    const botonEditar =
+        evento.target.closest(
+            ".btn-editar-registro"
+        );
+
+    const botonEliminar =
+        evento.target.closest(
+            ".btn-eliminar-registro"
+        );
+
+    const botonActivar =
+        evento.target.closest(
+            ".btn-activar-registro"
+        );
+
+    const botonDesactivar =
+        evento.target.closest(
+            ".btn-desactivar-registro"
+        );
+
+
+    if (
+        botonEditar &&
+        funcionEditar
+    ) {
+
+        funcionEditar(
+            botonEditar.dataset.id
+        );
+
+        return;
+    }
+
+
+    if (
+        botonEliminar &&
+        funcionEliminar
+    ) {
+
+        funcionEliminar(
+            botonEliminar.dataset.id
+        );
+
+        return;
+    }
+
+
+    if (
+        botonActivar &&
+        funcionCambiarEstado
+    ) {
+
+        funcionCambiarEstado(
+            botonActivar.dataset.id,
+            true
+        );
+
+        return;
+    }
+
+
+    if (
+        botonDesactivar &&
+        funcionCambiarEstado
+    ) {
+
+        funcionCambiarEstado(
+            botonDesactivar.dataset.id,
+            false
+        );
+    }
+}
+
+
 tablaAdmin?.addEventListener(
     "click",
-    evento => {
-
-        const botonEditar =
-            evento.target.closest(
-                ".btn-editar-registro"
-            );
-
-        const botonEliminar =
-            evento.target.closest(
-                ".btn-eliminar-registro"
-            );
-
-        const botonActivar =
-            evento.target.closest(
-                ".btn-activar-registro"
-            );
-
-        const botonDesactivar =
-            evento.target.closest(
-                ".btn-desactivar-registro"
-            );
-
-
-        if (
-            botonEditar &&
-            funcionEditar
-        ) {
-
-            funcionEditar(
-                botonEditar.dataset.id
-            );
-
-            return;
-        }
-
-
-        if (
-            botonEliminar &&
-            funcionEliminar
-        ) {
-
-            funcionEliminar(
-                botonEliminar.dataset.id
-            );
-
-            return;
-        }
-
-
-        if (
-            botonActivar &&
-            funcionCambiarEstado
-        ) {
-
-            funcionCambiarEstado(
-                botonActivar.dataset.id,
-                true
-            );
-
-            return;
-        }
-
-
-        if (
-            botonDesactivar &&
-            funcionCambiarEstado
-        ) {
-
-            funcionCambiarEstado(
-                botonDesactivar.dataset.id,
-                false
-            );
-        }
-    }
+    procesarAccionRegistro
 );
 
+
+listaAdminMovil?.addEventListener(
+    "click",
+    procesarAccionRegistro
+);
 
 /* =========================================================
    EXPORTAR FUNCIONES

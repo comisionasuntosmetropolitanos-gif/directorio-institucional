@@ -917,3 +917,230 @@ img {
         font-size: 0.84rem;
     }
 }
+/* ==========================================================
+   TARJETAS ADMINISTRATIVAS PARA CELULAR
+========================================================== */
+
+.lista-admin-movil {
+    display: none;
+}
+
+.tabla-admin-escritorio {
+    display: block;
+}
+
+@media (max-width: 768px) {
+
+    .tabla-admin-escritorio {
+        display: none !important;
+    }
+
+    .lista-admin-movil {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .contenedor-tabla-admin {
+        padding: 0;
+        overflow: visible;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .tarjeta-registro-movil {
+        width: 100%;
+        padding: 20px;
+        border: 1px solid #dde4e3;
+        border-radius: 18px;
+        background: #ffffff;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .registro-inactivo-movil {
+        border-color: #e6c77b;
+        background: #fff9ea;
+    }
+
+    .encabezado-registro-movil {
+        padding-bottom: 16px;
+        border-bottom: 1px solid #e7e7e7;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .numero-registro-movil {
+        display: block;
+        margin-bottom: 5px;
+        color: #777777;
+        font-size: 0.76rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .encabezado-registro-movil h3 {
+        margin: 0;
+        font-size: 1.23rem;
+        line-height: 1.35;
+        font-weight: 700;
+        overflow-wrap: anywhere;
+    }
+
+    .estado-activo-movil,
+    .estado-inactivo-movil {
+        flex-shrink: 0;
+        padding: 6px 9px;
+        border-radius: 20px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .estado-activo-movil {
+        color: #176b42;
+        background: #e7f6ee;
+    }
+
+    .estado-inactivo-movil {
+        color: #8a5800;
+        background: #fff0cc;
+    }
+
+    .categorias-registro-movil {
+        margin: 16px 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+    }
+
+    .datos-registro-movil {
+        margin: 0;
+    }
+
+    .datos-registro-movil > div {
+        padding: 13px 0;
+        border-bottom: 1px solid #eeeeee;
+        display: grid;
+        grid-template-columns: 105px minmax(0, 1fr);
+        gap: 12px;
+    }
+
+    .datos-registro-movil dt {
+        color: #00584d;
+        font-size: 0.76rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .datos-registro-movil dd {
+        min-width: 0;
+        margin: 0;
+        color: #262626;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+    }
+
+    .legislatura-movil {
+        display: block;
+        margin-top: 4px;
+        color: #777777;
+        font-size: 0.82rem;
+    }
+
+    .contactos-registro-movil {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+    }
+
+    .dato-contacto-movil {
+        min-width: 0;
+        color: #004d43;
+        text-decoration: none;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .dato-contacto-movil i {
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    .dato-contacto-movil span {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .dato-contacto-movil.secundario {
+        color: #5d5d5d;
+    }
+
+    .acciones-registro-movil {
+        padding-top: 18px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 9px;
+    }
+
+    .acciones-registro-movil .btn {
+        min-height: 46px;
+        padding: 8px 6px;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .acciones-registro-movil .btn-editar-registro {
+        color: #ffffff;
+        background: #b38b2e;
+    }
+
+    .acciones-registro-movil .btn-desactivar-registro {
+        color: #ffffff;
+        background: #6c757d;
+    }
+
+    .acciones-registro-movil .btn-activar-registro {
+        color: #ffffff;
+        background: #198754;
+    }
+
+    .acciones-registro-movil .btn-eliminar-registro {
+        color: #ffffff;
+        background: #bd3328;
+    }
+}
+
+@media (max-width: 390px) {
+
+    .tarjeta-registro-movil {
+        padding: 17px;
+    }
+
+    .encabezado-registro-movil {
+        flex-direction: column;
+    }
+
+    .datos-registro-movil > div {
+        grid-template-columns: 88px minmax(0, 1fr);
+        gap: 9px;
+    }
+
+    .acciones-registro-movil {
+        grid-template-columns: 1fr;
+    }
+
+    .acciones-registro-movil .btn {
+        width: 100%;
+    }
+}
