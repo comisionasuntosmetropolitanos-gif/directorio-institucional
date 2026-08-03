@@ -844,3 +844,40 @@ img {
 
     transform:scale(.98);
 }
+/* ==========================================================
+   AJUSTE DEFINITIVO DE LA COLUMNA ACCIONES
+========================================================== */
+
+@media (min-width: 992px) {
+
+    .tabla-admin th:last-child,
+    .tabla-admin td:last-child {
+        width: 128px !important;
+        min-width: 128px !important;
+        padding-left: 8px !important;
+        padding-right: 14px !important;
+        text-align: center;
+    }
+
+    .botones-acciones {
+        width: 100%;
+        min-width: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 9px;
+        padding: 0 4px;
+    }
+
+    .botones-acciones .btn {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+        flex: 0 0 36px;
+        margin: 0;
+        padding: 0;
+        border-radius: 9px;
+    }
+}
