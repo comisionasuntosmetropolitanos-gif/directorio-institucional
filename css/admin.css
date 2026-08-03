@@ -24,13 +24,13 @@ body {
     width: 100%;
     min-height: 100%;
     margin: 0;
+    overflow-x: hidden;
 }
 
 body.fondo-admin {
     background: var(--gris-fondo);
     color: #17191b;
     font-family: "Poppins", sans-serif;
-    overflow-x: hidden;
 }
 
 img {
@@ -42,8 +42,7 @@ img {
    PANTALLA DE CARGA
 ========================================================== */
 
-.pantalla-carga-admin,
-.pantalla-carga-inicial {
+.pantalla-carga-admin {
     position: fixed;
     inset: 0;
     z-index: 9999;
@@ -54,12 +53,6 @@ img {
     gap: 16px;
     background: var(--verde);
     color: var(--blanco);
-}
-
-.pantalla-carga-admin p,
-.pantalla-carga-inicial p {
-    margin: 0;
-    font-weight: 600;
 }
 
 /* ==========================================================
@@ -82,7 +75,6 @@ img {
 }
 
 .identidad-admin {
-    min-width: 0;
     display: flex;
     align-items: center;
     gap: 18px;
@@ -91,7 +83,6 @@ img {
 .logo-admin {
     width: 210px;
     height: 88px;
-    flex: 0 0 auto;
     padding: 8px;
     border-radius: 12px;
     background: var(--blanco);
@@ -111,7 +102,6 @@ img {
     color: var(--blanco);
     font-size: clamp(1.45rem, 2.4vw, 1.9rem);
     font-weight: 700;
-    line-height: 1.25;
 }
 
 .acciones-barra-admin {
@@ -136,23 +126,13 @@ img {
     color: var(--blanco);
 }
 
-.btn-ver-directorio:hover {
-    background: #956f1d;
-    color: var(--blanco);
-}
-
 .btn-cerrar-sesion {
     background: var(--rojo);
     color: var(--blanco);
 }
 
-.btn-cerrar-sesion:hover {
-    background: #a82b22;
-    color: var(--blanco);
-}
-
 /* ==========================================================
-   CONTENIDO
+   CONTENIDO PRINCIPAL
 ========================================================== */
 
 .contenido-admin {
@@ -172,28 +152,8 @@ img {
     gap: 26px;
 }
 
-.usuario-administrador h2 {
-    margin: 5px 0 8px;
-    font-size: clamp(1.45rem, 3vw, 2rem);
-    font-weight: 600;
-}
-
-.usuario-administrador p {
-    margin-bottom: 0;
-    color: var(--gris-texto);
-}
-
-.etiqueta-administrador {
-    color: var(--verde) !important;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-
 .datos-usuario-admin {
     min-width: 280px;
-    max-width: 45%;
     padding-left: 24px;
     border-left: 1px solid var(--gris-borde);
     display: flex;
@@ -201,73 +161,24 @@ img {
     gap: 12px;
 }
 
-.datos-usuario-admin i {
-    flex: 0 0 auto;
-    color: var(--verde);
-    font-size: 2rem;
-}
-
-.datos-usuario-admin > div {
-    min-width: 0;
-}
-
-.datos-usuario-admin span,
-.datos-usuario-admin strong {
-    display: block;
-}
-
-.datos-usuario-admin span {
-    color: #777;
-    font-size: 0.78rem;
-}
-
-.datos-usuario-admin strong {
-    max-width: 100%;
-    font-size: 0.9rem;
-    overflow-wrap: anywhere;
-}
-
 /* ==========================================================
    TARJETAS DE RESUMEN
 ========================================================== */
 
 .tarjeta-resumen {
-    height: 100%;
-    min-height: 118px;
     padding: 22px;
-    border: 2px solid transparent;
     border-radius: 16px;
     background: var(--blanco);
     box-shadow: var(--sombra);
     display: flex;
     align-items: center;
     gap: 18px;
-}
-
-.tarjeta-resumen-admin {
     cursor: pointer;
-    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-}
-
-.tarjeta-resumen-admin:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
-}
-
-.tarjeta-resumen-admin:focus-visible {
-    outline: 3px solid rgba(185, 139, 40, 0.35);
-    outline-offset: 3px;
-}
-
-.tarjeta-resumen-admin.activa {
-    border-color: var(--dorado);
-    background: #fffaf0;
 }
 
 .icono-resumen {
     width: 62px;
     height: 62px;
-    flex: 0 0 auto;
     border-radius: 14px;
     background: var(--verde);
     color: var(--blanco);
@@ -277,22 +188,12 @@ img {
     font-size: 25px;
 }
 
-.tarjeta-resumen-admin.activa .icono-resumen {
-    background: var(--dorado);
-}
-
-.tarjeta-resumen p {
-    margin: 0 0 3px;
-    color: #555;
-}
-
 .tarjeta-resumen strong {
-    display: block;
     font-size: 1.85rem;
 }
 
 /* ==========================================================
-   HERRAMIENTAS Y FORMULARIOS
+   HERRAMIENTAS
 ========================================================== */
 
 .barra-herramientas-admin {
@@ -303,38 +204,10 @@ img {
     box-shadow: var(--sombra);
 }
 
-.barra-herramientas-admin .form-label,
-.modal .form-label {
-    font-weight: 600;
-}
-
-.form-control,
-.form-select,
-.input-group-text {
-    min-height: 48px;
-}
-
-.btn-nuevo-registro,
-.btn-guardar-registro {
+.btn-nuevo-registro {
     background: var(--verde);
     color: var(--blanco);
     font-weight: 600;
-}
-
-.btn-nuevo-registro:hover,
-.btn-guardar-registro:hover {
-    background: var(--verde-oscuro);
-    color: var(--blanco);
-}
-
-.btn-cancelar {
-    background: #777;
-    color: var(--blanco);
-}
-
-.btn-cancelar:hover {
-    background: #5d5d5d;
-    color: var(--blanco);
 }
 
 .acciones-herramientas-admin {
@@ -342,7 +215,6 @@ img {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 15px;
 }
 
 .btn-limpiar-admin {
@@ -350,35 +222,8 @@ img {
     color: var(--blanco);
 }
 
-.btn-limpiar-admin:hover {
-    background: #4f4f4f;
-    color: var(--blanco);
-}
-
-.categorias-relacionadas {
-    padding: 15px;
-    border: 1px solid var(--gris-borde);
-    border-radius: 12px;
-    background: #f8fafb;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 18px;
-}
-
-.campo-textarea-admin {
-    min-height: 84px;
-    resize: vertical;
-}
-
-.estado-registro {
-    padding: 16px 16px 16px 48px;
-    border: 1px solid var(--gris-borde);
-    border-radius: 12px;
-    background: #f8fafb;
-}
-
 /* ==========================================================
-   TABLA DE ESCRITORIO
+   TABLA ESCRITORIO
 ========================================================== */
 
 .contenedor-tabla-admin {
@@ -389,17 +234,17 @@ img {
     overflow: hidden;
 }
 
-.contenedor-tabla-admin .table-responsive {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+.tabla-admin-escritorio {
+    display: block;
+}
+
+.lista-admin-movil {
+    display: none;
 }
 
 .tabla-admin {
     width: 100%;
-    min-width: 1080px;
     margin: 0;
-    table-layout: fixed;
 }
 
 .tabla-admin thead {
@@ -411,115 +256,16 @@ img {
 .tabla-admin td {
     padding: 14px 12px;
     vertical-align: middle;
-    white-space: normal;
-    word-break: normal;
-    overflow-wrap: anywhere;
-    hyphens: none;
-}
-
-.tabla-admin th {
-    text-align: center;
-    font-size: 0.88rem;
-}
-
-.tabla-admin td {
-    border-color: #e4e8e9;
-    font-size: 0.88rem;
-}
-
-.tabla-admin tbody tr:hover {
-    background: #f8faf9;
-}
-
-.tabla-admin th:nth-child(1),
-.tabla-admin td:nth-child(1) { width: 5%; }
-.tabla-admin th:nth-child(2),
-.tabla-admin td:nth-child(2) { width: 12%; }
-.tabla-admin th:nth-child(3),
-.tabla-admin td:nth-child(3) { width: 11%; }
-.tabla-admin th:nth-child(4),
-.tabla-admin td:nth-child(4) { width: 13%; }
-.tabla-admin th:nth-child(5),
-.tabla-admin td:nth-child(5) { width: 18%; }
-.tabla-admin th:nth-child(6),
-.tabla-admin td:nth-child(6) { width: 14%; }
-.tabla-admin th:nth-child(7),
-.tabla-admin td:nth-child(7) { width: 20%; }
-.tabla-admin th:nth-child(8),
-.tabla-admin td:nth-child(8) { width: 7%; }
-
-.numero-admin {
-    text-align: center;
-}
-
-.lista-categorias-admin,
-.contactos-admin {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-}
-
-.etiqueta-categoria {
-    display: inline-flex;
-    padding: 4px 8px;
-    border-radius: 999px;
-    background: #edf4f2;
-    color: var(--verde);
-    font-size: 0.73rem;
-    font-weight: 600;
-}
-
-.estado-activo-admin,
-.estado-inactivo-admin {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: 7px;
-    font-size: 0.73rem;
-    font-weight: 600;
-}
-
-.estado-activo-admin { color: #198754; }
-.estado-inactivo-admin { color: #965b00; }
-.registro-inactivo-admin { background: #fff8e8; opacity: 0.82; }
-
-.legislatura-admin,
-.comision-admin {
-    display: block;
-    margin-top: 4px;
-    color: #596064;
-}
-
-.sin-informacion {
-    color: #858b8e;
-    font-style: italic;
-}
-
-.contactos-admin span,
-.correo-admin {
-    width: 100%;
-    min-width: 0;
-    overflow-wrap: anywhere;
 }
 
 .botones-acciones {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 7px;
 }
 
-.botones-acciones .btn,
-.btn-activar-registro,
-.btn-desactivar-registro,
-.btn-editar-registro,
-.btn-eliminar-registro {
+.botones-acciones .btn {
     width: 38px;
     height: 38px;
-    min-height: 38px;
-    padding: 0;
     border: 0;
     border-radius: 9px;
     display: inline-flex;
@@ -528,123 +274,12 @@ img {
 }
 
 .btn-editar-registro { background: #eaf3f1; color: var(--verde); }
-.btn-editar-registro:hover { background: var(--verde); color: var(--blanco); }
 .btn-activar-registro { background: #198754; color: var(--blanco); }
 .btn-desactivar-registro { background: #6c757d; color: var(--blanco); }
 .btn-eliminar-registro { background: #f8e7e5; color: var(--rojo); }
-.btn-eliminar-registro:hover { background: var(--rojo); color: var(--blanco); }
-
-.mensaje-estado-admin,
-.mensaje-vacio {
-    min-height: 220px;
-    padding: 48px 20px;
-    color: var(--verde);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 14px;
-    text-align: center;
-}
 
 /* ==========================================================
-   MODALES
-========================================================== */
-
-.modal-header {
-    background: var(--verde);
-    color: var(--blanco);
-}
-
-.modal-header .btn-close {
-    filter: invert(1);
-}
-
-.texto-modal-superior {
-    margin: 0 0 4px;
-    color: #d6e3e0;
-    font-size: 0.78rem;
-    letter-spacing: 1.7px;
-}
-
-#modalRegistro .modal-dialog {
-    width: calc(100% - 30px);
-    max-width: 1100px;
-    margin: 15px auto;
-}
-
-#modalRegistro .modal-content {
-    height: calc(100vh - 30px);
-    max-height: calc(100vh - 30px);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
-#modalRegistro #formRegistro {
-    flex: 1 1 auto;
-    min-height: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
-#modalRegistro .modal-header,
-#modalRegistro .modal-footer {
-    flex: 0 0 auto;
-}
-
-#modalRegistro .modal-body {
-    flex: 1 1 auto;
-    min-height: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding: 24px;
-}
-
-#modalRegistro .modal-footer {
-    padding: 14px 22px;
-    border-top: 1px solid var(--gris-borde);
-    background: var(--blanco);
-}
-
-#modalEliminar .modal-content {
-    max-height: 90vh;
-}
-
-.encabezado-eliminar {
-    background: #a83225;
-}
-
-.icono-advertencia-eliminar {
-    margin-bottom: 14px;
-    color: var(--rojo);
-    font-size: 46px;
-    text-align: center;
-}
-
-#modalEliminar .modal-body {
-    text-align: center;
-}
-
-.texto-eliminacion {
-    margin-top: 15px;
-    color: #a83225;
-    font-weight: 600;
-}
-
-.btn-confirmar-eliminar {
-    background: var(--rojo);
-    color: var(--blanco);
-}
-
-.btn-confirmar-eliminar:hover {
-    background: #9f2b22;
-    color: var(--blanco);
-}
-
-/* ==========================================================
-   TABLETAS
+   DISEÑO RESPONSIVO — CELULARES Y TABLETS
 ========================================================== */
 
 @media (max-width: 991.98px) {
@@ -654,704 +289,96 @@ img {
         align-items: stretch;
     }
 
-    .acciones-barra-admin {
-        width: 100%;
-    }
-
-    .acciones-barra-admin .btn {
-        flex: 1;
-    }
-
     .datos-usuario-admin {
-        width: 100%;
-        max-width: none;
-        min-width: 0;
-        padding: 18px 0 0;
-        border-top: 1px solid var(--gris-borde);
+        padding-left: 0;
+        padding-top: 15px;
         border-left: 0;
-    }
-
-    .barra-herramientas-admin .row > div {
-        width: 100%;
+        border-top: 1px solid var(--gris-borde);
     }
 }
 
-/* ==========================================================
-   CELULARES — LA TABLA SE CONVIERTE EN TARJETAS
-========================================================== */
-
-@media (max-width: 767.98px) {
-    .container-fluid {
-        padding-left: 14px !important;
-        padding-right: 14px !important;
-    }
-
-    .barra-admin {
-        padding: 16px 0 22px;
-    }
-
-    .barra-admin-contenido,
-    .identidad-admin,
-    .acciones-barra-admin {
-        width: 100%;
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .identidad-admin {
-        gap: 16px;
-    }
-
-    .logo-admin {
-        width: min(100%, 315px);
-        height: auto;
-        max-height: none;
-        align-self: flex-start;
-    }
-
-    .titulo-admin {
-        font-size: 1.9rem;
-    }
-
-    .acciones-barra-admin .btn {
-        width: 100%;
-        min-height: 52px;
-    }
-
-    .contenido-admin {
-        padding-top: 22px;
-        padding-bottom: 36px;
-    }
-
-    .usuario-administrador {
-        padding: 20px;
-        gap: 22px;
-    }
-
-    .usuario-administrador h2 {
-        font-size: 1.65rem;
-    }
-
-    .datos-usuario-admin strong {
-        font-size: 0.86rem;
-    }
-
-    .tarjeta-resumen {
-        min-height: 108px;
-        padding: 19px;
-    }
-
-    .icono-resumen {
-        width: 58px;
-        height: 58px;
-        font-size: 24px;
-    }
-
-    .barra-herramientas-admin {
-        padding: 18px;
-    }
-
-    .acciones-herramientas-admin {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .acciones-herramientas-admin .btn {
-        width: 100%;
-    }
-
-    #contadorAdmin {
-        text-align: center;
-    }
-
-    .contenedor-tabla-admin {
-        overflow: visible;
-        background: transparent;
-        box-shadow: none;
-    }
-
-    .contenedor-tabla-admin .table-responsive {
-        overflow: visible;
-    }
-
-    .tabla-admin {
-        display: block;
-        width: 100%;
-        min-width: 0;
-        table-layout: auto;
-        background: transparent;
-    }
-
-    .tabla-admin thead {
-        display: none;
-    }
-
-    .tabla-admin tbody {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        width: 100%;
-    }
-
-    .tabla-admin tbody tr {
-        display: block;
-        width: 100%;
-        padding: 8px 16px;
-        border: 1px solid var(--gris-borde);
-        border-radius: 16px;
-        background: var(--blanco);
-        box-shadow: var(--sombra);
-    }
-
-    .tabla-admin tbody tr:hover {
-        background: var(--blanco);
-    }
-
-    .tabla-admin td {
-        display: grid;
-        grid-template-columns: 105px minmax(0, 1fr);
-        align-items: start;
-        gap: 10px;
-        width: 100% !important;
-        min-width: 0 !important;
-        padding: 12px 0;
-        border: 0;
-        border-bottom: 1px solid #edf0f1;
-        font-size: 0.9rem;
-        text-align: left;
-        overflow-wrap: anywhere;
-    }
-
-    .tabla-admin td:last-child {
-        border-bottom: 0;
-    }
-
-    .tabla-admin td::before {
-        color: var(--verde);
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 0.35px;
-        text-transform: uppercase;
-    }
-
-    .tabla-admin td:nth-child(1)::before { content: "Núm."; }
-    .tabla-admin td:nth-child(2)::before { content: "Categoría"; }
-    .tabla-admin td:nth-child(3)::before { content: "Estado"; }
-    .tabla-admin td:nth-child(4)::before { content: "Nombre"; }
-    .tabla-admin td:nth-child(5)::before { content: "Cargo / área"; }
-    .tabla-admin td:nth-child(6)::before { content: "Institución"; }
-    .tabla-admin td:nth-child(7)::before { content: "Contacto"; }
-    .tabla-admin td:nth-child(8)::before { content: "Acciones"; }
-
-    .tabla-admin td,
-    .tabla-admin td * {
-        min-width: 0;
-        max-width: 100%;
-        word-break: normal;
-        overflow-wrap: anywhere;
-        hyphens: none;
-    }
-
-    .botones-acciones {
-        flex-direction: row;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        gap: 9px;
-    }
-
-    .botones-acciones .btn {
-        width: 43px;
-        height: 43px;
-        min-height: 43px;
-    }
-
-    #modalRegistro .modal-dialog {
-        width: calc(100% - 12px);
-        margin: 6px auto;
-    }
-
-    #modalRegistro .modal-content {
-        height: calc(100dvh - 12px);
-        max-height: calc(100dvh - 12px);
-        border-radius: 14px;
-    }
-
-    #modalRegistro .modal-body {
-        padding: 17px;
-    }
-
-    #modalRegistro .modal-footer,
-    #modalEliminar .modal-footer {
-        flex-direction: column-reverse;
-        gap: 8px;
-    }
-
-    #modalRegistro .modal-footer .btn,
-    #modalEliminar .modal-footer .btn {
-        width: 100%;
-        margin: 0;
-    }
-
-    .categorias-relacionadas {
-        flex-direction: column;
-        gap: 10px;
-    }
-}
-
-@media (max-width: 389.98px) {
-    .titulo-admin {
-        font-size: 1.65rem;
-    }
-
-    .usuario-administrador {
-        padding: 17px;
-    }
-
-    .tabla-admin tbody tr {
-        padding: 7px 13px;
-    }
-
-    .tabla-admin td {
-        grid-template-columns: 88px minmax(0, 1fr);
-        gap: 8px;
-        font-size: 0.84rem;
-    }
-}
-/* ==========================================================
-   TARJETAS ADMINISTRATIVAS PARA CELULAR
-========================================================== */
-
-.lista-admin-movil {
-    display: none;
-}
-
-.tabla-admin-escritorio {
-    display: block;
-}
-
+/* AQUÍ OCURRE LA MAGIA PARA MÓVILES */
 @media (max-width: 768px) {
 
+    /* 1. Ocultar totalmente la tabla de escritorio */
     .tabla-admin-escritorio {
         display: none !important;
     }
 
+    /* 2. Mostrar la lista de tarjetas verticales */
     .lista-admin-movil {
-        width: 100%;
-        display: flex;
+        display: flex !important;
         flex-direction: column;
-        gap: 18px;
+        gap: 16px;
     }
 
     .contenedor-tabla-admin {
-        padding: 0;
-        overflow: visible;
         background: transparent;
         box-shadow: none;
     }
 
+    /* Estilo de cada tarjeta en celular */
     .tarjeta-registro-movil {
         width: 100%;
-        padding: 20px;
-        border: 1px solid #dde4e3;
-        border-radius: 18px;
+        padding: 18px;
+        border: 1px solid var(--gris-borde);
+        border-radius: 16px;
         background: #ffffff;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-    }
-
-    .registro-inactivo-movil {
-        border-color: #e6c77b;
-        background: #fff9ea;
+        box-shadow: var(--sombra);
     }
 
     .encabezado-registro-movil {
-        padding-bottom: 16px;
-        border-bottom: 1px solid #e7e7e7;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #eee;
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        gap: 14px;
-    }
-
-    .numero-registro-movil {
-        display: block;
-        margin-bottom: 5px;
-        color: #777777;
-        font-size: 0.76rem;
-        font-weight: 600;
-        text-transform: uppercase;
     }
 
     .encabezado-registro-movil h3 {
-        margin: 0;
-        font-size: 1.23rem;
-        line-height: 1.35;
+        margin: 4px 0 0;
+        font-size: 1.15rem;
         font-weight: 700;
-        overflow-wrap: anywhere;
-    }
-
-    .estado-activo-movil,
-    .estado-inactivo-movil {
-        flex-shrink: 0;
-        padding: 6px 9px;
-        border-radius: 20px;
-        font-size: 0.72rem;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .estado-activo-movil {
-        color: #176b42;
-        background: #e7f6ee;
-    }
-
-    .estado-inactivo-movil {
-        color: #8a5800;
-        background: #fff0cc;
     }
 
     .categorias-registro-movil {
-        margin: 16px 0;
+        margin: 12px 0;
         display: flex;
         flex-wrap: wrap;
-        gap: 7px;
+        gap: 6px;
     }
 
-    .datos-registro-movil {
-        margin: 0;
-    }
-
-    .datos-registro-movil > div {
-        padding: 13px 0;
-        border-bottom: 1px solid #eeeeee;
+    .datos-registro-movil div {
+        padding: 8px 0;
+        border-bottom: 1px solid #f0f0f0;
         display: grid;
-        grid-template-columns: 105px minmax(0, 1fr);
-        gap: 12px;
+        grid-template-columns: 100px 1fr;
+        gap: 10px;
     }
 
     .datos-registro-movil dt {
-        color: #00584d;
-        font-size: 0.76rem;
+        color: var(--verde);
+        font-size: 0.78rem;
         font-weight: 700;
         text-transform: uppercase;
     }
 
     .datos-registro-movil dd {
-        min-width: 0;
         margin: 0;
-        color: #262626;
-        line-height: 1.5;
-        overflow-wrap: anywhere;
+        font-size: 0.88rem;
     }
 
-    .legislatura-movil {
-        display: block;
-        margin-top: 4px;
-        color: #777777;
-        font-size: 0.82rem;
-    }
-
-    .contactos-registro-movil {
-        display: flex;
-        flex-direction: column;
-        gap: 9px;
-    }
-
-    .dato-contacto-movil {
-        min-width: 0;
-        color: #004d43;
-        text-decoration: none;
-        display: flex;
-        align-items: flex-start;
+    .acciones-registro-movil {
+        margin-top: 15px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
         gap: 8px;
     }
 
-    .dato-contacto-movil i {
-        flex-shrink: 0;
-        margin-top: 2px;
-    }
-
-    .dato-contacto-movil span {
-        min-width: 0;
-        overflow-wrap: anywhere;
-    }
-
-    .dato-contacto-movil.secundario {
-        color: #5d5d5d;
-    }
-
-    .acciones-registro-movil {
-        padding-top: 18px;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 9px;
-    }
-
     .acciones-registro-movil .btn {
-        min-height: 46px;
-        padding: 8px 6px;
-        border-radius: 10px;
-        font-size: 0.8rem;
+        width: 100%;
+        padding: 10px 4px;
+        font-size: 0.78rem;
         font-weight: 600;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .acciones-registro-movil .btn-editar-registro {
-        color: #ffffff;
-        background: #b38b2e;
-    }
-
-    .acciones-registro-movil .btn-desactivar-registro {
-        color: #ffffff;
-        background: #6c757d;
-    }
-
-    .acciones-registro-movil .btn-activar-registro {
-        color: #ffffff;
-        background: #198754;
-    }
-
-    .acciones-registro-movil .btn-eliminar-registro {
-        color: #ffffff;
-        background: #bd3328;
-    }
-}
-
-@media (max-width: 390px) {
-
-    .tarjeta-registro-movil {
-        padding: 17px;
-    }
-
-    .encabezado-registro-movil {
-        flex-direction: column;
-    }
-
-    .datos-registro-movil > div {
-        grid-template-columns: 88px minmax(0, 1fr);
-        gap: 9px;
-    }
-
-    .acciones-registro-movil {
-        grid-template-columns: 1fr;
-    }
-
-    .acciones-registro-movil .btn {
-        width: 100%;
-    }
-}
-/* ==========================================================
-   CORRECCIÓN DE DESBORDAMIENTO HORIZONTAL EN CELULARES
-========================================================== */
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-html,
-body {
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-}
-
-#panelAdministracion,
-.barra-admin,
-.contenido-admin {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    margin: 0;
-}
-
-@media (max-width: 768px) {
-
-    .barra-admin {
-        width: 100%;
-        max-width: 100%;
-        padding: 18px 0 24px;
-        overflow: hidden;
-    }
-
-    .barra-admin .container-fluid {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        margin: 0;
-        padding-left: 20px !important;
-        padding-right: 20px !important;
-    }
-
-    .barra-admin-contenido {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 22px;
-    }
-
-    .identidad-admin {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-    }
-
-    .identidad-admin > div {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-    }
-
-    .logo-admin {
-        display: block;
-        width: 100%;
-        max-width: 320px;
-        height: auto;
-        max-height: none;
-        margin: 0;
-        padding: 10px;
-        object-fit: contain;
-    }
-
-    .texto-admin-superior {
-        width: 100%;
-        max-width: 100%;
-        margin: 0 0 10px;
-        font-size: 0.76rem;
-        line-height: 1.4;
-        letter-spacing: 1.6px;
-        overflow-wrap: normal;
-        word-break: normal;
-    }
-
-    .titulo-admin {
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        font-size: 2rem;
-        line-height: 1.2;
-        overflow-wrap: normal;
-        word-break: normal;
-    }
-
-    .acciones-barra-admin {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .acciones-barra-admin .btn {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        min-height: 54px;
-        margin: 0;
-        white-space: normal;
-    }
-
-    .contenido-admin {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        padding-left: 14px !important;
-        padding-right: 14px !important;
-    }
-
-    .usuario-administrador {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        margin-left: 0;
-        margin-right: 0;
-        padding: 22px;
-        overflow: hidden;
-    }
-
-    .usuario-administrador > div,
-    .datos-usuario-admin,
-    .datos-usuario-admin > div {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-    }
-
-    #correoUsuarioAdmin {
-        display: block;
-        width: 100%;
-        max-width: 100%;
-        font-size: 0.88rem;
-        line-height: 1.45;
-        overflow-wrap: anywhere;
-        word-break: break-word;
-    }
-
-    .row {
-        margin-left: 0;
-        margin-right: 0;
-    }
-
-    .row > * {
-        min-width: 0;
-    }
-
-    .tarjeta-resumen,
-    .barra-herramientas-admin,
-    .contenedor-tabla-admin,
-    .lista-admin-movil,
-    .tarjeta-registro-movil {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        margin-left: 0;
-        margin-right: 0;
-    }
-
-    /* En móvil se oculta totalmente la tabla tradicional */
-
-    .tabla-admin-escritorio,
-    .contenedor-tabla-admin .table-responsive {
-        display: none !important;
-    }
-
-    .lista-admin-movil {
-        display: flex !important;
-        flex-direction: column;
-        gap: 18px;
-    }
-}
-
-@media (max-width: 390px) {
-
-    .barra-admin .container-fluid {
-        padding-left: 14px !important;
-        padding-right: 14px !important;
-    }
-
-    .logo-admin {
-        max-width: 285px;
-    }
-
-    .titulo-admin {
-        font-size: 1.75rem;
     }
 }
