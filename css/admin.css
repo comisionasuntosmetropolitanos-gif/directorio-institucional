@@ -1347,4 +1347,493 @@ width:100%;
         min-height: 46px;
         font-size: 0.95rem;
     }
+}/* ==========================================================
+   VISTA MÓVIL DEFINITIVA DEL PANEL ADMINISTRATIVO
+========================================================== */
+
+@media (max-width: 768px) {
+
+    /* ------------------------------------------------------
+       ESTRUCTURA GENERAL
+    ------------------------------------------------------ */
+
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .container-fluid {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+    }
+
+    .contenido-admin {
+        padding-top: 22px;
+        padding-bottom: 35px;
+    }
+
+
+    /* ------------------------------------------------------
+       ENCABEZADO
+    ------------------------------------------------------ */
+
+    .barra-admin {
+        padding: 18px 0 24px;
+    }
+
+    .barra-admin-contenido {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 22px;
+    }
+
+    .identidad-admin {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+    }
+
+    .logo-admin {
+        width: 100%;
+        max-width: 318px;
+        height: auto;
+        max-height: none;
+        padding: 10px;
+        object-fit: contain;
+    }
+
+    .texto-admin-superior {
+        margin-bottom: 10px;
+        font-size: 0.78rem;
+        line-height: 1.4;
+        letter-spacing: 2px;
+    }
+
+    .titulo-admin {
+        margin: 0;
+        font-size: 2rem;
+        line-height: 1.25;
+    }
+
+    .acciones-barra-admin {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .acciones-barra-admin .btn {
+        width: 100%;
+        min-height: 54px;
+        margin: 0;
+        font-size: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+    }
+
+
+    /* ------------------------------------------------------
+       TARJETA DEL USUARIO
+    ------------------------------------------------------ */
+
+    .usuario-administrador {
+        width: 100%;
+        padding: 22px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+    }
+
+    .usuario-administrador h2 {
+        margin: 8px 0 12px;
+        font-size: 1.65rem;
+        line-height: 1.3;
+    }
+
+    .usuario-administrador > div:first-child > p:last-child {
+        font-size: 1rem;
+        line-height: 1.55;
+    }
+
+    .datos-usuario-admin {
+        width: 100%;
+        min-width: 0;
+        padding: 20px 0 0;
+        border-top: 1px solid #dddddd;
+        border-left: 0;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .datos-usuario-admin div {
+        width: calc(100% - 48px);
+        min-width: 0;
+    }
+
+    .datos-usuario-admin strong {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        font-size: 0.92rem;
+        line-height: 1.45;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+
+    /* ------------------------------------------------------
+       TARJETAS DE RESUMEN
+    ------------------------------------------------------ */
+
+    .tarjeta-resumen {
+        min-height: 115px;
+        padding: 20px;
+        gap: 18px;
+    }
+
+    .icono-resumen {
+        width: 62px;
+        height: 62px;
+        flex-shrink: 0;
+        font-size: 26px;
+    }
+
+    .tarjeta-resumen p {
+        margin-bottom: 4px;
+        font-size: 1rem;
+    }
+
+    .tarjeta-resumen strong {
+        font-size: 2rem;
+    }
+
+
+    /* ------------------------------------------------------
+       BUSCADOR Y FILTROS
+    ------------------------------------------------------ */
+
+    .barra-herramientas-admin {
+        padding: 20px;
+        margin-bottom: 24px;
+    }
+
+    .barra-herramientas-admin .row {
+        row-gap: 16px;
+    }
+
+    .barra-herramientas-admin .row > div {
+        width: 100%;
+    }
+
+    .form-label {
+        margin-bottom: 7px;
+        font-size: 0.95rem;
+        font-weight: 600;
+    }
+
+    .form-control,
+    .form-select,
+    .input-group-text {
+        min-height: 50px;
+        font-size: 1rem;
+    }
+
+    .btn-nuevo-registro {
+        min-height: 52px;
+        font-size: 1rem;
+    }
+
+    .acciones-herramientas-admin {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .btn-limpiar-admin {
+        width: 100%;
+        min-height: 48px;
+    }
+
+    #contadorAdmin {
+        display: block;
+        width: 100%;
+        font-size: 0.95rem;
+        line-height: 1.4;
+        text-align: center;
+    }
+
+
+    /* ------------------------------------------------------
+       TABLA CONVERTIDA EN TARJETAS
+    ------------------------------------------------------ */
+
+    .contenedor-tabla-admin {
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+        overflow: visible !important;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .contenedor-tabla-admin .table-responsive {
+        width: 100%;
+        max-width: 100%;
+        overflow: visible !important;
+    }
+
+    .tabla-admin {
+        display: block;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        table-layout: auto !important;
+        background: transparent;
+    }
+
+    .tabla-admin thead {
+        display: none;
+    }
+
+    .tabla-admin tbody {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        width: 100%;
+    }
+
+    .tabla-admin tbody tr {
+        display: block;
+        width: 100%;
+        padding: 10px 18px;
+        border: 1px solid #e0e4e5;
+        border-radius: 16px;
+        background: #ffffff;
+        box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+    }
+
+    .tabla-admin tbody tr:hover {
+        background: #ffffff;
+    }
+
+    .tabla-admin tbody tr.registro-inactivo-admin {
+        background: #fff8e8;
+    }
+
+    .tabla-admin td {
+        display: grid;
+        grid-template-columns: 112px minmax(0, 1fr);
+        align-items: start;
+        gap: 12px;
+        width: 100% !important;
+        min-width: 0 !important;
+        padding: 14px 0;
+        border: 0;
+        border-bottom: 1px solid #eeeeee;
+        font-size: 0.94rem;
+        line-height: 1.45;
+        text-align: left;
+        white-space: normal !important;
+        word-break: normal !important;
+        overflow-wrap: anywhere !important;
+        hyphens: none !important;
+    }
+
+    .tabla-admin td:last-child {
+        border-bottom: 0;
+    }
+
+    .tabla-admin td::before {
+        color: #004d43;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+    }
+
+    .tabla-admin td:nth-child(1)::before {
+        content: "Núm.";
+    }
+
+    .tabla-admin td:nth-child(2)::before {
+        content: "Categoría";
+    }
+
+    .tabla-admin td:nth-child(3)::before {
+        content: "Estado";
+    }
+
+    .tabla-admin td:nth-child(4)::before {
+        content: "Nombre";
+    }
+
+    .tabla-admin td:nth-child(5)::before {
+        content: "Cargo / área";
+    }
+
+    .tabla-admin td:nth-child(6)::before {
+        content: "Institución";
+    }
+
+    .tabla-admin td:nth-child(7)::before {
+        content: "Contacto";
+    }
+
+    .tabla-admin td:nth-child(8)::before {
+        content: "Acciones";
+    }
+
+    .tabla-admin td,
+    .tabla-admin td strong,
+    .tabla-admin td span,
+    .tabla-admin td div {
+        max-width: 100%;
+        min-width: 0;
+        overflow-wrap: anywhere !important;
+        word-break: normal !important;
+    }
+
+    .lista-categorias-admin {
+        width: 100%;
+    }
+
+    .contactos-admin {
+        width: 100%;
+        min-width: 0 !important;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .contactos-admin span {
+        width: 100%;
+        max-width: 100%;
+        overflow-wrap: anywhere !important;
+        word-break: break-word !important;
+    }
+
+    .botones-acciones {
+        min-width: 0 !important;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .botones-acciones .btn {
+        width: 44px;
+        height: 44px;
+        min-height: 44px;
+        padding: 0;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    /* ------------------------------------------------------
+       MODAL DE REGISTRO
+    ------------------------------------------------------ */
+
+    #modalRegistro .modal-dialog {
+        width: calc(100% - 12px);
+        max-width: none;
+        margin: 6px auto;
+    }
+
+    #modalRegistro .modal-content {
+        height: calc(100dvh - 12px);
+        max-height: calc(100dvh - 12px);
+        border-radius: 14px;
+    }
+
+    #modalRegistro .modal-header {
+        padding: 17px;
+    }
+
+    #modalRegistro .modal-body {
+        padding: 18px;
+    }
+
+    #modalRegistro .modal-footer {
+        padding: 14px 18px;
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 9px;
+    }
+
+    #modalRegistro .modal-footer .btn {
+        width: 100%;
+        min-height: 48px;
+        margin: 0;
+    }
+
+    .categorias-relacionadas {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+    }
+
+
+    /* ------------------------------------------------------
+       MODAL DE ELIMINACIÓN
+    ------------------------------------------------------ */
+
+    #modalEliminar .modal-dialog {
+        width: calc(100% - 24px);
+        margin: 12px auto;
+    }
+
+    #modalEliminar .modal-footer {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 8px;
+    }
+
+    #modalEliminar .modal-footer .btn {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+
+/* Pantallas muy pequeñas */
+
+@media (max-width: 390px) {
+
+    .titulo-admin {
+        font-size: 1.75rem;
+    }
+
+    .usuario-administrador {
+        padding: 18px;
+    }
+
+    .tabla-admin tbody tr {
+        padding: 8px 14px;
+    }
+
+    .tabla-admin td {
+        grid-template-columns: 92px minmax(0, 1fr);
+        gap: 9px;
+        font-size: 0.88rem;
+    }
+
+    .tabla-admin td::before {
+        font-size: 0.7rem;
+    }
 }
