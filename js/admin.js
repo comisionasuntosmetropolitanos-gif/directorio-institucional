@@ -20,535 +20,2170 @@ import {
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
+
 document.addEventListener("DOMContentLoaded", () => {
+
 
     /* =====================================================
        ELEMENTOS DEL DOM
     ===================================================== */
-    const pantallaCargaAdmin = document.getElementById("pantallaCargaAdmin");
-    const panelAdministracion = document.getElementById("panelAdministracion");
-    const correoUsuarioAdmin = document.getElementById("correoUsuarioAdmin");
-    const btnCerrarSesion = document.getElementById("btnCerrarSesion");
 
-    // Resumen y Filtros
-    const totalComisiones = document.getElementById("totalComisiones");
-    const totalMesas = document.getElementById("totalMesas");
-    const totalRepresentantes = document.getElementById("totalRepresentantes");
-    const totalInstituciones = document.getElementById("totalInstituciones");
-    const tarjetasResumen = document.querySelectorAll(".tarjeta-resumen-admin");
+    const pantallaCargaAdmin =
+        document.getElementById("pantallaCargaAdmin");
 
-    const buscadorAdmin = document.getElementById("buscadorAdmin");
-    const filtroCategoriaAdmin = document.getElementById("filtroCategoriaAdmin");
-    const filtroEstadoAdmin = document.getElementById("filtroEstadoAdmin");
-    const btnLimpiarAdmin = document.getElementById("btnLimpiarAdmin");
-    const contadorAdmin = document.getElementById("contadorAdmin");
+    const panelAdministracion =
+        document.getElementById("panelAdministracion");
 
-    // Tabla & Vista Móvil
-    const tablaAdmin = document.getElementById("tablaAdmin");
-    const listaAdminMovil = document.getElementById("listaAdminMovil");
-    const mensajeCargandoAdmin = document.getElementById("mensajeCargandoAdmin");
-    const mensajeAdminVacio = document.getElementById("mensajeAdminVacio");
-    const mensajeErrorAdmin = document.getElementById("mensajeErrorAdmin");
-    const textoErrorAdmin = document.getElementById("textoErrorAdmin");
+    const correoUsuarioAdmin =
+        document.getElementById("correoUsuarioAdmin");
 
-    // Modal Formulario (Agregar / Editar)
-    const modalRegistroElemento = document.getElementById("modalRegistro");
-    const modalRegistroBS = new bootstrap.Modal(modalRegistroElemento);
-    const formRegistro = document.getElementById("formRegistro");
-    const tituloModalRegistro = document.getElementById("tituloModalRegistro");
-    const textoBotonGuardar = document.getElementById("textoBotonGuardar");
-    const mensajeFormulario = document.getElementById("mensajeFormulario");
+    const btnCerrarSesion =
+        document.getElementById("btnCerrarSesion");
 
-    // Campos del Formulario
-    const registroId = document.getElementById("registroId");
-    const categoriaRegistro = document.getElementById("categoriaRegistro");
-    const estadoRegistro = document.getElementById("estadoRegistro");
-    const checkboxesCategorias = document.querySelectorAll(".categoria-relacionada");
-    const legislaturaRegistro = document.getElementById("legislaturaRegistro");
-    const nombreRegistro = document.getElementById("nombreRegistro");
-    const cargoRegistro = document.getElementById("cargoRegistro");
-    const comisionRegistro = document.getElementById("comisionRegistro");
-    const institucionRegistro = document.getElementById("institucionRegistro");
-    const telefonoRegistro = document.getElementById("telefonoRegistro");
-    const whatsappRegistro = document.getElementById("whatsappRegistro");
-    const correoRegistro = document.getElementById("correoRegistro");
-    const correosAdicionalesRegistro = document.getElementById("correosAdicionalesRegistro");
-    const contactoAdicionalRegistro = document.getElementById("contactoAdicionalRegistro");
-    const contactoAdicionalCargoRegistro = document.getElementById("contactoAdicionalCargoRegistro");
-    const contactoAdicionalTelefonoRegistro = document.getElementById("contactoAdicionalTelefonoRegistro");
-    const activoRegistro = document.getElementById("activoRegistro");
 
-    // Modal Eliminar
-    const modalEliminarElemento = document.getElementById("modalEliminar");
-    const modalEliminarBS = new bootstrap.Modal(modalEliminarElemento);
-    const nombreRegistroEliminar = document.getElementById("nombreRegistroEliminar");
-    const registroIdEliminar = document.getElementById("registroIdEliminar");
-    const btnConfirmarEliminar = document.getElementById("btnConfirmarEliminar");
+    /* =====================================================
+       RESUMEN Y FILTROS
+    ===================================================== */
+
+    const totalComisiones =
+        document.getElementById("totalComisiones");
+
+    const totalMesas =
+        document.getElementById("totalMesas");
+
+    const totalRepresentantes =
+        document.getElementById("totalRepresentantes");
+
+    const totalInstituciones =
+        document.getElementById("totalInstituciones");
+
+    const totalIntegrantesZonas =
+        document.getElementById("totalIntegrantesZonas");
+
+    const tarjetasResumen =
+        document.querySelectorAll(".tarjeta-resumen-admin");
+
+
+    const buscadorAdmin =
+        document.getElementById("buscadorAdmin");
+
+    const filtroCategoriaAdmin =
+        document.getElementById("filtroCategoriaAdmin");
+
+    const filtroEstadoAdmin =
+        document.getElementById("filtroEstadoAdmin");
+
+    const btnLimpiarAdmin =
+        document.getElementById("btnLimpiarAdmin");
+
+    const contadorAdmin =
+        document.getElementById("contadorAdmin");
+
+
+    /* =====================================================
+       TABLA Y VISTA MÓVIL
+    ===================================================== */
+
+    const tablaAdmin =
+        document.getElementById("tablaAdmin");
+
+    const listaAdminMovil =
+        document.getElementById("listaAdminMovil");
+
+    const mensajeCargandoAdmin =
+        document.getElementById("mensajeCargandoAdmin");
+
+    const mensajeAdminVacio =
+        document.getElementById("mensajeAdminVacio");
+
+    const mensajeErrorAdmin =
+        document.getElementById("mensajeErrorAdmin");
+
+    const textoErrorAdmin =
+        document.getElementById("textoErrorAdmin");
+
+
+    /* =====================================================
+       MODAL FORMULARIO
+       AGREGAR / EDITAR
+    ===================================================== */
+
+    const modalRegistroElemento =
+        document.getElementById("modalRegistro");
+
+    const modalRegistroBS =
+        new bootstrap.Modal(modalRegistroElemento);
+
+    const formRegistro =
+        document.getElementById("formRegistro");
+
+    const tituloModalRegistro =
+        document.getElementById("tituloModalRegistro");
+
+    const textoBotonGuardar =
+        document.getElementById("textoBotonGuardar");
+
+    const mensajeFormulario =
+        document.getElementById("mensajeFormulario");
+
+
+    /* =====================================================
+       CAMPOS DEL FORMULARIO
+    ===================================================== */
+
+    const registroId =
+        document.getElementById("registroId");
+
+    const categoriaRegistro =
+        document.getElementById("categoriaRegistro");
+
+    const estadoRegistro =
+        document.getElementById("estadoRegistro");
+
+    const checkboxesCategorias =
+        document.querySelectorAll(".categoria-relacionada");
+
+    const legislaturaRegistro =
+        document.getElementById("legislaturaRegistro");
+
+    const nombreRegistro =
+        document.getElementById("nombreRegistro");
+
+    const cargoRegistro =
+        document.getElementById("cargoRegistro");
+
+    const comisionRegistro =
+        document.getElementById("comisionRegistro");
+
+    const institucionRegistro =
+        document.getElementById("institucionRegistro");
+
+    const telefonoRegistro =
+        document.getElementById("telefonoRegistro");
+
+    const whatsappRegistro =
+        document.getElementById("whatsappRegistro");
+
+    const correoRegistro =
+        document.getElementById("correoRegistro");
+
+    const correosAdicionalesRegistro =
+        document.getElementById("correosAdicionalesRegistro");
+
+    const contactoAdicionalRegistro =
+        document.getElementById("contactoAdicionalRegistro");
+
+    const contactoAdicionalCargoRegistro =
+        document.getElementById("contactoAdicionalCargoRegistro");
+
+    const contactoAdicionalTelefonoRegistro =
+        document.getElementById("contactoAdicionalTelefonoRegistro");
+
+    const activoRegistro =
+        document.getElementById("activoRegistro");
+
+
+    /* =====================================================
+       MODAL ELIMINAR
+    ===================================================== */
+
+    const modalEliminarElemento =
+        document.getElementById("modalEliminar");
+
+    const modalEliminarBS =
+        new bootstrap.Modal(modalEliminarElemento);
+
+    const nombreRegistroEliminar =
+        document.getElementById("nombreRegistroEliminar");
+
+    const registroIdEliminar =
+        document.getElementById("registroIdEliminar");
+
+    const btnConfirmarEliminar =
+        document.getElementById("btnConfirmarEliminar");
+
+
+    /* =====================================================
+       REGISTROS
+    ===================================================== */
 
     let registrosAdmin = [];
 
+
     /* =====================================================
-       FUNCIONES DE UTILIDAD Y ESCAPADO
+       NORMALIZAR TEXTO
     ===================================================== */
+
     function normalizarTexto(texto) {
+
         return String(texto || "")
             .toLowerCase()
             .normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "")
             .trim();
+
     }
 
+
+    /* =====================================================
+       ESCAPAR HTML
+    ===================================================== */
+
     function escaparHTML(texto) {
+
         return String(texto || "")
             .replaceAll("&", "&amp;")
             .replaceAll("<", "&lt;")
             .replaceAll(">", "&gt;")
             .replaceAll('"', "&quot;")
             .replaceAll("'", "&#039;");
+
     }
+
+
+    /* =====================================================
+       NOMBRE VISIBLE DE LA CATEGORÍA
+    ===================================================== */
 
     function obtenerNombreCategoria(cat) {
+
         const nombres = {
-            comisiones: "Comisión",
-            mesas: "Mesa Directiva",
-            representantes: "Representante",
-            instituciones: "Institución"
+
+            comisiones:
+                "Comisión",
+
+            mesas:
+                "Mesa Directiva",
+
+            representantes:
+                "Representante",
+
+            instituciones:
+                "Institución",
+
+            "integrantes-zonas":
+                "Integrante de Comisión de Zonas Metropolitanas"
+
         };
+
         return nombres[cat] || "Sin categoría";
+
     }
+
+
+    /* =====================================================
+       OCULTAR MENSAJES DE ESTADO
+    ===================================================== */
 
     function ocultarMensajesEstado() {
-        if (mensajeCargandoAdmin) mensajeCargandoAdmin.classList.add("d-none");
-        if (mensajeAdminVacio) mensajeAdminVacio.classList.add("d-none");
-        if (mensajeErrorAdmin) mensajeErrorAdmin.classList.add("d-none");
-    }
 
-    /* =====================================================
-       CONTADORES & RESUMEN
-    ===================================================== */
-    function actualizarContadores() {
-        function perteneceACategoria(reg, cat) {
-            const lista = Array.isArray(reg.categorias) ? reg.categorias : [reg.categoria];
-            return lista.includes(cat);
+        if (mensajeCargandoAdmin) {
+
+            mensajeCargandoAdmin
+                .classList
+                .add("d-none");
+
         }
 
-        totalComisiones.textContent = registrosAdmin.filter(r => perteneceACategoria(r, "comisiones")).length;
-        totalMesas.textContent = registrosAdmin.filter(r => perteneceACategoria(r, "mesas")).length;
-        totalRepresentantes.textContent = registrosAdmin.filter(r => perteneceACategoria(r, "representantes")).length;
-        totalInstituciones.textContent = registrosAdmin.filter(r => perteneceACategoria(r, "instituciones")).length;
+        if (mensajeAdminVacio) {
+
+            mensajeAdminVacio
+                .classList
+                .add("d-none");
+
+        }
+
+        if (mensajeErrorAdmin) {
+
+            mensajeErrorAdmin
+                .classList
+                .add("d-none");
+
+        }
+
     }
+
+
+    /* =====================================================
+       COMPROBAR SI PERTENECE A UNA CATEGORÍA
+    ===================================================== */
+
+    function perteneceACategoria(
+        registro,
+        categoria
+    ) {
+
+        const lista =
+            Array.isArray(registro.categorias)
+                ? registro.categorias
+                : [registro.categoria];
+
+        return lista.includes(categoria);
+
+    }
+
+
+    /* =====================================================
+       ACTUALIZAR CONTADORES
+    ===================================================== */
+
+    function actualizarContadores() {
+
+
+        if (totalComisiones) {
+
+            totalComisiones.textContent =
+                registrosAdmin.filter(
+                    registro =>
+                        perteneceACategoria(
+                            registro,
+                            "comisiones"
+                        )
+                ).length;
+
+        }
+
+
+        if (totalMesas) {
+
+            totalMesas.textContent =
+                registrosAdmin.filter(
+                    registro =>
+                        perteneceACategoria(
+                            registro,
+                            "mesas"
+                        )
+                ).length;
+
+        }
+
+
+        if (totalRepresentantes) {
+
+            totalRepresentantes.textContent =
+                registrosAdmin.filter(
+                    registro =>
+                        perteneceACategoria(
+                            registro,
+                            "representantes"
+                        )
+                ).length;
+
+        }
+
+
+        if (totalInstituciones) {
+
+            totalInstituciones.textContent =
+                registrosAdmin.filter(
+                    registro =>
+                        perteneceACategoria(
+                            registro,
+                            "instituciones"
+                        )
+                ).length;
+
+        }
+
+
+        if (totalIntegrantesZonas) {
+
+            totalIntegrantesZonas.textContent =
+                registrosAdmin.filter(
+                    registro =>
+                        perteneceACategoria(
+                            registro,
+                            "integrantes-zonas"
+                        )
+                ).length;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       CARGAR ESTADOS
+    ===================================================== */
 
     function cargarEstadosSelect() {
-        const estadoActual = filtroEstadoAdmin.value;
-        const estados = [...new Set(registrosAdmin.map(r => String(r.estado || "").trim()).filter(Boolean))];
-        estados.sort((a, b) => a.localeCompare(b, "es", { sensitivity: "base" }));
 
-        filtroEstadoAdmin.innerHTML = `<option value="todos">Todos los estados</option>`;
-        estados.forEach(est => {
-            const opt = document.createElement("option");
-            opt.value = est;
-            opt.textContent = est;
-            filtroEstadoAdmin.appendChild(opt);
+        const estadoActual =
+            filtroEstadoAdmin.value;
+
+
+        const estados = [
+
+            ...new Set(
+
+                registrosAdmin
+
+                    .map(registro =>
+                        String(
+                            registro.estado || ""
+                        ).trim()
+                    )
+
+                    .filter(Boolean)
+
+            )
+
+        ];
+
+
+        estados.sort(
+
+            (a, b) =>
+                a.localeCompare(
+                    b,
+                    "es",
+                    {
+                        sensitivity: "base"
+                    }
+                )
+
+        );
+
+
+        filtroEstadoAdmin.innerHTML = `
+
+            <option value="todos">
+
+                Todos los estados
+
+            </option>
+
+        `;
+
+
+        estados.forEach(estado => {
+
+            const opcion =
+                document.createElement("option");
+
+            opcion.value =
+                estado;
+
+            opcion.textContent =
+                estado;
+
+            filtroEstadoAdmin.appendChild(
+                opcion
+            );
+
         });
 
-        filtroEstadoAdmin.value = estados.includes(estadoActual) ? estadoActual : "todos";
+
+        filtroEstadoAdmin.value =
+            estados.includes(estadoActual)
+                ? estadoActual
+                : "todos";
+
     }
 
-    /* =====================================================
-       RENDERIZADO (ESCRITORIO Y MÓVIL)
-    ===================================================== */
-    function renderizarRegistros(lista) {
-        ocultarMensajesEstado();
-        tablaAdmin.innerHTML = "";
-        listaAdminMovil.innerHTML = "";
 
-        contadorAdmin.textContent = `Registros encontrados: ${lista.length}`;
+    /* =====================================================
+       RENDERIZAR REGISTROS
+       ESCRITORIO Y MÓVIL
+    ===================================================== */
+
+    function renderizarRegistros(lista) {
+
+
+        ocultarMensajesEstado();
+
+
+        tablaAdmin.innerHTML =
+            "";
+
+
+        listaAdminMovil.innerHTML =
+            "";
+
+
+        contadorAdmin.textContent =
+            `Registros encontrados: ${lista.length}`;
+
 
         if (lista.length === 0) {
-            mensajeAdminVacio.classList.remove("d-none");
+
+            mensajeAdminVacio
+                .classList
+                .remove("d-none");
+
             return;
+
         }
 
-        lista.forEach((reg, index) => {
-            const estaActivo = reg.activo !== false;
 
-            // 1. Renderizado en Tabla Escritorio
-            const tr = document.createElement("tr");
-            if (!estaActivo) tr.classList.add("registro-inactivo-admin");
+        lista.forEach(
+            (registro, index) => {
 
-            const categoriasArr = Array.isArray(reg.categorias) ? reg.categorias : [reg.categoria];
-            const badgesCategorias = categoriasArr.map(c => `<span class="etiqueta-categoria">${escaparHTML(obtenerNombreCategoria(c))}</span>`).join(" ");
 
-            tr.innerHTML = `
-                <td class="numero-admin">${index + 1}</td>
-                <td>
-                    <div class="lista-categorias-admin">
+                const estaActivo =
+                    registro.activo !== false;
+
+
+                /* =============================================
+                   CATEGORÍAS
+                ============================================= */
+
+                const categoriasArr =
+                    Array.isArray(
+                        registro.categorias
+                    )
+                        ? registro.categorias
+                        : [registro.categoria];
+
+
+                const badgesCategorias =
+                    categoriasArr
+                        .filter(Boolean)
+                        .map(
+                            categoria => `
+
+                                <span class="etiqueta-categoria">
+
+                                    ${escaparHTML(
+                                        obtenerNombreCategoria(
+                                            categoria
+                                        )
+                                    )}
+
+                                </span>
+
+                            `
+                        )
+                        .join(" ");
+
+
+                /* =============================================
+                   TABLA DE ESCRITORIO
+                ============================================= */
+
+                const fila =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                if (!estaActivo) {
+
+                    fila.classList.add(
+                        "registro-inactivo-admin"
+                    );
+
+                }
+
+
+                fila.innerHTML = `
+
+                    <td class="numero-admin">
+
+                        ${index + 1}
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="lista-categorias-admin">
+
+                            ${badgesCategorias}
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <strong>
+
+                            ${escaparHTML(
+                                registro.estado ||
+                                "Sin especif."
+                            )}
+
+                        </strong>
+
+
+                        ${
+                            registro.legislatura
+                                ? `
+                                    <span class="legislatura-admin">
+
+                                        ${escaparHTML(
+                                            registro.legislatura
+                                        )}
+
+                                    </span>
+                                  `
+                                : ""
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        <strong>
+
+                            ${escaparHTML(
+                                registro.nombre
+                            )}
+
+                        </strong>
+
+
+                        <div
+                            class="${
+                                estaActivo
+                                    ? "estado-activo-admin"
+                                    : "estado-inactivo-admin"
+                            }"
+                        >
+
+                            <i class="bi bi-circle-fill"></i>
+
+                            ${
+                                estaActivo
+                                    ? "Activo"
+                                    : "Inactivo"
+                            }
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <strong>
+
+                            ${escaparHTML(
+                                registro.cargo || ""
+                            )}
+
+                        </strong>
+
+
+                        ${
+                            registro.comision
+                                ? `
+                                    <span class="comision-admin">
+
+                                        ${escaparHTML(
+                                            registro.comision
+                                        )}
+
+                                    </span>
+                                  `
+                                : ""
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        ${escaparHTML(
+                            registro.institucion ||
+                            "-"
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="contactos-admin">
+
+
+                            ${
+                                registro.telefono
+                                    ? `
+                                        <span>
+
+                                            <i class="bi bi-telephone"></i>
+
+                                            ${escaparHTML(
+                                                registro.telefono
+                                            )}
+
+                                        </span>
+                                      `
+                                    : ""
+                            }
+
+
+                            ${
+                                registro.whatsapp
+                                    ? `
+                                        <span>
+
+                                            <i class="bi bi-whatsapp"></i>
+
+                                            ${escaparHTML(
+                                                registro.whatsapp
+                                            )}
+
+                                        </span>
+                                      `
+                                    : ""
+                            }
+
+
+                            ${
+                                registro.correo
+                                    ? `
+                                        <span class="correo-admin">
+
+                                            <i class="bi bi-envelope"></i>
+
+                                            ${escaparHTML(
+                                                registro.correo
+                                            )}
+
+                                        </span>
+                                      `
+                                    : ""
+                            }
+
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="botones-acciones">
+
+
+                            <button
+                                type="button"
+                                class="btn btn-editar-registro"
+                                data-id="${registro.id}"
+                                title="Editar"
+                            >
+
+                                <i class="bi bi-pencil-square"></i>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="btn ${
+                                    estaActivo
+                                        ? "btn-desactivar-registro"
+                                        : "btn-activar-registro"
+                                }"
+                                data-id="${registro.id}"
+                                data-activo="${estaActivo}"
+                                title="${
+                                    estaActivo
+                                        ? "Desactivar"
+                                        : "Activar"
+                                }"
+                            >
+
+                                <i
+                                    class="bi ${
+                                        estaActivo
+                                            ? "bi-eye-slash"
+                                            : "bi-eye"
+                                    }"
+                                ></i>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="btn btn-eliminar-registro"
+                                data-id="${registro.id}"
+                                data-nombre="${escaparHTML(
+                                    registro.nombre
+                                )}"
+                                title="Eliminar"
+                            >
+
+                                <i class="bi bi-trash"></i>
+
+                            </button>
+
+
+                        </div>
+
+                    </td>
+
+                `;
+
+
+                tablaAdmin.appendChild(
+                    fila
+                );
+
+
+                /* =============================================
+                   TARJETA PARA CELULAR
+                ============================================= */
+
+                const tarjeta =
+                    document.createElement(
+                        "article"
+                    );
+
+
+                tarjeta.className = `
+
+                    tarjeta-registro-movil
+
+                    ${
+                        !estaActivo
+                            ? "registro-inactivo-movil"
+                            : ""
+                    }
+
+                `;
+
+
+                tarjeta.innerHTML = `
+
+                    <div class="encabezado-registro-movil">
+
+
+                        <div>
+
+                            <span class="numero-registro-movil">
+
+                                Registro #${index + 1}
+
+                            </span>
+
+
+                            <h3>
+
+                                ${escaparHTML(
+                                    registro.nombre
+                                )}
+
+                            </h3>
+
+                        </div>
+
+
+                        <span
+                            class="${
+                                estaActivo
+                                    ? "estado-activo-movil"
+                                    : "estado-inactivo-movil"
+                            }"
+                        >
+
+                            <i class="bi bi-circle-fill"></i>
+
+                            ${
+                                estaActivo
+                                    ? "Activo"
+                                    : "Inactivo"
+                            }
+
+                        </span>
+
+
+                    </div>
+
+
+
+                    <div class="categorias-registro-movil">
+
                         ${badgesCategorias}
+
                     </div>
-                </td>
-                <td>
-                    <strong>${escaparHTML(reg.estado || "Sin especif.")}</strong>
-                    ${reg.legislatura ? `<span class="legislatura-admin">${escaparHTML(reg.legislatura)}</span>` : ""}
-                </td>
-                <td>
-                    <strong>${escaparHTML(reg.nombre)}</strong>
-                    <div class="${estaActivo ? 'estado-activo-admin' : 'estado-inactivo-admin'}">
-                        <i class="bi bi-circle-fill"></i> ${estaActivo ? 'Activo' : 'Inactivo'}
-                    </div>
-                </td>
-                <td>
-                    <strong>${escaparHTML(reg.cargo || "")}</strong>
-                    ${reg.comision ? `<span class="comision-admin">${escaparHTML(reg.comision)}</span>` : ""}
-                </td>
-                <td>${escaparHTML(reg.institucion || "-")}</td>
-                <td>
-                    <div class="contactos-admin">
-                        ${reg.telefono ? `<span><i class="bi bi-telephone"></i> ${escaparHTML(reg.telefono)}</span>` : ""}
-                        ${reg.whatsapp ? `<span><i class="bi bi-whatsapp"></i> ${escaparHTML(reg.whatsapp)}</span>` : ""}
-                        ${reg.correo ? `<span class="correo-admin"><i class="bi bi-envelope"></i> ${escaparHTML(reg.correo)}</span>` : ""}
-                    </div>
-                </td>
-                <td>
-                    <div class="botones-acciones">
-                        <button type="button" class="btn btn-editar-registro" data-id="${reg.id}" title="Editar">
+
+
+
+                    <dl class="datos-registro-movil">
+
+
+                        <div>
+
+                            <dt>
+                                Estado
+                            </dt>
+
+
+                            <dd>
+
+                                ${escaparHTML(
+                                    registro.estado ||
+                                    "Sin especificar"
+                                )}
+
+
+                                ${
+                                    registro.legislatura
+                                        ? `
+                                            <span class="legislatura-movil">
+
+                                                ${escaparHTML(
+                                                    registro.legislatura
+                                                )}
+
+                                            </span>
+                                          `
+                                        : ""
+                                }
+
+                            </dd>
+
+                        </div>
+
+
+
+                        <div>
+
+                            <dt>
+                                Cargo / área
+                            </dt>
+
+
+                            <dd>
+
+                                ${escaparHTML(
+                                    registro.cargo ||
+                                    "Sin cargo"
+                                )}
+
+
+                                ${
+                                    registro.comision
+                                        ? `
+                                            <br>
+
+                                            <small>
+
+                                                ${escaparHTML(
+                                                    registro.comision
+                                                )}
+
+                                            </small>
+                                          `
+                                        : ""
+                                }
+
+                            </dd>
+
+                        </div>
+
+
+
+                        <div>
+
+                            <dt>
+                                Institución
+                            </dt>
+
+
+                            <dd>
+
+                                ${escaparHTML(
+                                    registro.institucion ||
+                                    "-"
+                                )}
+
+                            </dd>
+
+                        </div>
+
+
+
+                        <div>
+
+                            <dt>
+                                Contacto
+                            </dt>
+
+
+                            <dd class="contactos-registro-movil">
+
+
+                                ${
+                                    registro.telefono
+                                        ? `
+                                            <a
+                                                href="tel:${registro.telefono}"
+                                                class="dato-contacto-movil"
+                                            >
+
+                                                <i class="bi bi-telephone"></i>
+
+                                                <span>
+
+                                                    ${escaparHTML(
+                                                        registro.telefono
+                                                    )}
+
+                                                </span>
+
+                                            </a>
+                                          `
+                                        : ""
+                                }
+
+
+                                ${
+                                    registro.whatsapp
+                                        ? `
+                                            <a
+                                                href="https://wa.me/${registro.whatsapp}"
+                                                class="dato-contacto-movil"
+                                                target="_blank"
+                                            >
+
+                                                <i class="bi bi-whatsapp"></i>
+
+                                                <span>
+
+                                                    ${escaparHTML(
+                                                        registro.whatsapp
+                                                    )}
+
+                                                </span>
+
+                                            </a>
+                                          `
+                                        : ""
+                                }
+
+
+                                ${
+                                    registro.correo
+                                        ? `
+                                            <a
+                                                href="mailto:${registro.correo}"
+                                                class="dato-contacto-movil"
+                                            >
+
+                                                <i class="bi bi-envelope"></i>
+
+                                                <span>
+
+                                                    ${escaparHTML(
+                                                        registro.correo
+                                                    )}
+
+                                                </span>
+
+                                            </a>
+                                          `
+                                        : ""
+                                }
+
+
+                            </dd>
+
+                        </div>
+
+
+                    </dl>
+
+
+
+                    <div class="acciones-registro-movil">
+
+
+                        <button
+                            type="button"
+                            class="btn btn-editar-registro"
+                            data-id="${registro.id}"
+                        >
+
                             <i class="bi bi-pencil-square"></i>
+
+                            Editar
+
                         </button>
-                        <button type="button" class="btn ${estaActivo ? 'btn-desactivar-registro' : 'btn-activar-registro'}" data-id="${reg.id}" data-activo="${estaActivo}" title="${estaActivo ? 'Desactivar' : 'Activar'}">
-                            <i class="bi ${estaActivo ? 'bi-eye-slash' : 'bi-eye'}"></i>
+
+
+                        <button
+                            type="button"
+                            class="btn ${
+                                estaActivo
+                                    ? "btn-desactivar-registro"
+                                    : "btn-activar-registro"
+                            }"
+                            data-id="${registro.id}"
+                            data-activo="${estaActivo}"
+                        >
+
+                            <i
+                                class="bi ${
+                                    estaActivo
+                                        ? "bi-eye-slash"
+                                        : "bi-eye"
+                                }"
+                            ></i>
+
+                            ${
+                                estaActivo
+                                    ? "Ocultar"
+                                    : "Mostrar"
+                            }
+
                         </button>
-                        <button type="button" class="btn btn-eliminar-registro" data-id="${reg.id}" data-nombre="${escaparHTML(reg.nombre)}" title="Eliminar">
+
+
+                        <button
+                            type="button"
+                            class="btn btn-eliminar-registro"
+                            data-id="${registro.id}"
+                            data-nombre="${escaparHTML(
+                                registro.nombre
+                            )}"
+                        >
+
                             <i class="bi bi-trash"></i>
+
+                            Eliminar
+
                         </button>
-                    </div>
-                </td>
-            `;
-            tablaAdmin.appendChild(tr);
 
-            // 2. Renderizado en Tarjetas Móvil
-            const card = document.createElement("article");
-            card.className = `tarjeta-registro-movil ${!estaActivo ? 'registro-inactivo-movil' : ''}`;
 
-            card.innerHTML = `
-                <div class="encabezado-registro-movil">
-                    <div>
-                        <span class="numero-registro-movil">Registro #${index + 1}</span>
-                        <h3>${escaparHTML(reg.nombre)}</h3>
                     </div>
-                    <span class="${estaActivo ? 'estado-activo-movil' : 'estado-inactivo-movil'}">
-                        <i class="bi bi-circle-fill"></i> ${estaActivo ? 'Activo' : 'Inactivo'}
-                    </span>
-                </div>
 
-                <div class="categorias-registro-movil">
-                    ${badgesCategorias}
-                </div>
+                `;
 
-                <dl class="datos-registro-movil">
-                    <div>
-                        <dt>Estado</dt>
-                        <dd>
-                            ${escaparHTML(reg.estado || "Sin especificar")}
-                            ${reg.legislatura ? `<span class="legislatura-movil">${escaparHTML(reg.legislatura)}</span>` : ""}
-                        </dd>
-                    </div>
-                    <div>
-                        <dt>Cargo / área</dt>
-                        <dd>
-                            ${escaparHTML(reg.cargo || "Sin cargo")}
-                            ${reg.comision ? `<br><small>${escaparHTML(reg.comision)}</small>` : ""}
-                        </dd>
-                    </div>
-                    <div>
-                        <dt>Institución</dt>
-                        <dd>${escaparHTML(reg.institucion || "-")}</dd>
-                    </div>
-                    <div>
-                        <dt>Contacto</dt>
-                        <dd class="contactos-registro-movil">
-                            ${reg.telefono ? `<a href="tel:${reg.telefono}" class="dato-contacto-movil"><i class="bi bi-telephone"></i> <span>${escaparHTML(reg.telefono)}</span></a>` : ""}
-                            ${reg.whatsapp ? `<a href="https://wa.me/${reg.whatsapp}" class="dato-contacto-movil" target="_blank"><i class="bi bi-whatsapp"></i> <span>${escaparHTML(reg.whatsapp)}</span></a>` : ""}
-                            ${reg.correo ? `<a href="mailto:${reg.correo}" class="dato-contacto-movil"><i class="bi bi-envelope"></i> <span>${escaparHTML(reg.correo)}</span></a>` : ""}
-                        </dd>
-                    </div>
-                </dl>
 
-                <div class="acciones-registro-movil">
-                    <button type="button" class="btn btn-editar-registro" data-id="${reg.id}">
-                        <i class="bi bi-pencil-square"></i> Editar
-                    </button>
-                    <button type="button" class="btn ${estaActivo ? 'btn-desactivar-registro' : 'btn-activar-registro'}" data-id="${reg.id}" data-activo="${estaActivo}">
-                        <i class="bi ${estaActivo ? 'bi-eye-slash' : 'bi-eye'}"></i> ${estaActivo ? 'Ocultar' : 'Mostrar'}
-                    </button>
-                    <button type="button" class="btn btn-eliminar-registro" data-id="${reg.id}" data-nombre="${escaparHTML(reg.nombre)}">
-                        <i class="bi bi-trash"></i> Eliminar
-                    </button>
-                </div>
-            `;
-            listaAdminMovil.appendChild(card);
-        });
+                listaAdminMovil.appendChild(
+                    tarjeta
+                );
+
+            }
+        );
+
 
         asignarEventosAcciones();
+
     }
+
 
     /* =====================================================
-       FILTRADO DE REGISTROS
+       FILTRAR REGISTROS
     ===================================================== */
+
     function filtrarRegistros() {
-        const texto = normalizarTexto(buscadorAdmin.value);
-        const catSel = filtroCategoriaAdmin.value;
-        const estSel = filtroEstadoAdmin.value;
 
-        const filtrados = registrosAdmin.filter(reg => {
-            const categoriasArr = Array.isArray(reg.categorias) ? reg.categorias : [reg.categoria];
-            const coincideCat = catSel === "todas" || categoriasArr.includes(catSel);
-            const coincideEst = estSel === "todos" || reg.estado === estSel;
 
-            const contenido = normalizarTexto(`
-                ${reg.nombre} ${reg.estado} ${reg.legislatura}
-                ${reg.cargo} ${reg.comision} ${reg.institucion}
-                ${reg.correo} ${reg.telefono} ${reg.whatsapp}
-            `);
+        const texto =
+            normalizarTexto(
+                buscadorAdmin.value
+            );
 
-            const coincideBusqueda = texto === "" || contenido.includes(texto);
 
-            return coincideCat && coincideEst && coincideBusqueda;
-        });
+        const categoriaSeleccionada =
+            filtroCategoriaAdmin.value;
 
-        renderizarRegistros(filtrados);
+
+        const estadoSeleccionado =
+            filtroEstadoAdmin.value;
+
+
+        const filtrados =
+            registrosAdmin.filter(
+                registro => {
+
+
+                    const categoriasArr =
+                        Array.isArray(
+                            registro.categorias
+                        )
+                            ? registro.categorias
+                            : [registro.categoria];
+
+
+                    const coincideCategoria =
+
+                        categoriaSeleccionada ===
+                            "todas"
+
+                        ||
+
+                        categoriasArr.includes(
+                            categoriaSeleccionada
+                        );
+
+
+                    const coincideEstado =
+
+                        estadoSeleccionado ===
+                            "todos"
+
+                        ||
+
+                        registro.estado ===
+                            estadoSeleccionado;
+
+
+                    const contenido =
+                        normalizarTexto(`
+
+                            ${registro.nombre}
+
+                            ${registro.estado}
+
+                            ${registro.legislatura}
+
+                            ${registro.cargo}
+
+                            ${registro.comision}
+
+                            ${registro.institucion}
+
+                            ${registro.correo}
+
+                            ${registro.telefono}
+
+                            ${registro.whatsapp}
+
+                        `);
+
+
+                    const coincideBusqueda =
+
+                        texto === ""
+
+                        ||
+
+                        contenido.includes(
+                            texto
+                        );
+
+
+                    return (
+                        coincideCategoria &&
+                        coincideEstado &&
+                        coincideBusqueda
+                    );
+
+                }
+            );
+
+
+        renderizarRegistros(
+            filtrados
+        );
+
     }
+
 
     /* =====================================================
        ESCUCHAR FIRESTORE EN TIEMPO REAL
     ===================================================== */
+
     function escucharFirestore() {
-        if (mensajeCargandoAdmin) mensajeCargandoAdmin.classList.remove("d-none");
 
-        const refDirectorio = collection(db, "directorio");
 
-        onSnapshot(refDirectorio, snapshot => {
-            registrosAdmin = snapshot.docs.map(docSnap => ({
-                id: docSnap.id,
-                ...docSnap.data()
-            }));
+        if (mensajeCargandoAdmin) {
 
-            actualizarContadores();
-            cargarEstadosSelect();
-            filtrarRegistros();
-        }, error => {
-            console.error("Error al consultar Firestore:", error);
-            ocultarMensajesEstado();
-            if (textoErrorAdmin) textoErrorAdmin.textContent = "Error al conectar con la base de datos de Firestore.";
-            if (mensajeErrorAdmin) mensajeErrorAdmin.classList.remove("d-none");
-        });
+            mensajeCargandoAdmin
+                .classList
+                .remove("d-none");
+
+        }
+
+
+        const referenciaDirectorio =
+            collection(
+                db,
+                "directorio"
+            );
+
+
+        onSnapshot(
+
+            referenciaDirectorio,
+
+
+            snapshot => {
+
+
+                registrosAdmin =
+                    snapshot.docs.map(
+                        documento => ({
+
+                            id:
+                                documento.id,
+
+                            ...documento.data()
+
+                        })
+                    );
+
+
+                actualizarContadores();
+
+                cargarEstadosSelect();
+
+                filtrarRegistros();
+
+            },
+
+
+            error => {
+
+
+                console.error(
+                    "Error al consultar Firestore:",
+                    error
+                );
+
+
+                ocultarMensajesEstado();
+
+
+                if (textoErrorAdmin) {
+
+                    textoErrorAdmin.textContent =
+                        "Error al conectar con la base de datos de Firestore.";
+
+                }
+
+
+                if (mensajeErrorAdmin) {
+
+                    mensajeErrorAdmin
+                        .classList
+                        .remove("d-none");
+
+                }
+
+            }
+
+        );
+
     }
+
 
     /* =====================================================
-       MANTENIMIENTO & FORMULARIO (CREAR / EDITAR)
+       ABRIR MODAL NUEVO
     ===================================================== */
-    function abrirModalNuevo() {
-        formRegistro.reset();
-        registroId.value = "";
-        tituloModalRegistro.textContent = "Agregar registro";
-        textoBotonGuardar.textContent = "Guardar registro";
-        mensajeFormulario.classList.add("d-none");
 
-        checkboxesCategorias.forEach(chk => chk.checked = false);
-        activoRegistro.checked = true;
+    function abrirModalNuevo() {
+
+
+        formRegistro.reset();
+
+
+        registroId.value =
+            "";
+
+
+        tituloModalRegistro.textContent =
+            "Agregar registro";
+
+
+        textoBotonGuardar.textContent =
+            "Guardar registro";
+
+
+        mensajeFormulario
+            .classList
+            .add("d-none");
+
+
+        checkboxesCategorias.forEach(
+            checkbox => {
+
+                checkbox.checked =
+                    false;
+
+            }
+        );
+
+
+        activoRegistro.checked =
+            true;
+
     }
+
+
+    /* =====================================================
+       ABRIR MODAL EDITAR
+    ===================================================== */
 
     function abrirModalEditar(id) {
-        const reg = registrosAdmin.find(r => r.id === id);
-        if (!reg) return;
+
+
+        const registro =
+            registrosAdmin.find(
+                elemento =>
+                    elemento.id === id
+            );
+
+
+        if (!registro) {
+
+            return;
+
+        }
+
 
         formRegistro.reset();
-        registroId.value = reg.id;
-        tituloModalRegistro.textContent = "Editar registro";
-        textoBotonGuardar.textContent = "Actualizar cambios";
-        mensajeFormulario.classList.add("d-none");
 
-        categoriaRegistro.value = reg.categoria || "";
-        estadoRegistro.value = reg.estado || "";
-        legislaturaRegistro.value = reg.legislatura || "";
-        nombreRegistro.value = reg.nombre || "";
-        cargoRegistro.value = reg.cargo || "";
-        comisionRegistro.value = reg.comision || "";
-        institucionRegistro.value = reg.institucion || "";
-        telefonoRegistro.value = reg.telefono || "";
-        whatsappRegistro.value = reg.whatsapp || "";
-        correoRegistro.value = reg.correo || "";
-        correosAdicionalesRegistro.value = reg.correosAdicionales || "";
-        contactoAdicionalRegistro.value = reg.contactoAdicional || "";
-        contactoAdicionalCargoRegistro.value = reg.contactoAdicionalCargo || "";
-        contactoAdicionalTelefonoRegistro.value = reg.contactoAdicionalTelefono || "";
-        activoRegistro.checked = reg.activo !== false;
 
-        const categoriasRel = Array.isArray(reg.categorias) ? reg.categorias : [reg.categoria];
-        checkboxesCategorias.forEach(chk => {
-            chk.checked = categoriasRel.includes(chk.value);
-        });
+        registroId.value =
+            registro.id;
+
+
+        tituloModalRegistro.textContent =
+            "Editar registro";
+
+
+        textoBotonGuardar.textContent =
+            "Actualizar cambios";
+
+
+        mensajeFormulario
+            .classList
+            .add("d-none");
+
+
+        categoriaRegistro.value =
+            registro.categoria ||
+            "";
+
+
+        estadoRegistro.value =
+            registro.estado ||
+            "";
+
+
+        legislaturaRegistro.value =
+            registro.legislatura ||
+            "";
+
+
+        nombreRegistro.value =
+            registro.nombre ||
+            "";
+
+
+        cargoRegistro.value =
+            registro.cargo ||
+            "";
+
+
+        comisionRegistro.value =
+            registro.comision ||
+            "";
+
+
+        institucionRegistro.value =
+            registro.institucion ||
+            "";
+
+
+        telefonoRegistro.value =
+            registro.telefono ||
+            "";
+
+
+        whatsappRegistro.value =
+            registro.whatsapp ||
+            "";
+
+
+        correoRegistro.value =
+            registro.correo ||
+            "";
+
+
+        correosAdicionalesRegistro.value =
+            registro.correosAdicionales ||
+            "";
+
+
+        contactoAdicionalRegistro.value =
+            registro.contactoAdicional ||
+            "";
+
+
+        contactoAdicionalCargoRegistro.value =
+            registro.contactoAdicionalCargo ||
+            "";
+
+
+        contactoAdicionalTelefonoRegistro.value =
+            registro.contactoAdicionalTelefono ||
+            "";
+
+
+        activoRegistro.checked =
+            registro.activo !== false;
+
+
+        const categoriasRelacionadas =
+            Array.isArray(
+                registro.categorias
+            )
+                ? registro.categorias
+                : [registro.categoria];
+
+
+        checkboxesCategorias.forEach(
+            checkbox => {
+
+                checkbox.checked =
+                    categoriasRelacionadas.includes(
+                        checkbox.value
+                    );
+
+            }
+        );
+
 
         modalRegistroBS.show();
+
     }
 
-    formRegistro.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const idDoc = registroId.value;
-        const catPrincipal = categoriaRegistro.value;
-
-        // Recuperar categorías seleccionadas
-        const categoriasSeleccionadas = [catPrincipal];
-        checkboxesCategorias.forEach(chk => {
-            if (chk.checked && !categoriasSeleccionadas.includes(chk.value)) {
-                categoriasSeleccionadas.push(chk.value);
-            }
-        });
-
-        const datos = {
-            categoria: catPrincipal,
-            categorias: categoriasSeleccionadas,
-            estado: estadoRegistro.value.trim(),
-            legislatura: legislaturaRegistro.value.trim(),
-            nombre: nombreRegistro.value.trim(),
-            cargo: cargoRegistro.value.trim(),
-            comision: comisionRegistro.value.trim(),
-            institucion: institucionRegistro.value.trim(),
-            telefono: telefonoRegistro.value.trim(),
-            whatsapp: whatsappRegistro.value.trim(),
-            correo: correoRegistro.value.trim(),
-            correosAdicionales: correosAdicionalesRegistro.value.trim(),
-            contactoAdicional: contactoAdicionalRegistro.value.trim(),
-            contactoAdicionalCargo: contactoAdicionalCargoRegistro.value.trim(),
-            contactoAdicionalTelefono: contactoAdicionalTelefonoRegistro.value.trim(),
-            activo: activoRegistro.checked,
-            actualizadoEn: serverTimestamp()
-        };
-
-        try {
-            if (idDoc) {
-                await updateDoc(doc(db, "directorio", idDoc), datos);
-            } else {
-                datos.creadoEn = serverTimestamp();
-                await addDoc(collection(db, "directorio"), datos);
-            }
-
-            modalRegistroBS.hide();
-        } catch (err) {
-            console.error("Error al guardar en Firestore:", err);
-            mensajeFormulario.textContent = "Error al guardar el registro. Inténtalo de nuevo.";
-            mensajeFormulario.className = "alert alert-danger mt-4";
-            mensajeFormulario.classList.remove("d-none");
-        }
-    });
 
     /* =====================================================
-       ACCIONES DE TABLA / TARJETAS
+       GUARDAR / ACTUALIZAR REGISTRO
     ===================================================== */
-    function asignarEventosAcciones() {
-        document.querySelectorAll(".btn-editar-registro").forEach(btn => {
-            btn.addEventListener("click", () => abrirModalEditar(btn.dataset.id));
-        });
 
-        document.querySelectorAll(".btn-activar-registro, .btn-desactivar-registro").forEach(btn => {
-            btn.addEventListener("click", async () => {
-                const id = btn.dataset.id;
-                const estadoActual = btn.dataset.activo === "true";
-                try {
-                    await updateDoc(doc(db, "directorio", id), {
-                        activo: !estadoActual,
-                        actualizadoEn: serverTimestamp()
-                    });
-                } catch (err) {
-                    console.error("Error al cambiar estado:", err);
+    formRegistro.addEventListener(
+        "submit",
+        async evento => {
+
+
+            evento.preventDefault();
+
+
+            const idDocumento =
+                registroId.value;
+
+
+            const categoriaPrincipal =
+                categoriaRegistro.value;
+
+
+            /* =============================================
+               RECUPERAR CATEGORÍAS SELECCIONADAS
+            ============================================= */
+
+            const categoriasSeleccionadas =
+                [categoriaPrincipal];
+
+
+            checkboxesCategorias.forEach(
+                checkbox => {
+
+
+                    if (
+                        checkbox.checked &&
+                        !categoriasSeleccionadas.includes(
+                            checkbox.value
+                        )
+                    ) {
+
+                        categoriasSeleccionadas.push(
+                            checkbox.value
+                        );
+
+                    }
+
                 }
-            });
-        });
+            );
 
-        document.querySelectorAll(".btn-eliminar-registro").forEach(btn => {
-            btn.addEventListener("click", () => {
-                registroIdEliminar.value = btn.dataset.id;
-                nombreRegistroEliminar.textContent = btn.dataset.nombre || "este registro";
-                modalEliminarBS.show();
-            });
-        });
-    }
 
-    btnConfirmarEliminar.addEventListener("click", async () => {
-        const id = registroIdEliminar.value;
-        if (!id) return;
+            /* =============================================
+               DATOS A GUARDAR
+            ============================================= */
 
-        try {
-            await deleteDoc(doc(db, "directorio", id));
-            modalEliminarBS.hide();
-        } catch (err) {
-            console.error("Error al eliminar registro:", err);
-            alert("No fue posible eliminar el registro.");
+            const datos = {
+
+
+                categoria:
+                    categoriaPrincipal,
+
+
+                categorias:
+                    categoriasSeleccionadas,
+
+
+                estado:
+                    estadoRegistro
+                        .value
+                        .trim(),
+
+
+                legislatura:
+                    legislaturaRegistro
+                        .value
+                        .trim(),
+
+
+                nombre:
+                    nombreRegistro
+                        .value
+                        .trim(),
+
+
+                cargo:
+                    cargoRegistro
+                        .value
+                        .trim(),
+
+
+                comision:
+                    comisionRegistro
+                        .value
+                        .trim(),
+
+
+                institucion:
+                    institucionRegistro
+                        .value
+                        .trim(),
+
+
+                telefono:
+                    telefonoRegistro
+                        .value
+                        .trim(),
+
+
+                whatsapp:
+                    whatsappRegistro
+                        .value
+                        .trim(),
+
+
+                correo:
+                    correoRegistro
+                        .value
+                        .trim(),
+
+
+                correosAdicionales:
+                    correosAdicionalesRegistro
+                        .value
+                        .trim(),
+
+
+                contactoAdicional:
+                    contactoAdicionalRegistro
+                        .value
+                        .trim(),
+
+
+                contactoAdicionalCargo:
+                    contactoAdicionalCargoRegistro
+                        .value
+                        .trim(),
+
+
+                contactoAdicionalTelefono:
+                    contactoAdicionalTelefonoRegistro
+                        .value
+                        .trim(),
+
+
+                activo:
+                    activoRegistro.checked,
+
+
+                actualizadoEn:
+                    serverTimestamp()
+
+            };
+
+
+            try {
+
+
+                if (idDocumento) {
+
+
+                    await updateDoc(
+
+                        doc(
+                            db,
+                            "directorio",
+                            idDocumento
+                        ),
+
+                        datos
+
+                    );
+
+
+                } else {
+
+
+                    datos.creadoEn =
+                        serverTimestamp();
+
+
+                    await addDoc(
+
+                        collection(
+                            db,
+                            "directorio"
+                        ),
+
+                        datos
+
+                    );
+
+                }
+
+
+                modalRegistroBS.hide();
+
+
+            } catch (error) {
+
+
+                console.error(
+                    "Error al guardar en Firestore:",
+                    error
+                );
+
+
+                mensajeFormulario.textContent =
+                    "Error al guardar el registro. Inténtalo de nuevo.";
+
+
+                mensajeFormulario.className =
+                    "alert alert-danger mt-4";
+
+
+                mensajeFormulario
+                    .classList
+                    .remove("d-none");
+
+            }
+
         }
-    });
+    );
+
 
     /* =====================================================
-       EVENTOS DE FILTROS Y TARJETAS
+       ASIGNAR EVENTOS A LOS BOTONES
     ===================================================== */
-    buscadorAdmin.addEventListener("input", filtrarRegistros);
-    filtroCategoriaAdmin.addEventListener("change", filtrarRegistros);
-    filtroEstadoAdmin.addEventListener("change", filtrarRegistros);
 
-    btnLimpiarAdmin.addEventListener("click", () => {
-        buscadorAdmin.value = "";
-        filtroCategoriaAdmin.value = "todas";
-        filtroEstadoAdmin.value = "todos";
+    function asignarEventosAcciones() {
 
-        tarjetasResumen.forEach(t => t.classList.remove("activa"));
-        filtrarRegistros();
-    });
 
-    tarjetasResumen.forEach(tarjeta => {
-        tarjeta.addEventListener("click", () => {
-            const cat = tarjeta.dataset.categoria;
-            buscadorAdmin.value = "";
-            filtroCategoriaAdmin.value = cat;
-            filtroEstadoAdmin.value = "todos";
+        document
+            .querySelectorAll(
+                ".btn-editar-registro"
+            )
+            .forEach(
+                boton => {
 
-            tarjetasResumen.forEach(t => t.classList.toggle("activa", t === tarjeta));
-            filtrarRegistros();
-        });
-    });
 
-    const btnNuevoRegistro = document.getElementById("btnNuevoRegistro");
-    if (btnNuevoRegistro) {
-        btnNuevoRegistro.addEventListener("click", abrirModalNuevo);
+                    boton.addEventListener(
+                        "click",
+                        () => {
+
+
+                            abrirModalEditar(
+                                boton.dataset.id
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        document
+            .querySelectorAll(
+                ".btn-activar-registro, .btn-desactivar-registro"
+            )
+            .forEach(
+                boton => {
+
+
+                    boton.addEventListener(
+                        "click",
+                        async () => {
+
+
+                            const id =
+                                boton.dataset.id;
+
+
+                            const estadoActual =
+                                boton.dataset.activo ===
+                                "true";
+
+
+                            try {
+
+
+                                await updateDoc(
+
+                                    doc(
+                                        db,
+                                        "directorio",
+                                        id
+                                    ),
+
+                                    {
+
+                                        activo:
+                                            !estadoActual,
+
+                                        actualizadoEn:
+                                            serverTimestamp()
+
+                                    }
+
+                                );
+
+
+                            } catch (error) {
+
+
+                                console.error(
+                                    "Error al cambiar estado:",
+                                    error
+                                );
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+
+        document
+            .querySelectorAll(
+                ".btn-eliminar-registro"
+            )
+            .forEach(
+                boton => {
+
+
+                    boton.addEventListener(
+                        "click",
+                        () => {
+
+
+                            registroIdEliminar.value =
+                                boton.dataset.id;
+
+
+                            nombreRegistroEliminar.textContent =
+                                boton.dataset.nombre ||
+                                "este registro";
+
+
+                            modalEliminarBS.show();
+
+                        }
+                    );
+
+                }
+            );
+
     }
+
+
+    /* =====================================================
+       CONFIRMAR ELIMINACIÓN
+    ===================================================== */
+
+    btnConfirmarEliminar.addEventListener(
+        "click",
+        async () => {
+
+
+            const id =
+                registroIdEliminar.value;
+
+
+            if (!id) {
+
+                return;
+
+            }
+
+
+            try {
+
+
+                await deleteDoc(
+
+                    doc(
+                        db,
+                        "directorio",
+                        id
+                    )
+
+                );
+
+
+                modalEliminarBS.hide();
+
+
+            } catch (error) {
+
+
+                console.error(
+                    "Error al eliminar registro:",
+                    error
+                );
+
+
+                alert(
+                    "No fue posible eliminar el registro."
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       EVENTOS DE FILTROS
+    ===================================================== */
+
+    buscadorAdmin.addEventListener(
+        "input",
+        filtrarRegistros
+    );
+
+
+    filtroCategoriaAdmin.addEventListener(
+        "change",
+        filtrarRegistros
+    );
+
+
+    filtroEstadoAdmin.addEventListener(
+        "change",
+        filtrarRegistros
+    );
+
+
+    /* =====================================================
+       LIMPIAR FILTROS
+    ===================================================== */
+
+    btnLimpiarAdmin.addEventListener(
+        "click",
+        () => {
+
+
+            buscadorAdmin.value =
+                "";
+
+
+            filtroCategoriaAdmin.value =
+                "todas";
+
+
+            filtroEstadoAdmin.value =
+                "todos";
+
+
+            tarjetasResumen.forEach(
+                tarjeta => {
+
+                    tarjeta
+                        .classList
+                        .remove("activa");
+
+                }
+            );
+
+
+            filtrarRegistros();
+
+        }
+    );
+
+
+    /* =====================================================
+       FILTRAR DESDE TARJETAS
+    ===================================================== */
+
+    tarjetasResumen.forEach(
+        tarjeta => {
+
+
+            tarjeta.addEventListener(
+                "click",
+                () => {
+
+
+                    const categoria =
+                        tarjeta.dataset.categoria;
+
+
+                    buscadorAdmin.value =
+                        "";
+
+
+                    filtroCategoriaAdmin.value =
+                        categoria;
+
+
+                    filtroEstadoAdmin.value =
+                        "todos";
+
+
+                    tarjetasResumen.forEach(
+                        elemento => {
+
+
+                            elemento.classList.toggle(
+
+                                "activa",
+
+                                elemento === tarjeta
+
+                            );
+
+                        }
+                    );
+
+
+                    filtrarRegistros();
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       NUEVO REGISTRO
+    ===================================================== */
+
+    const btnNuevoRegistro =
+        document.getElementById(
+            "btnNuevoRegistro"
+        );
+
+
+    if (btnNuevoRegistro) {
+
+
+        btnNuevoRegistro.addEventListener(
+            "click",
+            abrirModalNuevo
+        );
+
+    }
+
 
     /* =====================================================
        VERIFICACIÓN DE AUTENTICACIÓN
     ===================================================== */
-    onAuthStateChanged(auth, usuario => {
-        if (!usuario) {
-            window.location.replace("index.html");
-            return;
+
+    onAuthStateChanged(
+        auth,
+        usuario => {
+
+
+            if (!usuario) {
+
+
+                window.location.replace(
+                    "index.html"
+                );
+
+
+                return;
+
+            }
+
+
+            correoUsuarioAdmin.textContent =
+                usuario.email ||
+                "Administrador autorizado";
+
+
+            pantallaCargaAdmin
+                .classList
+                .add("d-none");
+
+
+            panelAdministracion
+                .classList
+                .remove("d-none");
+
+
+            escucharFirestore();
+
         }
+    );
 
-        correoUsuarioAdmin.textContent = usuario.email || "Administrador autorizado";
-
-        pantallaCargaAdmin.classList.add("d-none");
-        panelAdministracion.classList.remove("d-none");
-
-        escucharFirestore();
-    });
 
     /* =====================================================
        CERRAR SESIÓN
     ===================================================== */
-    btnCerrarSesion.addEventListener("click", async () => {
-        if (!window.confirm("¿Deseas cerrar la sesión administrativa?")) return;
 
-        try {
-            await signOut(auth);
-            window.location.replace("index.html");
-        } catch (error) {
-            console.error("Error al cerrar sesión:", error);
-            alert("Ocurrió un problema al cerrar la sesión.");
+    btnCerrarSesion.addEventListener(
+        "click",
+        async () => {
+
+
+            if (
+                !window.confirm(
+                    "¿Deseas cerrar la sesión administrativa?"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            try {
+
+
+                await signOut(
+                    auth
+                );
+
+
+                window.location.replace(
+                    "index.html"
+                );
+
+
+            } catch (error) {
+
+
+                console.error(
+                    "Error al cerrar sesión:",
+                    error
+                );
+
+
+                alert(
+                    "Ocurrió un problema al cerrar la sesión."
+                );
+
+            }
+
         }
-    });
+    );
+
 
 });

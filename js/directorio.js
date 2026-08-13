@@ -123,6 +123,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalInstituciones =
         document.getElementById("totalInstituciones");
 
+    /*
+       NUEVO CONTADOR:
+       INTEGRANTES DE COMISIÓN DE ZONAS METROPOLITANAS
+    */
+
+    const totalIntegrantesZonas =
+        document.getElementById("totalIntegrantesZonas");
+
     const tarjetasCategoria =
         document.querySelectorAll(".tarjeta-clic");
 
@@ -139,11 +147,13 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     function normalizarTexto(texto) {
+
         return String(texto || "")
             .toLowerCase()
             .normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "")
             .trim();
+
     }
 
 
@@ -152,12 +162,14 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     function escaparHTML(texto) {
+
         return String(texto || "")
             .replaceAll("&", "&amp;")
             .replaceAll("<", "&lt;")
             .replaceAll(">", "&gt;")
             .replaceAll('"', "&quot;")
             .replaceAll("'", "&#039;");
+
     }
 
 
@@ -166,7 +178,10 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     function prepararNumeroTelefono(numero) {
-        return String(numero || "").replace(/[^\d+]/g, "");
+
+        return String(numero || "")
+            .replace(/[^\d+]/g, "");
+
     }
 
 
@@ -175,20 +190,30 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     function prepararNumeroWhatsApp(numero) {
-        let numeroLimpio = String(numero || "").replace(/\D/g, "");
+
+        let numeroLimpio =
+            String(numero || "")
+                .replace(/\D/g, "");
 
         if (numeroLimpio.length === 10) {
-            numeroLimpio = `52${numeroLimpio}`;
+
+            numeroLimpio =
+                `52${numeroLimpio}`;
+
         }
 
         if (
             numeroLimpio.length === 13 &&
             numeroLimpio.startsWith("521")
         ) {
-            numeroLimpio = `52${numeroLimpio.substring(3)}`;
+
+            numeroLimpio =
+                `52${numeroLimpio.substring(3)}`;
+
         }
 
         return numeroLimpio;
+
     }
 
 
@@ -197,14 +222,29 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     function obtenerNombreCategoria(categoria) {
+
         const categorias = {
-            comisiones: "Comisiones",
-            mesas: "Mesas Directivas",
-            representantes: "Representantes",
-            instituciones: "Instituciones"
+
+            comisiones:
+                "Comisiones",
+
+            mesas:
+                "Mesas Directivas",
+
+            representantes:
+                "Representantes",
+
+            instituciones:
+                "Instituciones",
+
+            "integrantes-zonas":
+                "Integrantes de Comisión de Zonas Metropolitanas"
+
         };
 
-        return categorias[categoria] || "Sin categoría";
+        return categorias[categoria] ||
+            "Sin categoría";
+
     }
 
 
@@ -213,17 +253,26 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     function ocultarMensajesTabla() {
+
         mensajeCargando.classList.add("d-none");
+
         mensajeSinResultados.classList.add("d-none");
+
         mensajeError.classList.add("d-none");
+
     }
 
 
     function mostrarError(mensaje) {
+
         tablaDirectorio.innerHTML = "";
+
         ocultarMensajesTabla();
+
         textoError.textContent = mensaje;
+
         mensajeError.classList.remove("d-none");
+
     }
 
 
@@ -232,21 +281,25 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     function crearEstadoLegislatura(registro) {
-        const estado =
-            escaparHTML(registro.estado) || "Sin especificar";
 
-        const legislatura = registro.legislatura
-            ? `
-                <span class="legislatura">
-                    ${escaparHTML(registro.legislatura)}
-                </span>
-              `
-            : "";
+        const estado =
+            escaparHTML(registro.estado) ||
+            "Sin especificar";
+
+        const legislatura =
+            registro.legislatura
+                ? `
+                    <span class="legislatura">
+                        ${escaparHTML(registro.legislatura)}
+                    </span>
+                  `
+                : "";
 
         return `
             <strong>${estado}</strong>
             ${legislatura}
         `;
+
     }
 
 
@@ -255,34 +308,40 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     function crearCargoComision(registro) {
-        const cargo = registro.cargo
-            ? `
-                <strong>
-                    ${escaparHTML(registro.cargo)}
-                </strong>
-              `
-            : "";
 
-        const comision = registro.comision
-            ? `
-                <span class="texto-comision">
-                    ${escaparHTML(registro.comision)}
-                </span>
-              `
-            : "";
+        const cargo =
+            registro.cargo
+                ? `
+                    <strong>
+                        ${escaparHTML(registro.cargo)}
+                    </strong>
+                  `
+                : "";
+
+        const comision =
+            registro.comision
+                ? `
+                    <span class="texto-comision">
+                        ${escaparHTML(registro.comision)}
+                    </span>
+                  `
+                : "";
 
         if (!cargo && !comision) {
+
             return `
                 <span class="sin-informacion">
                     Sin información
                 </span>
             `;
+
         }
 
         return `
             ${cargo}
             ${comision}
         `;
+
     }
 
 
@@ -291,10 +350,19 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     function crearContacto(registro) {
+
         const contactos = [];
 
+
+        /* TELÉFONO */
+
         if (registro.telefono) {
-            const numeroTelefono = prepararNumeroTelefono(registro.telefono);
+
+            const numeroTelefono =
+                prepararNumeroTelefono(
+                    registro.telefono
+                );
+
             contactos.push(`
                 <a
                     href="tel:${numeroTelefono}"
@@ -302,16 +370,27 @@ document.addEventListener("DOMContentLoaded", () => {
                     title="Llamar"
                 >
                     <i class="bi bi-telephone-fill"></i>
+
                     <span>
                         ${escaparHTML(registro.telefono)}
                     </span>
                 </a>
             `);
+
         }
 
+
+        /* WHATSAPP */
+
         if (registro.whatsapp) {
-            const numeroWhatsApp = prepararNumeroWhatsApp(registro.whatsapp);
+
+            const numeroWhatsApp =
+                prepararNumeroWhatsApp(
+                    registro.whatsapp
+                );
+
             if (numeroWhatsApp.length >= 10) {
+
                 contactos.push(`
                     <a
                         href="https://wa.me/${numeroWhatsApp}"
@@ -321,15 +400,22 @@ document.addEventListener("DOMContentLoaded", () => {
                         title="Abrir WhatsApp"
                     >
                         <i class="bi bi-whatsapp"></i>
+
                         <span>
                             ${escaparHTML(registro.whatsapp)}
                         </span>
                     </a>
                 `);
+
             }
+
         }
 
+
+        /* CORREO */
+
         if (registro.correo) {
+
             contactos.push(`
                 <a
                     href="mailto:${escaparHTML(registro.correo)}"
@@ -337,57 +423,147 @@ document.addEventListener("DOMContentLoaded", () => {
                     title="Enviar correo electrónico"
                 >
                     <i class="bi bi-envelope-fill"></i>
+
                     <span>
                         ${escaparHTML(registro.correo)}
                     </span>
                 </a>
             `);
+
         }
 
+
+        /* SIN CONTACTO */
+
         if (contactos.length === 0) {
+
             return `
                 <span class="sin-informacion">
                     Sin información
                 </span>
             `;
+
         }
+
 
         return `
             <div class="lista-contactos">
                 ${contactos.join("")}
             </div>
         `;
+
     }
 
 
     /* =====================================================
-       ACTUALIZAR CONTADORES (CORREGIDO)
+       COMPROBAR SI UN REGISTRO PERTENECE A UNA CATEGORÍA
     ===================================================== */
 
-    function actualizarContadores() {
-        function perteneceACategoria(registro, categoria) {
-            const categoriasRegistro = Array.isArray(registro.categorias)
+    function perteneceACategoria(
+        registro,
+        categoria
+    ) {
+
+        const categoriasRegistro =
+            Array.isArray(registro.categorias)
                 ? registro.categorias
                 : [registro.categoria];
 
-            return categoriasRegistro.includes(categoria);
+        return categoriasRegistro.includes(
+            categoria
+        );
+
+    }
+
+
+    /* =====================================================
+       ACTUALIZAR CONTADORES
+    ===================================================== */
+
+    function actualizarContadores() {
+
+
+        /* COMISIONES */
+
+        if (totalComisiones) {
+
+            totalComisiones.textContent =
+                registrosDirectorio.filter(
+                    registro =>
+                        perteneceACategoria(
+                            registro,
+                            "comisiones"
+                        )
+                ).length;
+
         }
 
-        totalComisiones.textContent = registrosDirectorio.filter(
-            registro => perteneceACategoria(registro, "comisiones")
-        ).length;
 
-        totalMesas.textContent = registrosDirectorio.filter(
-            registro => perteneceACategoria(registro, "mesas")
-        ).length;
+        /* MESAS DIRECTIVAS */
 
-        totalRepresentantes.textContent = registrosDirectorio.filter(
-            registro => perteneceACategoria(registro, "representantes")
-        ).length;
+        if (totalMesas) {
 
-        totalInstituciones.textContent = registrosDirectorio.filter(
-            registro => perteneceACategoria(registro, "instituciones")
-        ).length;
+            totalMesas.textContent =
+                registrosDirectorio.filter(
+                    registro =>
+                        perteneceACategoria(
+                            registro,
+                            "mesas"
+                        )
+                ).length;
+
+        }
+
+
+        /* REPRESENTANTES */
+
+        if (totalRepresentantes) {
+
+            totalRepresentantes.textContent =
+                registrosDirectorio.filter(
+                    registro =>
+                        perteneceACategoria(
+                            registro,
+                            "representantes"
+                        )
+                ).length;
+
+        }
+
+
+        /* INSTITUCIONES */
+
+        if (totalInstituciones) {
+
+            totalInstituciones.textContent =
+                registrosDirectorio.filter(
+                    registro =>
+                        perteneceACategoria(
+                            registro,
+                            "instituciones"
+                        )
+                ).length;
+
+        }
+
+
+        /* ================================================
+           INTEGRANTES DE COMISIÓN DE ZONAS METROPOLITANAS
+        ================================================= */
+
+        if (totalIntegrantesZonas) {
+
+            totalIntegrantesZonas.textContent =
+                registrosDirectorio.filter(
+                    registro =>
+                        perteneceACategoria(
+                            registro,
+                            "integrantes-zonas"
+                        )
+                ).length;
+
+        }
+
     }
 
 
@@ -396,19 +572,42 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     function cargarEstados() {
-        const estadoSeleccionado = filtroEstado.value;
+
+        const estadoSeleccionado =
+            filtroEstado.value;
 
         const estados = [
+
             ...new Set(
+
                 registrosDirectorio
-                    .map(registro => String(registro.estado || "").trim())
-                    .filter(estado => estado !== "")
+
+                    .map(registro =>
+                        String(
+                            registro.estado || ""
+                        ).trim()
+                    )
+
+                    .filter(estado =>
+                        estado !== ""
+                    )
+
             )
+
         ];
 
-        estados.sort((a, b) =>
-            a.localeCompare(b, "es", { sensitivity: "base" })
+
+        estados.sort(
+            (a, b) =>
+                a.localeCompare(
+                    b,
+                    "es",
+                    {
+                        sensitivity: "base"
+                    }
+                )
         );
+
 
         filtroEstado.innerHTML = `
             <option value="todos">
@@ -416,15 +615,38 @@ document.addEventListener("DOMContentLoaded", () => {
             </option>
         `;
 
+
         estados.forEach(estado => {
-            const opcion = document.createElement("option");
-            opcion.value = estado;
-            opcion.textContent = estado;
-            filtroEstado.appendChild(opcion);
+
+            const opcion =
+                document.createElement(
+                    "option"
+                );
+
+            opcion.value =
+                estado;
+
+            opcion.textContent =
+                estado;
+
+            filtroEstado.appendChild(
+                opcion
+            );
+
         });
 
-        const estadoTodaviaExiste = estados.includes(estadoSeleccionado);
-        filtroEstado.value = estadoTodaviaExiste ? estadoSeleccionado : "todos";
+
+        const estadoTodaviaExiste =
+            estados.includes(
+                estadoSeleccionado
+            );
+
+
+        filtroEstado.value =
+            estadoTodaviaExiste
+                ? estadoSeleccionado
+                : "todos";
+
     }
 
 
@@ -433,38 +655,88 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     function actualizarFecha() {
-        const fechasValidas = registrosDirectorio
-            .map(registro => {
-                const fecha = registro.actualizadoEn || registro.creadoEn;
 
-                if (fecha && typeof fecha.toDate === "function") {
-                    return fecha.toDate();
-                }
+        const fechasValidas =
+            registrosDirectorio
 
-                if (fecha instanceof Date) {
-                    return fecha;
-                }
+                .map(registro => {
 
-                return null;
-            })
-            .filter(fecha => fecha !== null);
+                    const fecha =
+                        registro.actualizadoEn ||
+                        registro.creadoEn;
 
-        if (fechasValidas.length === 0) {
-            fechaActualizacion.textContent = "Última actualización: sin información";
+
+                    if (
+                        fecha &&
+                        typeof fecha.toDate ===
+                        "function"
+                    ) {
+
+                        return fecha.toDate();
+
+                    }
+
+
+                    if (
+                        fecha instanceof Date
+                    ) {
+
+                        return fecha;
+
+                    }
+
+
+                    return null;
+
+                })
+
+                .filter(fecha =>
+                    fecha !== null
+                );
+
+
+        if (
+            fechasValidas.length === 0
+        ) {
+
+            fechaActualizacion.textContent =
+                "Última actualización: sin información";
+
             return;
+
         }
 
-        const fechaMasReciente = new Date(
-            Math.max(...fechasValidas.map(fecha => fecha.getTime()))
-        );
 
-        const textoFecha = fechaMasReciente.toLocaleDateString("es-MX", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric"
-        });
+        const fechaMasReciente =
+            new Date(
 
-        fechaActualizacion.textContent = `Última actualización: ${textoFecha}`;
+                Math.max(
+
+                    ...fechasValidas.map(
+                        fecha =>
+                            fecha.getTime()
+                    )
+
+                )
+
+            );
+
+
+        const textoFecha =
+            fechaMasReciente
+                .toLocaleDateString(
+                    "es-MX",
+                    {
+                        day: "2-digit",
+                        month: "long",
+                        year: "numeric"
+                    }
+                );
+
+
+        fechaActualizacion.textContent =
+            `Última actualización: ${textoFecha}`;
+
     }
 
 
@@ -473,24 +745,59 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     function ordenarRegistros(registros) {
-        return [...registros].sort((a, b) => {
-            const estadoA = String(a.estado || "");
-            const estadoB = String(b.estado || "");
 
-            const comparacionEstado = estadoA.localeCompare(estadoB, "es", {
-                sensitivity: "base"
-            });
+        return [...registros].sort(
+            (a, b) => {
 
-            if (comparacionEstado !== 0) {
-                return comparacionEstado;
+                const estadoA =
+                    String(
+                        a.estado || ""
+                    );
+
+                const estadoB =
+                    String(
+                        b.estado || ""
+                    );
+
+
+                const comparacionEstado =
+                    estadoA.localeCompare(
+                        estadoB,
+                        "es",
+                        {
+                            sensitivity: "base"
+                        }
+                    );
+
+
+                if (
+                    comparacionEstado !== 0
+                ) {
+
+                    return comparacionEstado;
+
+                }
+
+
+                return String(
+                    a.nombre || ""
+                ).localeCompare(
+
+                    String(
+                        b.nombre || ""
+                    ),
+
+                    "es",
+
+                    {
+                        sensitivity: "base"
+                    }
+
+                );
+
             }
+        );
 
-            return String(a.nombre || "").localeCompare(
-                String(b.nombre || ""),
-                "es",
-                { sensitivity: "base" }
-            );
-        });
     }
 
 
@@ -499,54 +806,133 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     function mostrarRegistros(registros) {
-        tablaDirectorio.innerHTML = "";
+
+        tablaDirectorio.innerHTML =
+            "";
+
         ocultarMensajesTabla();
 
-        const registrosOrdenados = ordenarRegistros(registros);
-        contadorResultados.textContent = `Registros encontrados: ${registrosOrdenados.length}`;
 
-        if (registrosOrdenados.length === 0) {
-            mensajeSinResultados.classList.remove("d-none");
+        const registrosOrdenados =
+            ordenarRegistros(
+                registros
+            );
+
+
+        contadorResultados.textContent =
+            `Registros encontrados: ${registrosOrdenados.length}`;
+
+
+        if (
+            registrosOrdenados.length === 0
+        ) {
+
+            mensajeSinResultados
+                .classList
+                .remove("d-none");
+
             return;
+
         }
 
-        registrosOrdenados.forEach((registro, indice) => {
-            const fila = document.createElement("tr");
 
-            fila.innerHTML = `
-                <td class="numero-registro">
-                    ${indice + 1}
-                </td>
+        registrosOrdenados.forEach(
+            (registro, indice) => {
 
-                <td>
-                    ${crearEstadoLegislatura(registro)}
-                </td>
+                const fila =
+                    document.createElement(
+                        "tr"
+                    );
 
-                <td>
-                    <strong>
-                        ${escaparHTML(registro.nombre) || "Sin nombre"}
-                    </strong>
 
-                    <span class="categoria-registro-publico">
-                        ${escaparHTML(obtenerNombreCategoria(registro.categoria))}
-                    </span>
-                </td>
+                fila.innerHTML = `
 
-                <td>
-                    ${crearCargoComision(registro)}
-                </td>
+                    <td class="numero-registro">
 
-                <td>
-                    ${escaparHTML(registro.institucion) || "Sin especificar"}
-                </td>
+                        ${indice + 1}
 
-                <td>
-                    ${crearContacto(registro)}
-                </td>
-            `;
+                    </td>
 
-            tablaDirectorio.appendChild(fila);
-        });
+
+                    <td>
+
+                        ${crearEstadoLegislatura(
+                            registro
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        <strong>
+
+                            ${
+                                escaparHTML(
+                                    registro.nombre
+                                ) ||
+                                "Sin nombre"
+                            }
+
+                        </strong>
+
+
+                        <span
+                            class="categoria-registro-publico"
+                        >
+
+                            ${
+                                escaparHTML(
+                                    obtenerNombreCategoria(
+                                        registro.categoria
+                                    )
+                                )
+                            }
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        ${crearCargoComision(
+                            registro
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${
+                            escaparHTML(
+                                registro.institucion
+                            ) ||
+                            "Sin especificar"
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        ${crearContacto(
+                            registro
+                        )}
+
+                    </td>
+
+                `;
+
+
+                tablaDirectorio.appendChild(
+                    fila
+                );
+
+            }
+        );
+
     }
 
 
@@ -555,47 +941,118 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     function filtrarRegistros() {
-        const textoBusqueda = normalizarTexto(buscador.value);
-        const categoriaSeleccionada = filtroCategoria.value;
-        const estadoSeleccionado = filtroEstado.value;
 
-        const registrosFiltrados = registrosDirectorio.filter(registro => {
-            const categoriasRegistro = Array.isArray(registro.categorias)
-                ? registro.categorias
-                : [registro.categoria];
-
-            const coincideCategoria =
-                categoriaSeleccionada === "todas" ||
-                categoriasRegistro.includes(categoriaSeleccionada);
-
-            const coincideEstado =
-                estadoSeleccionado === "todos" ||
-                registro.estado === estadoSeleccionado;
-
-            const contenidoRegistro = normalizarTexto(`
-                ${registro.estado}
-                ${registro.legislatura}
-                ${registro.nombre}
-                ${registro.cargo}
-                ${registro.comision}
-                ${registro.institucion}
-                ${registro.telefono}
-                ${registro.whatsapp}
-                ${registro.correo}
-            `);
-
-            const coincideBusqueda =
-                textoBusqueda === "" ||
-                contenidoRegistro.includes(textoBusqueda);
-
-            return (
-                coincideCategoria &&
-                coincideEstado &&
-                coincideBusqueda
+        const textoBusqueda =
+            normalizarTexto(
+                buscador.value
             );
-        });
 
-        mostrarRegistros(registrosFiltrados);
+        const categoriaSeleccionada =
+            filtroCategoria.value;
+
+        const estadoSeleccionado =
+            filtroEstado.value;
+
+
+        const registrosFiltrados =
+            registrosDirectorio.filter(
+                registro => {
+
+
+                    /* CATEGORÍAS DEL REGISTRO */
+
+                    const categoriasRegistro =
+                        Array.isArray(
+                            registro.categorias
+                        )
+                            ? registro.categorias
+                            : [registro.categoria];
+
+
+                    /* FILTRO POR CATEGORÍA */
+
+                    const coincideCategoria =
+
+                        categoriaSeleccionada ===
+                            "todas"
+
+                        ||
+
+                        categoriasRegistro.includes(
+                            categoriaSeleccionada
+                        );
+
+
+                    /* FILTRO POR ESTADO */
+
+                    const coincideEstado =
+
+                        estadoSeleccionado ===
+                            "todos"
+
+                        ||
+
+                        registro.estado ===
+                            estadoSeleccionado;
+
+
+                    /* CONTENIDO BUSCABLE */
+
+                    const contenidoRegistro =
+                        normalizarTexto(`
+
+                            ${registro.estado}
+
+                            ${registro.legislatura}
+
+                            ${registro.nombre}
+
+                            ${registro.cargo}
+
+                            ${registro.comision}
+
+                            ${registro.institucion}
+
+                            ${registro.telefono}
+
+                            ${registro.whatsapp}
+
+                            ${registro.correo}
+
+                        `);
+
+
+                    /* FILTRO DE TEXTO */
+
+                    const coincideBusqueda =
+
+                        textoBusqueda === ""
+
+                        ||
+
+                        contenidoRegistro.includes(
+                            textoBusqueda
+                        );
+
+
+                    return (
+
+                        coincideCategoria &&
+
+                        coincideEstado &&
+
+                        coincideBusqueda
+
+                    );
+
+                }
+            );
+
+
+        mostrarRegistros(
+            registrosFiltrados
+        );
+
     }
 
 
@@ -604,35 +1061,83 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     function escucharDirectorio() {
-        mensajeCargando.classList.remove("d-none");
 
-        const referenciaDirectorio = collection(db, "directorio");
+        mensajeCargando
+            .classList
+            .remove("d-none");
+
+
+        const referenciaDirectorio =
+            collection(
+                db,
+                "directorio"
+            );
+
 
         onSnapshot(
+
             referenciaDirectorio,
+
+
             snapshot => {
-                registrosDirectorio = snapshot.docs.map(documento => ({
-                    id: documento.id,
-                    ...documento.data()
-                }));
+
+
+                registrosDirectorio =
+                    snapshot.docs.map(
+                        documento => ({
+
+                            id:
+                                documento.id,
+
+                            ...documento.data()
+
+                        })
+                    );
+
 
                 actualizarContadores();
+
                 cargarEstados();
+
                 actualizarFecha();
+
                 filtrarRegistros();
+
             },
+
+
             error => {
-                console.error("Error al leer Firestore:", error);
 
-                let mensaje = "Ocurrió un error al consultar la base de datos.";
 
-                if (error.code === "permission-denied") {
-                    mensaje = "Firebase rechazó la consulta. Debemos revisar las reglas de seguridad de Firestore.";
+                console.error(
+                    "Error al leer Firestore:",
+                    error
+                );
+
+
+                let mensaje =
+                    "Ocurrió un error al consultar la base de datos.";
+
+
+                if (
+                    error.code ===
+                    "permission-denied"
+                ) {
+
+                    mensaje =
+                        "Firebase rechazó la consulta. Debemos revisar las reglas de seguridad de Firestore.";
+
                 }
 
-                mostrarError(mensaje);
+
+                mostrarError(
+                    mensaje
+                );
+
             }
+
         );
+
     }
 
 
@@ -640,105 +1145,269 @@ document.addEventListener("DOMContentLoaded", () => {
        VALIDAR SESIÓN
     ===================================================== */
 
-    onAuthStateChanged(auth, usuario => {
-        if (!usuario) {
-            window.location.replace("index.html");
-            return;
+    onAuthStateChanged(
+        auth,
+        usuario => {
+
+
+            if (!usuario) {
+
+                window.location.replace(
+                    "index.html"
+                );
+
+                return;
+
+            }
+
+
+            correoUsuario.textContent =
+                usuario.email ||
+                "Usuario autorizado";
+
+
+            pantallaCarga
+                .classList
+                .add("d-none");
+
+
+            contenidoDirectorio
+                .classList
+                .remove("d-none");
+
+
+            escucharDirectorio();
+
         }
-
-        correoUsuario.textContent = usuario.email || "Usuario autorizado";
-
-        pantallaCarga.classList.add("d-none");
-        contenidoDirectorio.classList.remove("d-none");
-
-        escucharDirectorio();
-    });
+    );
 
 
     /* =====================================================
        BOTÓN ADMINISTRAR
     ===================================================== */
 
-    btnAdministrar.addEventListener("click", () => {
-        window.location.href = "admin.html";
-    });
+    btnAdministrar.addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                "admin.html";
+
+        }
+    );
 
 
     /* =====================================================
        FILTRAR DESDE LAS TARJETAS
     ===================================================== */
 
-    function seleccionarCategoriaDesdeTarjeta(tarjeta) {
-        const categoria = tarjeta.dataset.categoria;
+    function seleccionarCategoriaDesdeTarjeta(
+        tarjeta
+    ) {
 
-        buscador.value = "";
-        filtroCategoria.value = categoria;
-        filtroEstado.value = "todos";
+        const categoria =
+            tarjeta.dataset.categoria;
 
-        tarjetasCategoria.forEach(elemento => {
-            elemento.classList.toggle("activa", elemento === tarjeta);
-        });
+
+        buscador.value =
+            "";
+
+
+        filtroCategoria.value =
+            categoria;
+
+
+        filtroEstado.value =
+            "todos";
+
+
+        tarjetasCategoria.forEach(
+            elemento => {
+
+                elemento.classList.toggle(
+
+                    "activa",
+
+                    elemento === tarjeta
+
+                );
+
+            }
+        );
+
 
         filtrarRegistros();
 
+
         document
-            .querySelector(".seccion-busqueda")
+            .querySelector(
+                ".seccion-busqueda"
+            )
             .scrollIntoView({
-                behavior: "smooth",
-                block: "start"
+
+                behavior:
+                    "smooth",
+
+                block:
+                    "start"
+
             });
+
     }
 
-    tarjetasCategoria.forEach(tarjeta => {
-        tarjeta.addEventListener("click", () => {
-            seleccionarCategoriaDesdeTarjeta(tarjeta);
-        });
 
-        tarjeta.addEventListener("keydown", evento => {
-            if (evento.key === "Enter" || evento.key === " ") {
-                evento.preventDefault();
-                seleccionarCategoriaDesdeTarjeta(tarjeta);
-            }
-        });
-    });
+    tarjetasCategoria.forEach(
+        tarjeta => {
+
+
+            /* CLIC */
+
+            tarjeta.addEventListener(
+                "click",
+                () => {
+
+                    seleccionarCategoriaDesdeTarjeta(
+                        tarjeta
+                    );
+
+                }
+            );
+
+
+            /* TECLADO */
+
+            tarjeta.addEventListener(
+                "keydown",
+                evento => {
+
+                    if (
+                        evento.key ===
+                            "Enter"
+
+                        ||
+
+                        evento.key ===
+                            " "
+                    ) {
+
+                        evento.preventDefault();
+
+                        seleccionarCategoriaDesdeTarjeta(
+                            tarjeta
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+    );
 
 
     /* =====================================================
        CERRAR SESIÓN
     ===================================================== */
 
-    btnCerrarSesion.addEventListener("click", async () => {
-        const confirmar = window.confirm("¿Deseas cerrar la sesión?");
+    btnCerrarSesion.addEventListener(
+        "click",
+        async () => {
 
-        if (!confirmar) return;
 
-        try {
-            await signOut(auth);
-            window.location.replace("index.html");
-        } catch (error) {
-            console.error("Error al cerrar sesión:", error);
-            window.alert("No fue posible cerrar la sesión. Inténtalo nuevamente.");
+            const confirmar =
+                window.confirm(
+                    "¿Deseas cerrar la sesión?"
+                );
+
+
+            if (!confirmar) {
+
+                return;
+
+            }
+
+
+            try {
+
+
+                await signOut(
+                    auth
+                );
+
+
+                window.location.replace(
+                    "index.html"
+                );
+
+
+            } catch (error) {
+
+
+                console.error(
+                    "Error al cerrar sesión:",
+                    error
+                );
+
+
+                window.alert(
+                    "No fue posible cerrar la sesión. Inténtalo nuevamente."
+                );
+
+            }
+
         }
-    });
+    );
 
 
     /* =====================================================
-       BUSCADOR Y FILTROS
+       BUSCADOR
     ===================================================== */
 
-    buscador.addEventListener("input", filtrarRegistros);
+    buscador.addEventListener(
+        "input",
+        filtrarRegistros
+    );
 
-    filtroCategoria.addEventListener("change", () => {
-        tarjetasCategoria.forEach(tarjeta => {
-            tarjeta.classList.toggle(
-                "activa",
-                tarjeta.dataset.categoria === filtroCategoria.value
+
+    /* =====================================================
+       FILTRO DE CATEGORÍA
+    ===================================================== */
+
+    filtroCategoria.addEventListener(
+        "change",
+        () => {
+
+
+            tarjetasCategoria.forEach(
+                tarjeta => {
+
+                    tarjeta.classList.toggle(
+
+                        "activa",
+
+                        tarjeta.dataset.categoria ===
+                            filtroCategoria.value
+
+                    );
+
+                }
             );
-        });
-        filtrarRegistros();
-    });
 
-    filtroEstado.addEventListener("change", filtrarRegistros);
+
+            filtrarRegistros();
+
+        }
+    );
+
+
+    /* =====================================================
+       FILTRO DE ESTADO
+    ===================================================== */
+
+    filtroEstado.addEventListener(
+        "change",
+        filtrarRegistros
+    );
 
 
     /* =====================================================
@@ -746,17 +1415,40 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     if (btnLimpiar) {
-        btnLimpiar.addEventListener("click", () => {
-            buscador.value = "";
-            filtroCategoria.value = "todas";
-            filtroEstado.value = "todos";
 
-            tarjetasCategoria.forEach(tarjeta => {
-                tarjeta.classList.remove("activa");
-            });
+        btnLimpiar.addEventListener(
+            "click",
+            () => {
 
-            filtrarRegistros();
-        });
+
+                buscador.value =
+                    "";
+
+
+                filtroCategoria.value =
+                    "todas";
+
+
+                filtroEstado.value =
+                    "todos";
+
+
+                tarjetasCategoria.forEach(
+                    tarjeta => {
+
+                        tarjeta.classList.remove(
+                            "activa"
+                        );
+
+                    }
+                );
+
+
+                filtrarRegistros();
+
+            }
+        );
+
     }
 
 
@@ -764,8 +1456,14 @@ document.addEventListener("DOMContentLoaded", () => {
        IMPRIMIR DIRECTORIO
     ===================================================== */
 
-    btnImprimir.addEventListener("click", () => {
-        window.print();
-    });
+    btnImprimir.addEventListener(
+        "click",
+        () => {
+
+            window.print();
+
+        }
+    );
+
 
 });
