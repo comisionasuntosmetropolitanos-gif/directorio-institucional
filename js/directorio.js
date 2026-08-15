@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       ELEMENTOS GENERALES DE LA PÁGINA
+       ELEMENTOS GENERALES
     ===================================================== */
 
     const pantallaCarga =
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       ELEMENTOS DEL BUSCADOR Y LOS FILTROS
+       BUSCADOR Y FILTROS
     ===================================================== */
 
     const buscador =
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       ELEMENTOS DE LA TABLA
+       TABLA
     ===================================================== */
 
     const tablaDirectorio =
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       CONTADORES DE CATEGORÍAS
+       CONTADORES
     ===================================================== */
 
     const totalComisiones =
@@ -123,11 +123,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalInstituciones =
         document.getElementById("totalInstituciones");
 
-    /*
-       NUEVO CONTADOR:
-       INTEGRANTES DE COMISIÓN DE ZONAS METROPOLITANAS
-    */
-
     const totalIntegrantesZonas =
         document.getElementById("totalIntegrantesZonas");
 
@@ -136,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       ARREGLO QUE GUARDARÁ LOS REGISTROS DE FIRESTORE
+       REGISTROS
     ===================================================== */
 
     let registrosDirectorio = [];
@@ -174,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       PREPARAR NÚMERO TELEFÓNICO
+       PREPARAR TELÉFONO
     ===================================================== */
 
     function prepararNumeroTelefono(numero) {
@@ -186,7 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       PREPARAR NÚMERO DE WHATSAPP
+       PREPARAR WHATSAPP
     ===================================================== */
 
     function prepararNumeroWhatsApp(numero) {
@@ -195,12 +190,14 @@ document.addEventListener("DOMContentLoaded", () => {
             String(numero || "")
                 .replace(/\D/g, "");
 
+
         if (numeroLimpio.length === 10) {
 
             numeroLimpio =
                 `52${numeroLimpio}`;
 
         }
+
 
         if (
             numeroLimpio.length === 13 &&
@@ -212,13 +209,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+
         return numeroLimpio;
 
     }
 
 
     /* =====================================================
-       OBTENER EL NOMBRE VISIBLE DE UNA CATEGORÍA
+       NOMBRE DE CATEGORÍA
     ===================================================== */
 
     function obtenerNombreCategoria(categoria) {
@@ -242,6 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         };
 
+
         return categorias[categoria] ||
             "Sin categoría";
 
@@ -249,16 +248,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       MOSTRAR U OCULTAR MENSAJES DE LA TABLA
+       MENSAJES DE TABLA
     ===================================================== */
 
     function ocultarMensajesTabla() {
 
-        mensajeCargando.classList.add("d-none");
+        if (mensajeCargando) {
+            mensajeCargando.classList.add("d-none");
+        }
 
-        mensajeSinResultados.classList.add("d-none");
+        if (mensajeSinResultados) {
+            mensajeSinResultados.classList.add("d-none");
+        }
 
-        mensajeError.classList.add("d-none");
+        if (mensajeError) {
+            mensajeError.classList.add("d-none");
+        }
 
     }
 
@@ -269,15 +274,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         ocultarMensajesTabla();
 
-        textoError.textContent = mensaje;
+        if (textoError) {
+            textoError.textContent = mensaje;
+        }
 
-        mensajeError.classList.remove("d-none");
+        if (mensajeError) {
+            mensajeError.classList.remove("d-none");
+        }
 
     }
 
 
     /* =====================================================
-       CREAR COLUMNA ESTADO / LEGISLATURA
+       ESTADO / LEGISLATURA
     ===================================================== */
 
     function crearEstadoLegislatura(registro) {
@@ -285,6 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const estado =
             escaparHTML(registro.estado) ||
             "Sin especificar";
+
 
         const legislatura =
             registro.legislatura
@@ -295,6 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   `
                 : "";
 
+
         return `
             <strong>${estado}</strong>
             ${legislatura}
@@ -304,7 +315,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       CREAR COLUMNA CARGO O COMISIÓN
+       CARGO / COMISIÓN
     ===================================================== */
 
     function crearCargoComision(registro) {
@@ -318,6 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   `
                 : "";
 
+
         const comision =
             registro.comision
                 ? `
@@ -326,6 +338,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </span>
                   `
                 : "";
+
 
         if (!cargo && !comision) {
 
@@ -337,6 +350,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+
         return `
             ${cargo}
             ${comision}
@@ -346,41 +360,207 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       CREAR COLUMNA DE CONTACTO
+       CREAR TELÉFONO COMO ENLACE
     ===================================================== */
 
-    function crearContacto(registro) {
+    function crearTelefonoHTML(
+        telefono,
+        titulo = "Llamar"
+    ) {
 
-        const contactos = [];
+        if (!telefono) {
+            return "";
+        }
 
 
-        /* TELÉFONO */
+        const numero =
+            prepararNumeroTelefono(telefono);
 
-        if (registro.telefono) {
 
-            const numeroTelefono =
-                prepararNumeroTelefono(
-                    registro.telefono
-                );
+        /*
+           Si solamente tenemos una extensión o un texto
+           especial, lo mostramos sin crear enlace telefónico.
+        */
 
-            contactos.push(`
-                <a
-                    href="tel:${numeroTelefono}"
-                    class="enlace-contacto"
-                    title="Llamar"
-                >
-                    <i class="bi bi-telephone-fill"></i>
+        if (!numero) {
+
+            return `
+                <span class="enlace-contacto">
+                    <i class="bi bi-telephone"></i>
 
                     <span>
-                        ${escaparHTML(registro.telefono)}
+                        ${escaparHTML(telefono)}
                     </span>
-                </a>
-            `);
+                </span>
+            `;
 
         }
 
 
-        /* WHATSAPP */
+        return `
+            <a
+                href="tel:${numero}"
+                class="enlace-contacto"
+                title="${escaparHTML(titulo)}"
+            >
+                <i class="bi bi-telephone-fill"></i>
+
+                <span>
+                    ${escaparHTML(telefono)}
+                </span>
+            </a>
+        `;
+
+    }
+
+
+    /* =====================================================
+       CREAR CORREO COMO ENLACE
+    ===================================================== */
+
+    function crearCorreoHTML(
+        correo,
+        titulo = "Enviar correo electrónico"
+    ) {
+
+        if (!correo) {
+            return "";
+        }
+
+
+        return `
+            <a
+                href="mailto:${escaparHTML(correo)}"
+                class="enlace-contacto correo-contacto"
+                title="${escaparHTML(titulo)}"
+            >
+                <i class="bi bi-envelope-fill"></i>
+
+                <span>
+                    ${escaparHTML(correo)}
+                </span>
+            </a>
+        `;
+
+    }
+
+
+    /* =====================================================
+       CREAR CONTACTO ADICIONAL
+    ===================================================== */
+
+    function crearContactoAdicionalHTML(contacto) {
+
+        if (!contacto) {
+            return "";
+        }
+
+
+        const nombre =
+            String(contacto.nombre || "").trim();
+
+        const cargo =
+            String(contacto.cargo || "").trim();
+
+        const telefono =
+            String(contacto.telefono || "").trim();
+
+        const correo =
+            String(contacto.correo || "").trim();
+
+
+        if (
+            !nombre &&
+            !cargo &&
+            !telefono &&
+            !correo
+        ) {
+
+            return "";
+
+        }
+
+
+        return `
+            <div class="contacto-adicional-directorio">
+
+                ${
+                    cargo
+                        ? `
+                            <span class="cargo-contacto-adicional">
+                                ${escaparHTML(cargo)}
+                            </span>
+                          `
+                        : ""
+                }
+
+
+                ${
+                    nombre
+                        ? `
+                            <strong class="nombre-contacto-adicional">
+                                <i class="bi bi-person-fill"></i>
+                                ${escaparHTML(nombre)}
+                            </strong>
+                          `
+                        : ""
+                }
+
+
+                ${
+                    telefono
+                        ? crearTelefonoHTML(
+                            telefono,
+                            `Llamar a ${nombre || "contacto"}`
+                        )
+                        : ""
+                }
+
+
+                ${
+                    correo
+                        ? crearCorreoHTML(
+                            correo,
+                            `Enviar correo a ${nombre || "contacto"}`
+                        )
+                        : ""
+                }
+
+            </div>
+        `;
+
+    }
+
+
+    /* =====================================================
+       COLUMNA CONTACTO
+    ===================================================== */
+
+    function crearContacto(registro) {
+
+        const contactosPrincipales = [];
+
+        const contactosExtras = [];
+
+
+        /* =================================================
+           TELÉFONO PRINCIPAL
+        ================================================= */
+
+        if (registro.telefono) {
+
+            contactosPrincipales.push(
+                crearTelefonoHTML(
+                    registro.telefono
+                )
+            );
+
+        }
+
+
+        /* =================================================
+           WHATSAPP
+        ================================================= */
 
         if (registro.whatsapp) {
 
@@ -389,9 +569,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     registro.whatsapp
                 );
 
+
             if (numeroWhatsApp.length >= 10) {
 
-                contactos.push(`
+                contactosPrincipales.push(`
                     <a
                         href="https://wa.me/${numeroWhatsApp}"
                         class="enlace-contacto"
@@ -412,30 +593,161 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        /* CORREO */
+        /* =================================================
+           CORREO PRINCIPAL
+        ================================================= */
 
         if (registro.correo) {
 
-            contactos.push(`
-                <a
-                    href="mailto:${escaparHTML(registro.correo)}"
-                    class="enlace-contacto correo-contacto"
-                    title="Enviar correo electrónico"
-                >
-                    <i class="bi bi-envelope-fill"></i>
-
-                    <span>
-                        ${escaparHTML(registro.correo)}
-                    </span>
-                </a>
-            `);
+            contactosPrincipales.push(
+                crearCorreoHTML(
+                    registro.correo
+                )
+            );
 
         }
 
 
-        /* SIN CONTACTO */
+        /* =================================================
+           CORREOS ADICIONALES
 
-        if (contactos.length === 0) {
+           Admite:
+           correo1@...
+           correo1@..., correo2@...
+           correo1@...; correo2@...
+        ================================================= */
+
+        if (registro.correosAdicionales) {
+
+            let listaCorreos = [];
+
+
+            if (
+                Array.isArray(
+                    registro.correosAdicionales
+                )
+            ) {
+
+                listaCorreos =
+                    registro.correosAdicionales;
+
+            } else {
+
+                listaCorreos =
+                    String(
+                        registro.correosAdicionales
+                    )
+                        .split(/[;,]/);
+
+            }
+
+
+            listaCorreos
+                .map(correo =>
+                    String(correo || "").trim()
+                )
+                .filter(Boolean)
+                .forEach(correo => {
+
+                    contactosPrincipales.push(
+                        crearCorreoHTML(
+                            correo,
+                            "Correo adicional"
+                        )
+                    );
+
+                });
+
+        }
+
+
+        /* =================================================
+           CONTACTO ADICIONAL DEL SISTEMA ACTUAL
+
+           Estos campos ya existen en tus registros:
+           contactoAdicional
+           contactoAdicionalCargo
+           contactoAdicionalTelefono
+        ================================================= */
+
+        if (
+            registro.contactoAdicional ||
+            registro.contactoAdicionalCargo ||
+            registro.contactoAdicionalTelefono ||
+            registro.contactoAdicionalCorreo
+        ) {
+
+            contactosExtras.push(
+                crearContactoAdicionalHTML({
+
+                    nombre:
+                        registro.contactoAdicional,
+
+                    cargo:
+                        registro.contactoAdicionalCargo,
+
+                    telefono:
+                        registro.contactoAdicionalTelefono,
+
+                    correo:
+                        registro.contactoAdicionalCorreo
+
+                })
+            );
+
+        }
+
+
+        /* =================================================
+           NUEVO FORMATO:
+           VARIOS CONTACTOS ADICIONALES
+
+           contactosAdicionales: [
+               {
+                   nombre: "...",
+                   cargo: "Asesor",
+                   telefono: "...",
+                   correo: "..."
+               }
+           ]
+        ================================================= */
+
+        if (
+            Array.isArray(
+                registro.contactosAdicionales
+            )
+        ) {
+
+            registro.contactosAdicionales
+                .forEach(contacto => {
+
+                    const html =
+                        crearContactoAdicionalHTML(
+                            contacto
+                        );
+
+
+                    if (html) {
+
+                        contactosExtras.push(
+                            html
+                        );
+
+                    }
+
+                });
+
+        }
+
+
+        /* =================================================
+           SIN INFORMACIÓN
+        ================================================= */
+
+        if (
+            contactosPrincipales.length === 0 &&
+            contactosExtras.length === 0
+        ) {
 
             return `
                 <span class="sin-informacion">
@@ -446,9 +758,30 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
+        /* =================================================
+           RESULTADO
+        ================================================= */
+
         return `
             <div class="lista-contactos">
-                ${contactos.join("")}
+
+                ${
+                    contactosPrincipales.join("")
+                }
+
+
+                ${
+                    contactosExtras.length > 0
+                        ? `
+                            <div class="contactos-adicionales-directorio">
+
+                                ${contactosExtras.join("")}
+
+                            </div>
+                          `
+                        : ""
+                }
+
             </div>
         `;
 
@@ -456,7 +789,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       COMPROBAR SI UN REGISTRO PERTENECE A UNA CATEGORÍA
+       PERTENECE A CATEGORÍA
     ===================================================== */
 
     function perteneceACategoria(
@@ -468,6 +801,7 @@ document.addEventListener("DOMContentLoaded", () => {
             Array.isArray(registro.categorias)
                 ? registro.categorias
                 : [registro.categoria];
+
 
         return categoriasRegistro.includes(
             categoria
@@ -483,8 +817,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function actualizarContadores() {
 
 
-        /* COMISIONES */
-
         if (totalComisiones) {
 
             totalComisiones.textContent =
@@ -498,8 +830,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
-        /* MESAS DIRECTIVAS */
 
         if (totalMesas) {
 
@@ -515,8 +845,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        /* REPRESENTANTES */
-
         if (totalRepresentantes) {
 
             totalRepresentantes.textContent =
@@ -531,8 +859,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        /* INSTITUCIONES */
-
         if (totalInstituciones) {
 
             totalInstituciones.textContent =
@@ -546,10 +872,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
-        /* ================================================
-           INTEGRANTES DE COMISIÓN DE ZONAS METROPOLITANAS
-        ================================================= */
 
         if (totalIntegrantesZonas) {
 
@@ -568,13 +890,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       LLENAR EL SELECTOR DE ESTADOS
+       CARGAR ESTADOS
     ===================================================== */
 
     function cargarEstados() {
 
         const estadoSeleccionado =
             filtroEstado.value;
+
 
         const estados = [
 
@@ -588,9 +911,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         ).trim()
                     )
 
-                    .filter(estado =>
-                        estado !== ""
-                    )
+                    .filter(Boolean)
 
             )
 
@@ -623,11 +944,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     "option"
                 );
 
+
             opcion.value =
                 estado;
 
             opcion.textContent =
                 estado;
+
 
             filtroEstado.appendChild(
                 opcion
@@ -636,14 +959,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
 
-        const estadoTodaviaExiste =
+        filtroEstado.value =
             estados.includes(
                 estadoSeleccionado
-            );
-
-
-        filtroEstado.value =
-            estadoTodaviaExiste
+            )
                 ? estadoSeleccionado
                 : "todos";
 
@@ -651,7 +970,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       OBTENER LA FECHA DE ACTUALIZACIÓN
+       ACTUALIZAR FECHA
     ===================================================== */
 
     function actualizarFecha() {
@@ -669,7 +988,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (
                         fecha &&
                         typeof fecha.toDate ===
-                        "function"
+                            "function"
                     ) {
 
                         return fecha.toDate();
@@ -690,9 +1009,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 })
 
-                .filter(fecha =>
-                    fecha !== null
-                );
+                .filter(Boolean);
 
 
         if (
@@ -741,7 +1058,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       ORDENAR LOS REGISTROS
+       ORDENAR REGISTROS
     ===================================================== */
 
     function ordenarRegistros(registros) {
@@ -753,6 +1070,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     String(
                         a.estado || ""
                     );
+
 
                 const estadoB =
                     String(
@@ -782,17 +1100,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 return String(
                     a.nombre || ""
                 ).localeCompare(
-
                     String(
                         b.nombre || ""
                     ),
-
                     "es",
-
                     {
                         sensitivity: "base"
                     }
-
                 );
 
             }
@@ -802,13 +1116,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       MOSTRAR REGISTROS EN LA TABLA
+       MOSTRAR REGISTROS
     ===================================================== */
 
     function mostrarRegistros(registros) {
 
-        tablaDirectorio.innerHTML =
-            "";
+        tablaDirectorio.innerHTML = "";
 
         ocultarMensajesTabla();
 
@@ -839,6 +1152,7 @@ document.addEventListener("DOMContentLoaded", () => {
         registrosOrdenados.forEach(
             (registro, indice) => {
 
+
                 const fila =
                     document.createElement(
                         "tr"
@@ -848,39 +1162,32 @@ document.addEventListener("DOMContentLoaded", () => {
                 fila.innerHTML = `
 
                     <td class="numero-registro">
-
                         ${indice + 1}
-
                     </td>
 
 
                     <td>
-
                         ${crearEstadoLegislatura(
                             registro
                         )}
-
                     </td>
 
 
                     <td>
 
                         <strong>
-
                             ${
                                 escaparHTML(
                                     registro.nombre
                                 ) ||
                                 "Sin nombre"
                             }
-
                         </strong>
 
 
                         <span
                             class="categoria-registro-publico"
                         >
-
                             ${
                                 escaparHTML(
                                     obtenerNombreCategoria(
@@ -888,39 +1195,32 @@ document.addEventListener("DOMContentLoaded", () => {
                                     )
                                 )
                             }
-
                         </span>
 
                     </td>
 
 
                     <td>
-
                         ${crearCargoComision(
                             registro
                         )}
-
                     </td>
 
 
                     <td>
-
                         ${
                             escaparHTML(
                                 registro.institucion
                             ) ||
                             "Sin especificar"
                         }
-
                     </td>
 
 
                     <td>
-
                         ${crearContacto(
                             registro
                         )}
-
                     </td>
 
                 `;
@@ -937,7 +1237,103 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       FILTRAR LOS REGISTROS
+       OBTENER TEXTO DE CONTACTOS ADICIONALES
+       PARA EL BUSCADOR
+    ===================================================== */
+
+    function obtenerTextoContactosAdicionales(
+        registro
+    ) {
+
+        const textos = [];
+
+
+        /* CONTACTO ADICIONAL ANTIGUO */
+
+        textos.push(
+            registro.contactoAdicional || ""
+        );
+
+        textos.push(
+            registro.contactoAdicionalCargo || ""
+        );
+
+        textos.push(
+            registro.contactoAdicionalTelefono || ""
+        );
+
+        textos.push(
+            registro.contactoAdicionalCorreo || ""
+        );
+
+
+        /* CORREOS ADICIONALES */
+
+        if (
+            Array.isArray(
+                registro.correosAdicionales
+            )
+        ) {
+
+            textos.push(
+                registro.correosAdicionales.join(
+                    " "
+                )
+            );
+
+        } else {
+
+            textos.push(
+                registro.correosAdicionales || ""
+            );
+
+        }
+
+
+        /* VARIOS CONTACTOS */
+
+        if (
+            Array.isArray(
+                registro.contactosAdicionales
+            )
+        ) {
+
+            registro.contactosAdicionales
+                .forEach(contacto => {
+
+                    if (!contacto) {
+                        return;
+                    }
+
+
+                    textos.push(
+                        contacto.nombre || ""
+                    );
+
+                    textos.push(
+                        contacto.cargo || ""
+                    );
+
+                    textos.push(
+                        contacto.telefono || ""
+                    );
+
+                    textos.push(
+                        contacto.correo || ""
+                    );
+
+                });
+
+        }
+
+
+        return textos.join(" ");
+
+    }
+
+
+    /* =====================================================
+       FILTRAR REGISTROS
     ===================================================== */
 
     function filtrarRegistros() {
@@ -947,8 +1343,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 buscador.value
             );
 
+
         const categoriaSeleccionada =
             filtroCategoria.value;
+
 
         const estadoSeleccionado =
             filtroEstado.value;
@@ -959,8 +1357,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 registro => {
 
 
-                    /* CATEGORÍAS DEL REGISTRO */
-
                     const categoriasRegistro =
                         Array.isArray(
                             registro.categorias
@@ -969,7 +1365,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             : [registro.categoria];
 
 
-                    /* FILTRO POR CATEGORÍA */
+                    /* CATEGORÍA */
 
                     const coincideCategoria =
 
@@ -983,7 +1379,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         );
 
 
-                    /* FILTRO POR ESTADO */
+                    /* ESTADO */
 
                     const coincideEstado =
 
@@ -996,7 +1392,15 @@ document.addEventListener("DOMContentLoaded", () => {
                             estadoSeleccionado;
 
 
-                    /* CONTENIDO BUSCABLE */
+                    /* CONTACTOS ADICIONALES */
+
+                    const textoContactos =
+                        obtenerTextoContactosAdicionales(
+                            registro
+                        );
+
+
+                    /* TEXTO GENERAL */
 
                     const contenidoRegistro =
                         normalizarTexto(`
@@ -1019,10 +1423,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
                             ${registro.correo}
 
+                            ${textoContactos}
+
                         `);
 
 
-                    /* FILTRO DE TEXTO */
+                    /* BÚSQUEDA */
 
                     const coincideBusqueda =
 
@@ -1057,7 +1463,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       CARGAR REGISTROS DESDE FIRESTORE
+       ESCUCHAR FIRESTORE
     ===================================================== */
 
     function escucharDirectorio() {
@@ -1125,7 +1531,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ) {
 
                     mensaje =
-                        "Firebase rechazó la consulta. Debemos revisar las reglas de seguridad de Firestore.";
+                        "Firebase rechazó la consulta. Revisa las reglas de seguridad de Firestore.";
 
                 }
 
@@ -1183,22 +1589,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       BOTÓN ADMINISTRAR
+       ADMINISTRAR
     ===================================================== */
 
-    btnAdministrar.addEventListener(
-        "click",
-        () => {
+    if (btnAdministrar) {
 
-            window.location.href =
-                "admin.html";
+        btnAdministrar.addEventListener(
+            "click",
+            () => {
 
-        }
-    );
+                window.location.href =
+                    "admin.html";
+
+            }
+        );
+
+    }
 
 
     /* =====================================================
-       FILTRAR DESDE LAS TARJETAS
+       SELECCIONAR CATEGORÍA DESDE TARJETA
     ===================================================== */
 
     function seleccionarCategoriaDesdeTarjeta(
@@ -1239,11 +1649,15 @@ document.addEventListener("DOMContentLoaded", () => {
         filtrarRegistros();
 
 
-        document
-            .querySelector(
+        const seccionBusqueda =
+            document.querySelector(
                 ".seccion-busqueda"
-            )
-            .scrollIntoView({
+            );
+
+
+        if (seccionBusqueda) {
+
+            seccionBusqueda.scrollIntoView({
 
                 behavior:
                     "smooth",
@@ -1253,14 +1667,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
             });
 
+        }
+
     }
 
 
     tarjetasCategoria.forEach(
         tarjeta => {
 
-
-            /* CLIC */
 
             tarjeta.addEventListener(
                 "click",
@@ -1274,11 +1688,10 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
 
-            /* TECLADO */
-
             tarjeta.addEventListener(
                 "keydown",
                 evento => {
+
 
                     if (
                         evento.key ===
@@ -1291,6 +1704,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     ) {
 
                         evento.preventDefault();
+
 
                         seleccionarCategoriaDesdeTarjeta(
                             tarjeta
@@ -1309,54 +1723,58 @@ document.addEventListener("DOMContentLoaded", () => {
        CERRAR SESIÓN
     ===================================================== */
 
-    btnCerrarSesion.addEventListener(
-        "click",
-        async () => {
+    if (btnCerrarSesion) {
+
+        btnCerrarSesion.addEventListener(
+            "click",
+            async () => {
 
 
-            const confirmar =
-                window.confirm(
-                    "¿Deseas cerrar la sesión?"
-                );
+                const confirmar =
+                    window.confirm(
+                        "¿Deseas cerrar la sesión?"
+                    );
 
 
-            if (!confirmar) {
+                if (!confirmar) {
 
-                return;
+                    return;
+
+                }
+
+
+                try {
+
+
+                    await signOut(
+                        auth
+                    );
+
+
+                    window.location.replace(
+                        "index.html"
+                    );
+
+
+                } catch (error) {
+
+
+                    console.error(
+                        "Error al cerrar sesión:",
+                        error
+                    );
+
+
+                    window.alert(
+                        "No fue posible cerrar la sesión. Inténtalo nuevamente."
+                    );
+
+                }
 
             }
+        );
 
-
-            try {
-
-
-                await signOut(
-                    auth
-                );
-
-
-                window.location.replace(
-                    "index.html"
-                );
-
-
-            } catch (error) {
-
-
-                console.error(
-                    "Error al cerrar sesión:",
-                    error
-                );
-
-
-                window.alert(
-                    "No fue posible cerrar la sesión. Inténtalo nuevamente."
-                );
-
-            }
-
-        }
-    );
+    }
 
 
     /* =====================================================
@@ -1453,17 +1871,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       IMPRIMIR DIRECTORIO
+       IMPRIMIR
     ===================================================== */
 
-    btnImprimir.addEventListener(
-        "click",
-        () => {
+    if (btnImprimir) {
 
-            window.print();
+        btnImprimir.addEventListener(
+            "click",
+            () => {
 
-        }
-    );
+                window.print();
+
+            }
+        );
+
+    }
 
 
 });

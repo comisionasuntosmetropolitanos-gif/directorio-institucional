@@ -583,6 +583,15 @@
                     </button>
 
 
+                    <button
+                        type="button"
+                        id="btnPrevisualizarIntegrantes"
+                        class="btn btn-nuevo-registro"
+                    >
+                        <i class="bi bi-eye-fill"></i>
+                        Previsualizar integrantes
+                    </button>
+
                     <span id="contadorAdmin">
                         Registros encontrados: 0
                     </span>
@@ -1557,18 +1566,114 @@
 
 
     <!-- =====================================================
-         JAVASCRIPT
-    ====================================================== -->
+     JAVASCRIPT
+====================================================== -->
 
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    ></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
 
 
-    <script
-        type="module"
-        src="js/admin.js?v=11"
-    ></script>
+<!-- =====================================================
+     JAVASCRIPT PRINCIPAL DEL ADMINISTRADOR
+====================================================== -->
+
+<script
+    type="module"
+    src="js/admin.js?v=11"
+></script>
+
+
+<!-- =====================================================
+     IMPORTADOR TEMPORAL
+     INTEGRANTES DE COMISIÓN DE ZONAS METROPOLITANAS
+====================================================== -->
+
+
+<!-- =====================================================
+     BOTÓN TEMPORAL DE PREVISUALIZACIÓN
+====================================================== -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        const btnPrevisualizarIntegrantes =
+            document.getElementById("btnPrevisualizarIntegrantes");
+
+        if (!btnPrevisualizarIntegrantes) {
+            return;
+        }
+
+        btnPrevisualizarIntegrantes.addEventListener(
+            "click",
+            async () => {
+
+                if (
+                    typeof window.previsualizarIntegrantesZonas !== "function"
+                ) {
+                    window.alert(
+                        "El importador todavía no está disponible. " +
+                        "Actualiza la página con Ctrl + F5 e inténtalo nuevamente."
+                    );
+                    return;
+                }
+
+                btnPrevisualizarIntegrantes.disabled = true;
+
+                const textoOriginal =
+                    btnPrevisualizarIntegrantes.innerHTML;
+
+                btnPrevisualizarIntegrantes.innerHTML =
+                    '<span class="spinner-border spinner-border-sm me-2"></span>Revisando...';
+
+                try {
+
+                    const resultado =
+                        await window.previsualizarIntegrantesZonas();
+
+                    const nuevos =
+                        resultado.filter(
+                            registro => registro.ACCION === "NUEVO"
+                        ).length;
+
+                    const existentes =
+                        resultado.filter(
+                            registro => registro.ACCION === "YA EXISTE"
+                        ).length;
+
+                    window.alert(
+                        "Previsualización terminada.\n\n" +
+                        "Total preparado: " + resultado.length + "\n" +
+                        "Nuevos: " + nuevos + "\n" +
+                        "Ya existentes: " + existentes + "\n\n" +
+                        "No se modificó Firebase."
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        "Error en la previsualización:",
+                        error
+                    );
+
+                    window.alert(
+                        "No fue posible hacer la previsualización. " +
+                        "Revisa la consola para ver el detalle."
+                    );
+
+                } finally {
+
+                    btnPrevisualizarIntegrantes.disabled = false;
+
+                    btnPrevisualizarIntegrantes.innerHTML =
+                        textoOriginal;
+
+                }
+
+            }
+        );
+
+    });
+</script>
 
 
 </body>
