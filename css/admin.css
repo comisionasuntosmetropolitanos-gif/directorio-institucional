@@ -1092,3 +1092,133 @@ img {
         padding: 18px;
     }
 }
+/* =========================================================
+   TARJETAS DEL PANEL ADMINISTRATIVO
+   MISMA ALTURA Y ALINEACIÓN
+========================================================= */
+
+.contenido-admin .row.g-3.mb-4 > div {
+    display: flex;
+}
+
+.tarjeta-resumen-admin {
+    width: 100%;
+    min-height: 176px;
+    height: 100%;
+
+    display: grid;
+    grid-template-columns: 62px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+
+    column-gap: 18px;
+    row-gap: 8px;
+
+    align-items: center;
+
+    padding: 24px 22px;
+
+    box-sizing: border-box;
+}
+
+/* Icono */
+.tarjeta-resumen-admin .icono-resumen {
+    grid-column: 1;
+    grid-row: 1 / 3;
+
+    width: 62px;
+    height: 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+}
+
+/* Contenedor de texto */
+.tarjeta-resumen-admin > div:last-child {
+    grid-column: 2;
+    grid-row: 1 / 3;
+
+    display: grid;
+    grid-template-rows: minmax(64px, auto) 38px;
+
+    align-content: center;
+
+    min-width: 0;
+}
+
+/* Título */
+.tarjeta-resumen-admin p {
+    margin: 0;
+
+    display: flex;
+    align-items: center;
+
+    min-height: 64px;
+
+    font-size: 1rem;
+    line-height: 1.35;
+    font-weight: 400;
+}
+
+/* Número */
+.tarjeta-resumen-admin strong {
+    margin: 0;
+
+    display: flex;
+    align-items: flex-end;
+
+    height: 38px;
+
+    font-size: 1.9rem;
+    line-height: 1;
+    font-weight: 700;
+}
+
+/* Quinta tarjeta */
+.tarjeta-resumen-admin[data-categoria="integrantes-zonas"] p {
+    font-size: 0.92rem;
+    line-height: 1.32;
+}
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (max-width: 767px) {
+
+    .tarjeta-resumen-admin {
+        min-height: 140px;
+
+        grid-template-columns: 58px minmax(0, 1fr);
+
+        column-gap: 16px;
+
+        padding: 20px;
+    }
+
+    .tarjeta-resumen-admin .icono-resumen {
+        width: 58px;
+        height: 58px;
+    }
+
+    .tarjeta-resumen-admin > div:last-child {
+        grid-template-rows: auto 34px;
+    }
+
+    .tarjeta-resumen-admin p {
+        min-height: auto;
+        font-size: 0.95rem;
+    }
+
+    .tarjeta-resumen-admin[data-categoria="integrantes-zonas"] p {
+        font-size: 0.90rem;
+    }
+
+    .tarjeta-resumen-admin strong {
+        height: 34px;
+        font-size: 1.8rem;
+    }
+
+}
