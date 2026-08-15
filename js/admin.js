@@ -1272,11 +1272,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             );
 
+const filtradosOrdenados = [...filtrados].sort((a, b) => {
 
-        renderizarRegistros(
-            filtrados
-        );
+    const nombreA = normalizarTexto(a.nombre)
+        .replace(/^(dip\.?|lic\.?|dr\.?|dra\.?|mtro\.?|mtra\.?)\s+/i, "");
 
+    const nombreB = normalizarTexto(b.nombre)
+        .replace(/^(dip\.?|lic\.?|dr\.?|dra\.?|mtro\.?|mtra\.?)\s+/i, "");
+
+    return nombreA.localeCompare(
+        nombreB,
+        "es",
+        {
+            sensitivity: "base"
+        }
+    );
+
+});
+
+
+renderizarRegistros(
+    filtradosOrdenados
+);
     }
 
 

@@ -1060,61 +1060,68 @@ document.addEventListener("DOMContentLoaded", () => {
     /* =====================================================
        ORDENAR REGISTROS
     ===================================================== */
+function ordenarRegistros(registros) {
 
-    function ordenarRegistros(registros) {
+    return [...registros].sort(
+        (a, b) => {
 
-        return [...registros].sort(
-            (a, b) => {
+            /* =============================================
+               QUITAR "DIP." PARA ORDENAR POR EL NOMBRE REAL
+            ============================================= */
 
-                const estadoA =
-                    String(
-                        a.estado || ""
-                    );
+            const nombreA =
+                String(a.nombre || "")
+                    .replace(/^Dip\.?\s*/i, "")
+                    .trim();
 
-
-                const estadoB =
-                    String(
-                        b.estado || ""
-                    );
-
-
-                const comparacionEstado =
-                    estadoA.localeCompare(
-                        estadoB,
-                        "es",
-                        {
-                            sensitivity: "base"
-                        }
-                    );
+            const nombreB =
+                String(b.nombre || "")
+                    .replace(/^Dip\.?\s*/i, "")
+                    .trim();
 
 
-                if (
-                    comparacionEstado !== 0
-                ) {
+            /* =============================================
+               ORDEN ALFABÉTICO POR NOMBRE
+            ============================================= */
 
-                    return comparacionEstado;
-
-                }
-
-
-                return String(
-                    a.nombre || ""
-                ).localeCompare(
-                    String(
-                        b.nombre || ""
-                    ),
+            const comparacionNombre =
+                nombreA.localeCompare(
+                    nombreB,
                     "es",
                     {
                         sensitivity: "base"
                     }
                 );
 
+
+            if (comparacionNombre !== 0) {
+
+                return comparacionNombre;
+
             }
-        );
-
-    }
 
 
+            /* =============================================
+               SI DOS NOMBRES FUERAN IGUALES,
+               ORDENAR POR ESTADO
+            ============================================= */
+
+            return String(
+                a.estado || ""
+            ).localeCompare(
+                String(
+                    b.estado || ""
+                ),
+                "es",
+                {
+                    sensitivity: "base"
+                }
+            );
+
+        }
+    );
+
+}
     /* =====================================================
        MOSTRAR REGISTROS
     ===================================================== */
