@@ -377,6 +377,11 @@ document.addEventListener("DOMContentLoaded", () => {
             prepararNumeroTelefono(telefono);
 
 
+        /*
+           Si solamente tenemos una extensión o un texto
+           especial, lo mostramos sin crear enlace telefónico.
+        */
+
         if (!numero) {
 
             return `
@@ -538,6 +543,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const contactosExtras = [];
 
 
+        /* =================================================
+           TELÉFONO PRINCIPAL
+        ================================================= */
+
         if (registro.telefono) {
 
             contactosPrincipales.push(
@@ -548,6 +557,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+
+        /* =================================================
+           WHATSAPP
+        ================================================= */
 
         if (registro.whatsapp) {
 
@@ -580,6 +593,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
+        /* =================================================
+           CORREO PRINCIPAL
+        ================================================= */
+
         if (registro.correo) {
 
             contactosPrincipales.push(
@@ -590,6 +607,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+
+        /* =================================================
+           CORREOS ADICIONALES
+
+           Admite:
+           correo1@...
+           correo1@..., correo2@...
+           correo1@...; correo2@...
+        ================================================= */
 
         if (registro.correosAdicionales) {
 
@@ -635,42 +661,93 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        if (
-            registro.contactoAdicional ||
-            registro.contactoAdicionalCargo ||
-            registro.contactoAdicionalTelefono ||
-            registro.contactoAdicionalCorreo
-        ) {
+        /* =================================================
+           CONTACTOS ADICIONALES
 
-            contactosExtras.push(
-                crearContactoAdicionalHTML({
+           IMPORTANTE:
+           El panel Admin guarda el primer contacto adicional
+           en dos lugares por compatibilidad:
 
-                    nombre:
-                        registro.contactoAdicional,
+           1) contactosAdicionales[]
+           2) contactoAdicional / contactoAdicionalCargo /
+              contactoAdicionalTelefono / contactoAdicionalCorreo
 
-                    cargo:
-                        registro.contactoAdicionalCargo,
+           Si el Directorio muestra ambos formatos al mismo
+           tiempo, el primer contacto aparece duplicado.
 
-                    telefono:
-                        registro.contactoAdicionalTelefono,
+           SOLUCIÓN:
+           - Si existe contactosAdicionales[] y tiene datos,
+             se utiliza SOLO ese arreglo.
+           - Los campos antiguos se usan únicamente como
+             respaldo para registros viejos que todavía no
+             tengan el arreglo nuevo.
+           - También se eliminan duplicados dentro del propio
+             arreglo, por seguridad.
+        ================================================= */
 
-                    correo:
-                        registro.contactoAdicionalCorreo
-
-                })
-            );
-
-        }
-
-
-        if (
+        const contactosNuevos =
             Array.isArray(
                 registro.contactosAdicionales
             )
+                ? registro.contactosAdicionales
+                    .filter(contacto => {
+
+                        if (!contacto) {
+                            return false;
+                        }
+
+                        return Boolean(
+                            String(contacto.nombre || "").trim() ||
+                            String(contacto.cargo || "").trim() ||
+                            String(contacto.telefono || "").trim() ||
+                            String(contacto.correo || "").trim()
+                        );
+
+                    })
+                : [];
+
+
+        if (
+            contactosNuevos.length > 0
         ) {
 
-            registro.contactosAdicionales
+            const clavesContactos =
+                new Set();
+
+
+            contactosNuevos
                 .forEach(contacto => {
+
+                    const clave =
+                        [
+                            contacto.nombre,
+                            contacto.cargo,
+                            contacto.telefono,
+                            contacto.correo
+                        ]
+                            .map(valor =>
+                                normalizarTexto(
+                                    valor
+                                )
+                            )
+                            .join("|");
+
+
+                    if (
+                        clavesContactos.has(
+                            clave
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    clavesContactos.add(
+                        clave
+                    );
+
 
                     const html =
                         crearContactoAdicionalHTML(
@@ -688,8 +765,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 });
 
+        } else {
+
+            /*
+               Compatibilidad con registros antiguos:
+               solo se utiliza este bloque cuando NO existe
+               ningún contacto dentro de contactosAdicionales[].
+            */
+
+            if (
+                registro.contactoAdicional ||
+                registro.contactoAdicionalCargo ||
+                registro.contactoAdicionalTelefono ||
+                registro.contactoAdicionalCorreo
+            ) {
+
+                const html =
+                    crearContactoAdicionalHTML({
+
+                        nombre:
+                            registro.contactoAdicional,
+
+                        cargo:
+                            registro.contactoAdicionalCargo,
+
+                        telefono:
+                            registro.contactoAdicionalTelefono,
+
+                        correo:
+                            registro.contactoAdicionalCorreo
+
+                    });
+
+
+                if (html) {
+
+                    contactosExtras.push(
+                        html
+                    );
+
+                }
+
+            }
+
         }
 
+
+        /* =================================================
+           SIN INFORMACIÓN
+        ================================================= */
 
         if (
             contactosPrincipales.length === 0 &&
@@ -705,10 +829,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
+        /* =================================================
+           RESULTADO
+        ================================================= */
+
         return `
             <div class="lista-contactos">
 
-                ${contactosPrincipales.join("")}
+                ${
+                    contactosPrincipales.join("")
+                }
+
 
                 ${
                     contactosExtras.length > 0
@@ -1000,58 +1131,68 @@ document.addEventListener("DOMContentLoaded", () => {
     /* =====================================================
        ORDENAR REGISTROS
     ===================================================== */
+function ordenarRegistros(registros) {
 
-    function ordenarRegistros(registros) {
+    return [...registros].sort(
+        (a, b) => {
 
-        return [...registros].sort(
-            (a, b) => {
+            /* =============================================
+               QUITAR "DIP." PARA ORDENAR POR EL NOMBRE REAL
+            ============================================= */
 
-                const nombreA =
-                    String(a.nombre || "")
-                        .replace(/^Dip\.?\s*/i, "")
-                        .trim();
+            const nombreA =
+                String(a.nombre || "")
+                    .replace(/^Dip\.?\s*/i, "")
+                    .trim();
 
-                const nombreB =
-                    String(b.nombre || "")
-                        .replace(/^Dip\.?\s*/i, "")
-                        .trim();
-
-
-                const comparacionNombre =
-                    nombreA.localeCompare(
-                        nombreB,
-                        "es",
-                        {
-                            sensitivity: "base"
-                        }
-                    );
+            const nombreB =
+                String(b.nombre || "")
+                    .replace(/^Dip\.?\s*/i, "")
+                    .trim();
 
 
-                if (comparacionNombre !== 0) {
+            /* =============================================
+               ORDEN ALFABÉTICO POR NOMBRE
+            ============================================= */
 
-                    return comparacionNombre;
-
-                }
-
-
-                return String(
-                    a.estado || ""
-                ).localeCompare(
-                    String(
-                        b.estado || ""
-                    ),
+            const comparacionNombre =
+                nombreA.localeCompare(
+                    nombreB,
                     "es",
                     {
                         sensitivity: "base"
                     }
                 );
 
+
+            if (comparacionNombre !== 0) {
+
+                return comparacionNombre;
+
             }
-        );
-
-    }
 
 
+            /* =============================================
+               SI DOS NOMBRES FUERAN IGUALES,
+               ORDENAR POR ESTADO
+            ============================================= */
+
+            return String(
+                a.estado || ""
+            ).localeCompare(
+                String(
+                    b.estado || ""
+                ),
+                "es",
+                {
+                    sensitivity: "base"
+                }
+            );
+
+        }
+    );
+
+}
     /* =====================================================
        MOSTRAR REGISTROS
     ===================================================== */
@@ -1098,26 +1239,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 fila.innerHTML = `
 
-                    <td
-                        class="numero-registro"
-                        data-label="REGISTRO"
-                    >
+                    <td class="numero-registro">
                         ${indice + 1}
                     </td>
 
 
-                    <td
-                        data-label="ESTADO"
-                    >
+                    <td>
                         ${crearEstadoLegislatura(
                             registro
                         )}
                     </td>
 
 
-                    <td
-                        data-label="NOMBRE"
-                    >
+                    <td>
 
                         <strong>
                             ${
@@ -1144,18 +1278,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     </td>
 
 
-                    <td
-                        data-label="CARGO / ÁREA"
-                    >
+                    <td>
                         ${crearCargoComision(
                             registro
                         )}
                     </td>
 
 
-                    <td
-                        data-label="INSTITUCIÓN"
-                    >
+                    <td>
                         ${
                             escaparHTML(
                                 registro.institucion
@@ -1165,9 +1295,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </td>
 
 
-                    <td
-                        data-label="CONTACTO"
-                    >
+                    <td>
                         ${crearContacto(
                             registro
                         )}
@@ -1187,7 +1315,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       TEXTO DE CONTACTOS ADICIONALES PARA BUSCADOR
+       OBTENER TEXTO DE CONTACTOS ADICIONALES
+       PARA EL BUSCADOR
     ===================================================== */
 
     function obtenerTextoContactosAdicionales(
@@ -1196,6 +1325,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const textos = [];
 
+
+        /* CONTACTO ADICIONAL ANTIGUO */
 
         textos.push(
             registro.contactoAdicional || ""
@@ -1213,6 +1344,8 @@ document.addEventListener("DOMContentLoaded", () => {
             registro.contactoAdicionalCorreo || ""
         );
 
+
+        /* CORREOS ADICIONALES */
 
         if (
             Array.isArray(
@@ -1234,6 +1367,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+
+        /* VARIOS CONTACTOS */
 
         if (
             Array.isArray(
@@ -1308,6 +1443,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             : [registro.categoria];
 
 
+                    /* CATEGORÍA */
+
                     const coincideCategoria =
 
                         categoriaSeleccionada ===
@@ -1320,6 +1457,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         );
 
 
+                    /* ESTADO */
+
                     const coincideEstado =
 
                         estadoSeleccionado ===
@@ -1331,11 +1470,15 @@ document.addEventListener("DOMContentLoaded", () => {
                             estadoSeleccionado;
 
 
+                    /* CONTACTOS ADICIONALES */
+
                     const textoContactos =
                         obtenerTextoContactosAdicionales(
                             registro
                         );
 
+
+                    /* TEXTO GENERAL */
 
                     const contenidoRegistro =
                         normalizarTexto(`
@@ -1362,6 +1505,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         `);
 
+
+                    /* BÚSQUEDA */
 
                     const coincideBusqueda =
 
