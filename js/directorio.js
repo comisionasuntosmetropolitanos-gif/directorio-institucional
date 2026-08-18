@@ -377,11 +377,6 @@ document.addEventListener("DOMContentLoaded", () => {
             prepararNumeroTelefono(telefono);
 
 
-        /*
-           Si solamente tenemos una extensión o un texto
-           especial, lo mostramos sin crear enlace telefónico.
-        */
-
         if (!numero) {
 
             return `
@@ -543,10 +538,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const contactosExtras = [];
 
 
-        /* =================================================
-           TELÉFONO PRINCIPAL
-        ================================================= */
-
         if (registro.telefono) {
 
             contactosPrincipales.push(
@@ -557,10 +548,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
-        /* =================================================
-           WHATSAPP
-        ================================================= */
 
         if (registro.whatsapp) {
 
@@ -593,10 +580,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        /* =================================================
-           CORREO PRINCIPAL
-        ================================================= */
-
         if (registro.correo) {
 
             contactosPrincipales.push(
@@ -607,15 +590,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
-        /* =================================================
-           CORREOS ADICIONALES
-
-           Admite:
-           correo1@...
-           correo1@..., correo2@...
-           correo1@...; correo2@...
-        ================================================= */
 
         if (registro.correosAdicionales) {
 
@@ -661,15 +635,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        /* =================================================
-           CONTACTO ADICIONAL DEL SISTEMA ACTUAL
-
-           Estos campos ya existen en tus registros:
-           contactoAdicional
-           contactoAdicionalCargo
-           contactoAdicionalTelefono
-        ================================================= */
-
         if (
             registro.contactoAdicional ||
             registro.contactoAdicionalCargo ||
@@ -697,20 +662,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
-        /* =================================================
-           NUEVO FORMATO:
-           VARIOS CONTACTOS ADICIONALES
-
-           contactosAdicionales: [
-               {
-                   nombre: "...",
-                   cargo: "Asesor",
-                   telefono: "...",
-                   correo: "..."
-               }
-           ]
-        ================================================= */
 
         if (
             Array.isArray(
@@ -740,10 +691,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        /* =================================================
-           SIN INFORMACIÓN
-        ================================================= */
-
         if (
             contactosPrincipales.length === 0 &&
             contactosExtras.length === 0
@@ -758,17 +705,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        /* =================================================
-           RESULTADO
-        ================================================= */
-
         return `
             <div class="lista-contactos">
 
-                ${
-                    contactosPrincipales.join("")
-                }
-
+                ${contactosPrincipales.join("")}
 
                 ${
                     contactosExtras.length > 0
@@ -1060,68 +1000,58 @@ document.addEventListener("DOMContentLoaded", () => {
     /* =====================================================
        ORDENAR REGISTROS
     ===================================================== */
-function ordenarRegistros(registros) {
 
-    return [...registros].sort(
-        (a, b) => {
+    function ordenarRegistros(registros) {
 
-            /* =============================================
-               QUITAR "DIP." PARA ORDENAR POR EL NOMBRE REAL
-            ============================================= */
+        return [...registros].sort(
+            (a, b) => {
 
-            const nombreA =
-                String(a.nombre || "")
-                    .replace(/^Dip\.?\s*/i, "")
-                    .trim();
+                const nombreA =
+                    String(a.nombre || "")
+                        .replace(/^Dip\.?\s*/i, "")
+                        .trim();
 
-            const nombreB =
-                String(b.nombre || "")
-                    .replace(/^Dip\.?\s*/i, "")
-                    .trim();
+                const nombreB =
+                    String(b.nombre || "")
+                        .replace(/^Dip\.?\s*/i, "")
+                        .trim();
 
 
-            /* =============================================
-               ORDEN ALFABÉTICO POR NOMBRE
-            ============================================= */
+                const comparacionNombre =
+                    nombreA.localeCompare(
+                        nombreB,
+                        "es",
+                        {
+                            sensitivity: "base"
+                        }
+                    );
 
-            const comparacionNombre =
-                nombreA.localeCompare(
-                    nombreB,
+
+                if (comparacionNombre !== 0) {
+
+                    return comparacionNombre;
+
+                }
+
+
+                return String(
+                    a.estado || ""
+                ).localeCompare(
+                    String(
+                        b.estado || ""
+                    ),
                     "es",
                     {
                         sensitivity: "base"
                     }
                 );
 
-
-            if (comparacionNombre !== 0) {
-
-                return comparacionNombre;
-
             }
+        );
+
+    }
 
 
-            /* =============================================
-               SI DOS NOMBRES FUERAN IGUALES,
-               ORDENAR POR ESTADO
-            ============================================= */
-
-            return String(
-                a.estado || ""
-            ).localeCompare(
-                String(
-                    b.estado || ""
-                ),
-                "es",
-                {
-                    sensitivity: "base"
-                }
-            );
-
-        }
-    );
-
-}
     /* =====================================================
        MOSTRAR REGISTROS
     ===================================================== */
@@ -1168,19 +1098,26 @@ function ordenarRegistros(registros) {
 
                 fila.innerHTML = `
 
-                    <td class="numero-registro">
+                    <td
+                        class="numero-registro"
+                        data-label="REGISTRO"
+                    >
                         ${indice + 1}
                     </td>
 
 
-                    <td>
+                    <td
+                        data-label="ESTADO"
+                    >
                         ${crearEstadoLegislatura(
                             registro
                         )}
                     </td>
 
 
-                    <td>
+                    <td
+                        data-label="NOMBRE"
+                    >
 
                         <strong>
                             ${
@@ -1207,14 +1144,18 @@ function ordenarRegistros(registros) {
                     </td>
 
 
-                    <td>
+                    <td
+                        data-label="CARGO / ÁREA"
+                    >
                         ${crearCargoComision(
                             registro
                         )}
                     </td>
 
 
-                    <td>
+                    <td
+                        data-label="INSTITUCIÓN"
+                    >
                         ${
                             escaparHTML(
                                 registro.institucion
@@ -1224,7 +1165,9 @@ function ordenarRegistros(registros) {
                     </td>
 
 
-                    <td>
+                    <td
+                        data-label="CONTACTO"
+                    >
                         ${crearContacto(
                             registro
                         )}
@@ -1244,8 +1187,7 @@ function ordenarRegistros(registros) {
 
 
     /* =====================================================
-       OBTENER TEXTO DE CONTACTOS ADICIONALES
-       PARA EL BUSCADOR
+       TEXTO DE CONTACTOS ADICIONALES PARA BUSCADOR
     ===================================================== */
 
     function obtenerTextoContactosAdicionales(
@@ -1254,8 +1196,6 @@ function ordenarRegistros(registros) {
 
         const textos = [];
 
-
-        /* CONTACTO ADICIONAL ANTIGUO */
 
         textos.push(
             registro.contactoAdicional || ""
@@ -1273,8 +1213,6 @@ function ordenarRegistros(registros) {
             registro.contactoAdicionalCorreo || ""
         );
 
-
-        /* CORREOS ADICIONALES */
 
         if (
             Array.isArray(
@@ -1296,8 +1234,6 @@ function ordenarRegistros(registros) {
 
         }
 
-
-        /* VARIOS CONTACTOS */
 
         if (
             Array.isArray(
@@ -1372,8 +1308,6 @@ function ordenarRegistros(registros) {
                             : [registro.categoria];
 
 
-                    /* CATEGORÍA */
-
                     const coincideCategoria =
 
                         categoriaSeleccionada ===
@@ -1386,8 +1320,6 @@ function ordenarRegistros(registros) {
                         );
 
 
-                    /* ESTADO */
-
                     const coincideEstado =
 
                         estadoSeleccionado ===
@@ -1399,15 +1331,11 @@ function ordenarRegistros(registros) {
                             estadoSeleccionado;
 
 
-                    /* CONTACTOS ADICIONALES */
-
                     const textoContactos =
                         obtenerTextoContactosAdicionales(
                             registro
                         );
 
-
-                    /* TEXTO GENERAL */
 
                     const contenidoRegistro =
                         normalizarTexto(`
@@ -1434,8 +1362,6 @@ function ordenarRegistros(registros) {
 
                         `);
 
-
-                    /* BÚSQUEDA */
 
                     const coincideBusqueda =
 

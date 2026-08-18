@@ -1434,3 +1434,212 @@ img {
 .tabla-directorio tbody td {
     border: 0 !important;
 }
+/* =========================================================
+   VISTA MÓVIL DEL DIRECTORIO EN FORMATO TARJETAS
+   Solo afecta celulares. En tablet, laptop y escritorio
+   se conserva la tabla tradicional.
+========================================================= */
+@media (max-width: 767px) {
+
+    /* El contenedor deja de comportarse como una tabla ancha */
+    .contenedor-tabla {
+        border: 0;
+        border-radius: 0;
+        overflow: visible;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .contenedor-tabla .table-responsive {
+        overflow: visible !important;
+    }
+
+    .tabla-directorio {
+        display: block;
+        width: 100% !important;
+        min-width: 0 !important;
+        margin: 0;
+        background: transparent;
+    }
+
+    /* En celular ya no se necesita el encabezado de columnas */
+    .tabla-directorio thead {
+        display: none;
+    }
+
+    .tabla-directorio tbody {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        width: 100%;
+    }
+
+    /* Cada registro se convierte en una tarjeta completa */
+    .tabla-directorio tbody tr,
+    .tabla-directorio tbody tr + tr {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin: 0;
+        padding: 22px 20px;
+        border: 1px solid #d8dddd !important;
+        border-radius: 18px;
+        background: #ffffff;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
+        overflow: hidden;
+    }
+
+    .tabla-directorio tbody tr:hover {
+        background: #ffffff;
+    }
+
+    /* Todas las celdas ocupan el ancho de la tarjeta */
+    .tabla-directorio tbody td {
+        display: block;
+        width: 100% !important;
+        min-width: 0 !important;
+        padding: 14px 0 !important;
+        border: 0 !important;
+        border-bottom: 1px solid #eceeee !important;
+        text-align: left !important;
+        font-size: 1rem;
+        line-height: 1.45;
+        overflow-wrap: anywhere;
+    }
+
+    /* Registro # */
+    .tabla-directorio tbody td:nth-child(1) {
+        order: 1;
+        padding-top: 0 !important;
+        padding-bottom: 6px !important;
+        border-bottom: 0 !important;
+        color: #222222;
+        font-size: 1.02rem;
+        font-weight: 500;
+    }
+
+    .tabla-directorio tbody td:nth-child(1)::before {
+        content: "Registro #";
+        color: #222222;
+        font-weight: 500;
+    }
+
+    /* Evita mostrar únicamente el número duplicado visualmente */
+    .tabla-directorio tbody td.numero-registro {
+        color: transparent;
+        position: relative;
+    }
+
+    .tabla-directorio tbody td.numero-registro::after {
+        content: attr(data-numero);
+        color: #222222;
+    }
+
+    /* Nombre: se muestra inmediatamente debajo del número */
+    .tabla-directorio tbody td:nth-child(3) {
+        order: 2;
+        padding-top: 6px !important;
+        padding-bottom: 16px !important;
+    }
+
+    .tabla-directorio tbody td:nth-child(3) > strong {
+        display: block;
+        color: #202020;
+        font-size: 1.35rem;
+        line-height: 1.2;
+        font-weight: 700;
+    }
+
+    .categoria-registro-publico {
+        margin-top: 12px;
+        padding: 5px 11px;
+        font-size: 0.78rem;
+    }
+
+    /* Estado */
+    .tabla-directorio tbody td:nth-child(2) {
+        order: 3;
+    }
+
+    .tabla-directorio tbody td:nth-child(2)::before {
+        content: "ESTADO";
+    }
+
+    /* Cargo / área */
+    .tabla-directorio tbody td:nth-child(4) {
+        order: 4;
+    }
+
+    .tabla-directorio tbody td:nth-child(4)::before {
+        content: "CARGO / ÁREA";
+    }
+
+    /* Institución */
+    .tabla-directorio tbody td:nth-child(5) {
+        order: 5;
+    }
+
+    .tabla-directorio tbody td:nth-child(5)::before {
+        content: "INSTITUCIÓN";
+    }
+
+    /* Contacto */
+    .tabla-directorio tbody td:nth-child(6) {
+        order: 6;
+        padding-bottom: 0 !important;
+        border-bottom: 0 !important;
+    }
+
+    .tabla-directorio tbody td:nth-child(6)::before {
+        content: "CONTACTO";
+    }
+
+    /* Etiquetas verdes, similares a la tarjeta del Admin */
+    .tabla-directorio tbody td:nth-child(2)::before,
+    .tabla-directorio tbody td:nth-child(4)::before,
+    .tabla-directorio tbody td:nth-child(5)::before,
+    .tabla-directorio tbody td:nth-child(6)::before {
+        display: block;
+        margin-bottom: 7px;
+        color: var(--verde);
+        font-size: 0.82rem;
+        line-height: 1.2;
+        font-weight: 700;
+    }
+
+    .tabla-directorio .legislatura {
+        margin-top: 3px;
+    }
+
+    .tabla-directorio .texto-comision {
+        margin-top: 5px;
+    }
+
+    /* Contactos en una sola columna y sin desbordamiento */
+    .tabla-directorio .lista-contactos,
+    .tabla-directorio .contactos-adicionales-directorio,
+    .tabla-directorio .contacto-adicional-directorio {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .tabla-directorio .enlace-contacto {
+        width: 100%;
+        min-width: 0;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .tabla-directorio .enlace-contacto span,
+    .tabla-directorio .correo-contacto span,
+    .tabla-directorio .nombre-contacto-adicional {
+        min-width: 0;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    .tabla-directorio .contactos-adicionales-directorio {
+        margin-top: 14px;
+        padding-top: 14px;
+    }
+}
