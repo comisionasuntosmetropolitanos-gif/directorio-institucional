@@ -1375,3 +1375,327 @@ img {
     }
 
 }
+/* =========================================================
+   NOTIFICACIÓN FLOTANTE DE CONFIRMACIÓN
+   Directorio Institucional
+   Pegar al FINAL de css/admin.css
+========================================================= */
+
+.notificacion-admin-flotante {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 20000;
+
+    width: min(92vw, 470px);
+    min-height: 110px;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 22px 24px;
+
+    background: #ffffff;
+    border: 1px solid #d9e4e2;
+    border-radius: 18px;
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.18);
+
+    transform:
+        translate(-50%, -46%)
+        scale(0.96);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.22s ease,
+        transform 0.22s ease,
+        visibility 0.22s ease;
+
+    font-family: "Poppins", sans-serif;
+}
+
+.notificacion-admin-flotante.visible {
+    opacity: 1;
+    visibility: visible;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+}
+
+.notificacion-admin-icono {
+    flex: 0 0 auto;
+
+    width: 54px;
+    height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #e9f5f2;
+    color: #006b5b;
+
+    font-size: 1.65rem;
+}
+
+.notificacion-admin-contenido {
+    min-width: 0;
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.notificacion-admin-contenido strong {
+    color: #17211f;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.notificacion-admin-contenido span {
+    color: #525f5c;
+    font-size: 0.94rem;
+    line-height: 1.45;
+}
+
+.notificacion-admin-cerrar {
+    flex: 0 0 auto;
+
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 10px;
+
+    background: transparent;
+    color: #6b7472;
+
+    font-size: 1rem;
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease;
+}
+
+.notificacion-admin-cerrar:hover,
+.notificacion-admin-cerrar:focus-visible {
+    background: #f0f4f3;
+    color: #006b5b;
+    outline: none;
+}
+
+.notificacion-admin-flotante.notificacion-danger
+.notificacion-admin-icono {
+    background: #fdeeee;
+    color: #bb2d3b;
+}
+
+
+/* =========================================================
+   AJUSTE PARA CELULAR
+========================================================= */
+
+@media (max-width: 576px) {
+
+    .notificacion-admin-flotante {
+        width: calc(100vw - 32px);
+        min-height: 100px;
+
+        gap: 12px;
+
+        padding: 18px;
+
+        border-radius: 16px;
+    }
+
+    .notificacion-admin-icono {
+        width: 46px;
+        height: 46px;
+
+        font-size: 1.4rem;
+    }
+
+    .notificacion-admin-contenido strong {
+        font-size: 0.98rem;
+    }
+
+    .notificacion-admin-contenido span {
+        font-size: 0.88rem;
+    }
+
+}
+/* =========================================================
+   NOTIFICACIÓN FLOTANTE DE CONFIRMACIÓN
+   Directorio Institucional
+   Pegar al FINAL de css/admin.css
+========================================================= */
+
+.notificacion-admin-flotante {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 20000;
+
+    width: min(92vw, 470px);
+    min-height: 110px;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 22px 24px;
+
+    background: #ffffff;
+    border: 1px solid #d9e4e2;
+    border-radius: 18px;
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.18);
+
+    transform:
+        translate(-50%, -46%)
+        scale(0.96);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.22s ease,
+        transform 0.22s ease,
+        visibility 0.22s ease;
+
+    font-family: "Poppins", sans-serif;
+}
+
+.notificacion-admin-flotante.visible {
+    opacity: 1;
+    visibility: visible;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+}
+
+.notificacion-admin-icono {
+    flex: 0 0 auto;
+
+    width: 54px;
+    height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #e9f5f2;
+    color: #006b5b;
+
+    font-size: 1.65rem;
+}
+
+.notificacion-admin-contenido {
+    min-width: 0;
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.notificacion-admin-contenido strong {
+    color: #17211f;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.notificacion-admin-contenido span {
+    color: #525f5c;
+    font-size: 0.94rem;
+    line-height: 1.45;
+}
+
+.notificacion-admin-cerrar {
+    flex: 0 0 auto;
+
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 10px;
+
+    background: transparent;
+    color: #6b7472;
+
+    font-size: 1rem;
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease;
+}
+
+.notificacion-admin-cerrar:hover,
+.notificacion-admin-cerrar:focus-visible {
+    background: #f0f4f3;
+    color: #006b5b;
+    outline: none;
+}
+
+.notificacion-admin-flotante.notificacion-danger
+.notificacion-admin-icono {
+    background: #fdeeee;
+    color: #bb2d3b;
+}
+
+
+/* =========================================================
+   AJUSTE PARA CELULAR
+========================================================= */
+
+@media (max-width: 576px) {
+
+    .notificacion-admin-flotante {
+        width: calc(100vw - 32px);
+        min-height: 100px;
+
+        gap: 12px;
+
+        padding: 18px;
+
+        border-radius: 16px;
+    }
+
+    .notificacion-admin-icono {
+        width: 46px;
+        height: 46px;
+
+        font-size: 1.4rem;
+    }
+
+    .notificacion-admin-contenido strong {
+        font-size: 0.98rem;
+    }
+
+    .notificacion-admin-contenido span {
+        font-size: 0.88rem;
+    }
+
+}
