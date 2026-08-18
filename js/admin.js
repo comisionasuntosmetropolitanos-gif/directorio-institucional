@@ -574,6 +574,429 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
+       MOSTRAR CONTACTOS EN ADMIN
+       Incluye contactos principales y adicionales
+    ===================================================== */
+
+    function obtenerContactosAdicionalesParaMostrar(
+        registro
+    ) {
+
+        const nuevos =
+            Array.isArray(
+                registro.contactosAdicionales
+            )
+                ? registro.contactosAdicionales
+                    .filter(
+                        contacto =>
+                            contacto &&
+                            (
+                                String(contacto.nombre || "").trim() ||
+                                String(contacto.cargo || "").trim() ||
+                                String(contacto.telefono || "").trim() ||
+                                String(contacto.correo || "").trim()
+                            )
+                    )
+                : [];
+
+
+        if (
+            nuevos.length > 0
+        ) {
+
+            const vistos =
+                new Set();
+
+
+            return nuevos.filter(
+                contacto => {
+
+                    const clave =
+                        [
+                            contacto.nombre,
+                            contacto.cargo,
+                            contacto.telefono,
+                            contacto.correo
+                        ]
+                            .map(
+                                valor =>
+                                    normalizarTexto(
+                                        valor
+                                    )
+                            )
+                            .join("|");
+
+
+                    if (
+                        vistos.has(
+                            clave
+                        )
+                    ) {
+
+                        return false;
+
+                    }
+
+
+                    vistos.add(
+                        clave
+                    );
+
+                    return true;
+
+                }
+            );
+
+        }
+
+
+        const legado = {
+
+            nombre:
+                registro.contactoAdicional || "",
+
+            cargo:
+                registro.contactoAdicionalCargo || "",
+
+            telefono:
+                registro.contactoAdicionalTelefono || "",
+
+            correo:
+                registro.contactoAdicionalCorreo || ""
+
+        };
+
+
+        if (
+            legado.nombre ||
+            legado.cargo ||
+            legado.telefono ||
+            legado.correo
+        ) {
+
+            return [legado];
+
+        }
+
+
+        return [];
+
+    }
+
+
+    function crearContactoAdminEscritorio(
+        registro
+    ) {
+
+        const partes = [];
+
+
+        if (
+            registro.telefono
+        ) {
+
+            partes.push(`
+                <span>
+                    <i class="bi bi-telephone"></i>
+                    ${escaparHTML(
+                        registro.telefono
+                    )}
+                </span>
+            `);
+
+        }
+
+
+        if (
+            registro.whatsapp
+        ) {
+
+            partes.push(`
+                <span>
+                    <i class="bi bi-whatsapp"></i>
+                    ${escaparHTML(
+                        registro.whatsapp
+                    )}
+                </span>
+            `);
+
+        }
+
+
+        if (
+            registro.correo
+        ) {
+
+            partes.push(`
+                <span class="correo-admin">
+                    <i class="bi bi-envelope"></i>
+                    ${escaparHTML(
+                        registro.correo
+                    )}
+                </span>
+            `);
+
+        }
+
+
+        const adicionales =
+            obtenerContactosAdicionalesParaMostrar(
+                registro
+            );
+
+
+        adicionales.forEach(
+            contacto => {
+
+                partes.push(`
+                    <div class="contacto-adicional-admin-tabla">
+
+                        ${
+                            contacto.cargo
+                                ? `
+                                    <small>
+                                        ${escaparHTML(
+                                            contacto.cargo
+                                        )}
+                                    </small>
+                                  `
+                                : ""
+                        }
+
+                        ${
+                            contacto.nombre
+                                ? `
+                                    <strong>
+                                        <i class="bi bi-person-fill"></i>
+                                        ${escaparHTML(
+                                            contacto.nombre
+                                        )}
+                                    </strong>
+                                  `
+                                : ""
+                        }
+
+                        ${
+                            contacto.telefono
+                                ? `
+                                    <span>
+                                        <i class="bi bi-telephone"></i>
+                                        ${escaparHTML(
+                                            contacto.telefono
+                                        )}
+                                    </span>
+                                  `
+                                : ""
+                        }
+
+                        ${
+                            contacto.correo
+                                ? `
+                                    <span class="correo-admin">
+                                        <i class="bi bi-envelope"></i>
+                                        ${escaparHTML(
+                                            contacto.correo
+                                        )}
+                                    </span>
+                                  `
+                                : ""
+                        }
+
+                    </div>
+                `);
+
+            }
+        );
+
+
+        if (
+            partes.length === 0
+        ) {
+
+            return `
+                <span class="sin-informacion">
+                    Sin información
+                </span>
+            `;
+
+        }
+
+
+        return partes.join("");
+
+    }
+
+
+    function crearContactoAdminMovil(
+        registro
+    ) {
+
+        const partes = [];
+
+
+        if (
+            registro.telefono
+        ) {
+
+            partes.push(`
+                <a
+                    href="tel:${registro.telefono}"
+                    class="dato-contacto-movil"
+                >
+                    <i class="bi bi-telephone"></i>
+                    <span>
+                        ${escaparHTML(
+                            registro.telefono
+                        )}
+                    </span>
+                </a>
+            `);
+
+        }
+
+
+        if (
+            registro.whatsapp
+        ) {
+
+            partes.push(`
+                <a
+                    href="https://wa.me/${registro.whatsapp}"
+                    class="dato-contacto-movil"
+                    target="_blank"
+                >
+                    <i class="bi bi-whatsapp"></i>
+                    <span>
+                        ${escaparHTML(
+                            registro.whatsapp
+                        )}
+                    </span>
+                </a>
+            `);
+
+        }
+
+
+        if (
+            registro.correo
+        ) {
+
+            partes.push(`
+                <a
+                    href="mailto:${registro.correo}"
+                    class="dato-contacto-movil"
+                >
+                    <i class="bi bi-envelope"></i>
+                    <span>
+                        ${escaparHTML(
+                            registro.correo
+                        )}
+                    </span>
+                </a>
+            `);
+
+        }
+
+
+        const adicionales =
+            obtenerContactosAdicionalesParaMostrar(
+                registro
+            );
+
+
+        adicionales.forEach(
+            contacto => {
+
+                partes.push(`
+                    <div class="contacto-adicional-admin-movil">
+
+                        ${
+                            contacto.cargo
+                                ? `
+                                    <small>
+                                        ${escaparHTML(
+                                            contacto.cargo
+                                        )}
+                                    </small>
+                                  `
+                                : ""
+                        }
+
+                        ${
+                            contacto.nombre
+                                ? `
+                                    <strong>
+                                        <i class="bi bi-person-fill"></i>
+                                        ${escaparHTML(
+                                            contacto.nombre
+                                        )}
+                                    </strong>
+                                  `
+                                : ""
+                        }
+
+                        ${
+                            contacto.telefono
+                                ? `
+                                    <a
+                                        href="tel:${contacto.telefono}"
+                                        class="dato-contacto-movil"
+                                    >
+                                        <i class="bi bi-telephone"></i>
+                                        <span>
+                                            ${escaparHTML(
+                                                contacto.telefono
+                                            )}
+                                        </span>
+                                    </a>
+                                  `
+                                : ""
+                        }
+
+                        ${
+                            contacto.correo
+                                ? `
+                                    <a
+                                        href="mailto:${contacto.correo}"
+                                        class="dato-contacto-movil"
+                                    >
+                                        <i class="bi bi-envelope"></i>
+                                        <span>
+                                            ${escaparHTML(
+                                                contacto.correo
+                                            )}
+                                        </span>
+                                    </a>
+                                  `
+                                : ""
+                        }
+
+                    </div>
+                `);
+
+            }
+        );
+
+
+        if (
+            partes.length === 0
+        ) {
+
+            return `
+                <span class="sin-informacion">
+                    Sin información
+                </span>
+            `;
+
+        }
+
+
+        return partes.join("");
+
+    }
+
+
+    /* =====================================================
        OCULTAR MENSAJES DE ESTADO
     ===================================================== */
 
@@ -1001,57 +1424,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         <div class="contactos-admin">
 
-
-                            ${
-                                registro.telefono
-                                    ? `
-                                        <span>
-
-                                            <i class="bi bi-telephone"></i>
-
-                                            ${escaparHTML(
-                                                registro.telefono
-                                            )}
-
-                                        </span>
-                                      `
-                                    : ""
-                            }
-
-
-                            ${
-                                registro.whatsapp
-                                    ? `
-                                        <span>
-
-                                            <i class="bi bi-whatsapp"></i>
-
-                                            ${escaparHTML(
-                                                registro.whatsapp
-                                            )}
-
-                                        </span>
-                                      `
-                                    : ""
-                            }
-
-
-                            ${
-                                registro.correo
-                                    ? `
-                                        <span class="correo-admin">
-
-                                            <i class="bi bi-envelope"></i>
-
-                                            ${escaparHTML(
-                                                registro.correo
-                                            )}
-
-                                        </span>
-                                      `
-                                    : ""
-                            }
-
+                            ${crearContactoAdminEscritorio(
+                                registro
+                            )}
 
                         </div>
 
@@ -1312,79 +1687,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                             <dd class="contactos-registro-movil">
 
-
-                                ${
-                                    registro.telefono
-                                        ? `
-                                            <a
-                                                href="tel:${registro.telefono}"
-                                                class="dato-contacto-movil"
-                                            >
-
-                                                <i class="bi bi-telephone"></i>
-
-                                                <span>
-
-                                                    ${escaparHTML(
-                                                        registro.telefono
-                                                    )}
-
-                                                </span>
-
-                                            </a>
-                                          `
-                                        : ""
-                                }
-
-
-                                ${
-                                    registro.whatsapp
-                                        ? `
-                                            <a
-                                                href="https://wa.me/${registro.whatsapp}"
-                                                class="dato-contacto-movil"
-                                                target="_blank"
-                                            >
-
-                                                <i class="bi bi-whatsapp"></i>
-
-                                                <span>
-
-                                                    ${escaparHTML(
-                                                        registro.whatsapp
-                                                    )}
-
-                                                </span>
-
-                                            </a>
-                                          `
-                                        : ""
-                                }
-
-
-                                ${
-                                    registro.correo
-                                        ? `
-                                            <a
-                                                href="mailto:${registro.correo}"
-                                                class="dato-contacto-movil"
-                                            >
-
-                                                <i class="bi bi-envelope"></i>
-
-                                                <span>
-
-                                                    ${escaparHTML(
-                                                        registro.correo
-                                                    )}
-
-                                                </span>
-
-                                            </a>
-                                          `
-                                        : ""
-                                }
-
+                                ${crearContactoAdminMovil(
+                                    registro
+                                )}
 
                             </dd>
 

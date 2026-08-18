@@ -1727,3 +1727,189 @@ img {
 .tarjeta-resumen-admin.activa strong {
     color: #1f1f1f;
 }
+/* =========================================================
+   CONTACTOS EN TABLA ADMIN
+   Mismo orden visual que en el Directorio
+   Pegar al FINAL de css/admin.css
+========================================================= */
+
+/* Contenedor general de la columna Contacto */
+.contactos-admin {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* Cada dato principal en una línea independiente */
+.contactos-admin > span {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+
+    width: 100%;
+
+    line-height: 1.45;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+
+/* Íconos */
+.contactos-admin > span i,
+.contacto-adicional-admin-tabla i {
+    flex: 0 0 auto;
+    margin-top: 2px;
+
+    color: #006b5b;
+}
+
+
+/* Correo */
+.contactos-admin .correo-admin {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   CONTACTO ADICIONAL
+========================================================= */
+
+.contacto-adicional-admin-tabla {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+
+    width: 100%;
+
+    margin-top: 6px;
+    padding-top: 10px;
+
+    border-top: 1px solid #d9dfde;
+
+    line-height: 1.4;
+}
+
+
+/* Cargo del contacto adicional */
+.contacto-adicional-admin-tabla small {
+    display: block;
+
+    margin: 0;
+
+    color: #5f6665;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+
+/* Nombre */
+.contacto-adicional-admin-tabla strong {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+
+    width: 100%;
+
+    color: #111111;
+    font-size: 0.90rem;
+    font-weight: 700;
+
+    line-height: 1.35;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+
+/* Teléfono y correo del contacto adicional */
+.contacto-adicional-admin-tabla span {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+
+    width: 100%;
+
+    color: #006b5b;
+
+    line-height: 1.4;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   COLUMNA CONTACTO
+   Da un poco más de espacio sin alterar toda la tabla
+========================================================= */
+
+.tabla-admin th:nth-child(7),
+.tabla-admin td:nth-child(7) {
+    min-width: 250px;
+    width: 250px;
+    vertical-align: top;
+}
+
+
+/* =========================================================
+   VISTA MÓVIL
+========================================================= */
+
+.contacto-adicional-admin-movil {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 7px;
+
+    width: 100%;
+
+    margin-top: 10px;
+    padding-top: 10px;
+
+    border-top: 1px solid #d9dfde;
+}
+
+
+.contacto-adicional-admin-movil small {
+    color: #5f6665;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+
+.contacto-adicional-admin-movil strong {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+
+    line-height: 1.35;
+}
+
+
+.contacto-adicional-admin-movil .dato-contacto-movil {
+    width: 100%;
+}
+
+
+/* =========================================================
+   PANTALLAS PEQUEÑAS
+========================================================= */
+
+@media (max-width: 767px) {
+
+    .tabla-admin th:nth-child(7),
+    .tabla-admin td:nth-child(7) {
+        min-width: 0;
+        width: auto;
+    }
+
+}
