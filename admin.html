@@ -39,7 +39,7 @@
     <!-- Estilos exclusivos del administrador -->
     <link
         rel="stylesheet"
-        href="css/admin.css?v=14"
+        href="css/admin.css?v=15"
     >
 
 </head>
@@ -234,32 +234,31 @@
             <section class="row g-3 mb-4">
 
 
-                <!-- COMISIONES -->
+                <!-- INTEGRANTES DE COMISIÓN -->
 
                 <div class="col-xl col-md-6">
 
                     <article
                         class="tarjeta-resumen tarjeta-resumen-admin"
-                        data-categoria="comisiones"
+                        data-categoria="integrantes-zonas"
                         role="button"
                         tabindex="0"
-                        aria-label="Mostrar registros de comisiones"
+                        aria-label="Mostrar integrantes de la Comisión de Zonas Metropolitanas"
                     >
 
                         <div class="icono-resumen">
 
-                            <i class="bi bi-building"></i>
+                            <i class="bi bi-person-badge-fill"></i>
 
                         </div>
-
 
                         <div>
 
                             <p>
-                                Comisiones
+                                Integrantes de Comisión de Zonas Metropolitanas
                             </p>
 
-                            <strong id="totalComisiones">
+                            <strong id="totalIntegrantesZonas">
                                 0
                             </strong>
 
@@ -268,81 +267,6 @@
                     </article>
 
                 </div>
-
-
-
-                <!-- MESAS DIRECTIVAS -->
-
-                <div class="col-xl col-md-6">
-
-                    <article
-                        class="tarjeta-resumen tarjeta-resumen-admin"
-                        data-categoria="mesas"
-                        role="button"
-                        tabindex="0"
-                        aria-label="Mostrar registros de mesas directivas"
-                    >
-
-                        <div class="icono-resumen">
-
-                            <i class="bi bi-bank"></i>
-
-                        </div>
-
-
-                        <div>
-
-                            <p>
-                                Mesas Directivas
-                            </p>
-
-                            <strong id="totalMesas">
-                                0
-                            </strong>
-
-                        </div>
-
-                    </article>
-
-                </div>
-
-
-
-                <!-- REPRESENTANTES -->
-
-                <div class="col-xl col-md-6">
-
-                    <article
-                        class="tarjeta-resumen tarjeta-resumen-admin"
-                        data-categoria="representantes"
-                        role="button"
-                        tabindex="0"
-                        aria-label="Mostrar registros de representantes"
-                    >
-
-                        <div class="icono-resumen">
-
-                            <i class="bi bi-people"></i>
-
-                        </div>
-
-
-                        <div>
-
-                            <p>
-                                Representantes
-                            </p>
-
-                            <strong id="totalRepresentantes">
-                                0
-                            </strong>
-
-                        </div>
-
-                    </article>
-
-                </div>
-
 
 
                 <!-- INSTITUCIONES -->
@@ -363,7 +287,6 @@
 
                         </div>
 
-
                         <div>
 
                             <p>
@@ -381,35 +304,101 @@
                 </div>
 
 
-
-                <!-- =================================================
-                     NUEVA CATEGORÍA
-                ================================================== -->
+                <!-- COMISIONES -->
 
                 <div class="col-xl col-md-6">
 
                     <article
                         class="tarjeta-resumen tarjeta-resumen-admin"
-                        data-categoria="integrantes-zonas"
+                        data-categoria="comisiones"
                         role="button"
                         tabindex="0"
-                        aria-label="Mostrar integrantes de la Comisión de Zonas Metropolitanas"
+                        aria-label="Mostrar registros de comisiones"
                     >
 
                         <div class="icono-resumen">
 
-                            <i class="bi bi-person-badge-fill"></i>
+                            <i class="bi bi-building"></i>
 
                         </div>
-
 
                         <div>
 
                             <p>
-                                Integrantes de Comisión de Zonas Metropolitanas
+                                Comisiones
                             </p>
 
-                            <strong id="totalIntegrantesZonas">
+                            <strong id="totalComisiones">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <!-- MESAS DIRECTIVAS -->
+
+                <div class="col-xl col-md-6">
+
+                    <article
+                        class="tarjeta-resumen tarjeta-resumen-admin"
+                        data-categoria="mesas"
+                        role="button"
+                        tabindex="0"
+                        aria-label="Mostrar registros de mesas directivas"
+                    >
+
+                        <div class="icono-resumen">
+
+                            <i class="bi bi-bank"></i>
+
+                        </div>
+
+                        <div>
+
+                            <p>
+                                Mesas Directivas
+                            </p>
+
+                            <strong id="totalMesas">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <!-- REPRESENTANTES -->
+
+                <div class="col-xl col-md-6">
+
+                    <article
+                        class="tarjeta-resumen tarjeta-resumen-admin"
+                        data-categoria="representantes"
+                        role="button"
+                        tabindex="0"
+                        aria-label="Mostrar registros de representantes"
+                    >
+
+                        <div class="icono-resumen">
+
+                            <i class="bi bi-people"></i>
+
+                        </div>
+
+                        <div>
+
+                            <p>
+                                Representantes
+                            </p>
+
+                            <strong id="totalRepresentantes">
                                 0
                             </strong>
 
@@ -445,7 +434,6 @@
                             Buscar registro
                         </label>
 
-
                         <div class="input-group">
 
                             <span class="input-group-text">
@@ -453,7 +441,6 @@
                                 <i class="bi bi-search"></i>
 
                             </span>
-
 
                             <input
                                 type="text"
@@ -467,7 +454,6 @@
                     </div>
 
 
-
                     <!-- FILTRO DE CATEGORÍA -->
 
                     <div class="col-xl-3 col-md-6">
@@ -479,7 +465,6 @@
                             Categoría
                         </label>
 
-
                         <select
                             id="filtroCategoriaAdmin"
                             class="form-select"
@@ -487,6 +472,14 @@
 
                             <option value="todas">
                                 Todas las categorías
+                            </option>
+
+                            <option value="integrantes-zonas">
+                                Integrantes de Comisión de Zonas Metropolitanas
+                            </option>
+
+                            <option value="instituciones">
+                                Instituciones
                             </option>
 
                             <option value="comisiones">
@@ -501,18 +494,9 @@
                                 Representantes
                             </option>
 
-                            <option value="instituciones">
-                                Instituciones
-                            </option>
-
-                            <option value="integrantes-zonas">
-                                Integrantes de Comisión de Zonas Metropolitanas
-                            </option>
-
                         </select>
 
                     </div>
-
 
 
                     <!-- FILTRO DE ESTADO -->
@@ -526,7 +510,6 @@
                             Estado
                         </label>
 
-
                         <select
                             id="filtroEstadoAdmin"
                             class="form-select"
@@ -539,7 +522,6 @@
                         </select>
 
                     </div>
-
 
 
                     <!-- AGREGAR REGISTRO -->
@@ -566,9 +548,7 @@
                 </div>
 
 
-
                 <div class="acciones-herramientas-admin">
-
 
                     <button
                         type="button"
@@ -1269,76 +1249,44 @@
 
 
 
-                            <!-- CONTACTO ADICIONAL -->
+                            <!-- =================================================
+                                 CONTACTOS ADICIONALES DINÁMICOS
+                            ================================================== -->
 
-                            <div class="col-md-4">
+                            <div class="col-12">
 
+                                <section class="seccion-contactos-adicionales-admin">
 
-                                <label
-                                    for="contactoAdicionalRegistro"
-                                    class="form-label"
-                                >
-                                    Contacto adicional
-                                </label>
+                                    <div class="encabezado-contactos-adicionales-admin">
 
+                                        <div>
+                                            <h3>
+                                                <i class="bi bi-person-lines-fill"></i>
+                                                Contactos adicionales
+                                            </h3>
 
-                                <input
-                                    type="text"
-                                    id="contactoAdicionalRegistro"
-                                    class="form-control"
-                                    placeholder="Nombre del contacto"
-                                >
+                                            <p>
+                                                Agrega asesores, secretarios, particulares u otros contactos relacionados con este registro.
+                                            </p>
+                                        </div>
 
+                                        <button
+                                            type="button"
+                                            id="btnAgregarContactoAdicional"
+                                            class="btn btn-agregar-contacto-adicional"
+                                        >
+                                            <i class="bi bi-plus-circle-fill"></i>
+                                            Agregar otro contacto
+                                        </button>
 
-                            </div>
+                                    </div>
 
+                                    <div
+                                        id="contactosAdicionalesContenedor"
+                                        class="contactos-adicionales-contenedor"
+                                    ></div>
 
-
-                            <!-- CARGO CONTACTO -->
-
-                            <div class="col-md-4">
-
-
-                                <label
-                                    for="contactoAdicionalCargoRegistro"
-                                    class="form-label"
-                                >
-                                    Cargo del contacto
-                                </label>
-
-
-                                <input
-                                    type="text"
-                                    id="contactoAdicionalCargoRegistro"
-                                    class="form-control"
-                                    placeholder="Ejemplo: Asesora"
-                                >
-
-
-                            </div>
-
-
-
-                            <!-- TELÉFONO CONTACTO -->
-
-                            <div class="col-md-4">
-
-
-                                <label
-                                    for="contactoAdicionalTelefonoRegistro"
-                                    class="form-label"
-                                >
-                                    Teléfono del contacto
-                                </label>
-
-
-                                <input
-                                    type="tel"
-                                    id="contactoAdicionalTelefonoRegistro"
-                                    class="form-control"
-                                    placeholder="Número adicional"
-                                >
-
+                                </section>
 
                             </div>
 
@@ -1569,100 +1517,9 @@
 
 <script
     type="module"
-    src="js/admin.js?v=11"
+    src="js/admin.js?v=12"
 ></script>
 
-
-<!-- =====================================================
-     IMPORTADOR TEMPORAL
-     INTEGRANTES DE COMISIÓN DE ZONAS METROPOLITANAS
-====================================================== -->
-
-
-<!-- =====================================================
-     BOTÓN TEMPORAL DE PREVISUALIZACIÓN
-====================================================== -->
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-
-        const btnPrevisualizarIntegrantes =
-            document.getElementById("btnPrevisualizarIntegrantes");
-
-        if (!btnPrevisualizarIntegrantes) {
-            return;
-        }
-
-        btnPrevisualizarIntegrantes.addEventListener(
-            "click",
-            async () => {
-
-                if (
-                    typeof window.previsualizarIntegrantesZonas !== "function"
-                ) {
-                    window.alert(
-                        "El importador todavía no está disponible. " +
-                        "Actualiza la página con Ctrl + F5 e inténtalo nuevamente."
-                    );
-                    return;
-                }
-
-                btnPrevisualizarIntegrantes.disabled = true;
-
-                const textoOriginal =
-                    btnPrevisualizarIntegrantes.innerHTML;
-
-                btnPrevisualizarIntegrantes.innerHTML =
-                    '<span class="spinner-border spinner-border-sm me-2"></span>Revisando...';
-
-                try {
-
-                    const resultado =
-                        await window.previsualizarIntegrantesZonas();
-
-                    const nuevos =
-                        resultado.filter(
-                            registro => registro.ACCION === "NUEVO"
-                        ).length;
-
-                    const existentes =
-                        resultado.filter(
-                            registro => registro.ACCION === "YA EXISTE"
-                        ).length;
-
-                    window.alert(
-                        "Previsualización terminada.\n\n" +
-                        "Total preparado: " + resultado.length + "\n" +
-                        "Nuevos: " + nuevos + "\n" +
-                        "Ya existentes: " + existentes + "\n\n" +
-                        "No se modificó Firebase."
-                    );
-
-                } catch (error) {
-
-                    console.error(
-                        "Error en la previsualización:",
-                        error
-                    );
-
-                    window.alert(
-                        "No fue posible hacer la previsualización. " +
-                        "Revisa la consola para ver el detalle."
-                    );
-
-                } finally {
-
-                    btnPrevisualizarIntegrantes.disabled = false;
-
-                    btnPrevisualizarIntegrantes.innerHTML =
-                        textoOriginal;
-
-                }
-
-            }
-        );
-
-    });
-</script>
 
 
 </body>

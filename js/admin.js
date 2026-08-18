@@ -170,14 +170,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const correosAdicionalesRegistro =
         document.getElementById("correosAdicionalesRegistro");
 
-    const contactoAdicionalRegistro =
-        document.getElementById("contactoAdicionalRegistro");
+    const contactosAdicionalesContenedor =
+        document.getElementById("contactosAdicionalesContenedor");
 
-    const contactoAdicionalCargoRegistro =
-        document.getElementById("contactoAdicionalCargoRegistro");
-
-    const contactoAdicionalTelefonoRegistro =
-        document.getElementById("contactoAdicionalTelefonoRegistro");
+    const btnAgregarContactoAdicional =
+        document.getElementById("btnAgregarContactoAdicional");
 
     const activoRegistro =
         document.getElementById("activoRegistro");
@@ -267,6 +264,311 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         return nombres[cat] || "Sin categoría";
+
+    }
+
+
+    /* =====================================================
+       CONTACTOS ADICIONALES DINÁMICOS
+    ===================================================== */
+
+    function crearContactoAdicional(contacto = {}) {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "contacto-adicional-item-admin";
+
+        item.innerHTML = `
+
+            <div class="contacto-adicional-cabecera-admin">
+
+                <strong class="contacto-adicional-titulo-admin">
+                    Contacto adicional
+                </strong>
+
+                <button
+                    type="button"
+                    class="btn btn-eliminar-contacto-adicional"
+                    title="Eliminar este contacto"
+                    aria-label="Eliminar este contacto"
+                >
+                    <i class="bi bi-trash3"></i>
+                    <span>Eliminar</span>
+                </button>
+
+            </div>
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Nombre del contacto
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control contacto-adicional-nombre"
+                        placeholder="Nombre completo"
+                    >
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Cargo del contacto
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control contacto-adicional-cargo"
+                        placeholder="Ejemplo: Asesor, Secretaria Particular"
+                    >
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Teléfono del contacto
+                    </label>
+
+                    <input
+                        type="tel"
+                        class="form-control contacto-adicional-telefono"
+                        placeholder="Ejemplo: 55 1234 5678"
+                    >
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Correo del contacto
+                    </label>
+
+                    <input
+                        type="email"
+                        class="form-control contacto-adicional-correo"
+                        placeholder="correo@ejemplo.com"
+                    >
+
+                </div>
+
+            </div>
+
+        `;
+
+        item.querySelector(
+            ".contacto-adicional-nombre"
+        ).value =
+            contacto.nombre || "";
+
+        item.querySelector(
+            ".contacto-adicional-cargo"
+        ).value =
+            contacto.cargo || "";
+
+        item.querySelector(
+            ".contacto-adicional-telefono"
+        ).value =
+            contacto.telefono || "";
+
+        item.querySelector(
+            ".contacto-adicional-correo"
+        ).value =
+            contacto.correo || "";
+
+        item.querySelector(
+            ".btn-eliminar-contacto-adicional"
+        ).addEventListener(
+            "click",
+            () => {
+
+                item.remove();
+                actualizarNumeracionContactos();
+
+            }
+        );
+
+        return item;
+
+    }
+
+
+    function actualizarNumeracionContactos() {
+
+        if (!contactosAdicionalesContenedor) {
+            return;
+        }
+
+        contactosAdicionalesContenedor
+            .querySelectorAll(
+                ".contacto-adicional-item-admin"
+            )
+            .forEach(
+                (item, index) => {
+
+                    const titulo =
+                        item.querySelector(
+                            ".contacto-adicional-titulo-admin"
+                        );
+
+                    if (titulo) {
+
+                        titulo.textContent =
+                            `Contacto adicional ${index + 1}`;
+
+                    }
+
+                }
+            );
+
+    }
+
+
+    function agregarContactoAdicional(contacto = {}) {
+
+        if (!contactosAdicionalesContenedor) {
+            return;
+        }
+
+        contactosAdicionalesContenedor.appendChild(
+            crearContactoAdicional(contacto)
+        );
+
+        actualizarNumeracionContactos();
+
+    }
+
+
+    function cargarContactosAdicionales(contactos = []) {
+
+        if (!contactosAdicionalesContenedor) {
+            return;
+        }
+
+        contactosAdicionalesContenedor.innerHTML =
+            "";
+
+        const lista =
+            Array.isArray(contactos)
+                ? contactos
+                : [];
+
+        if (lista.length === 0) {
+
+            agregarContactoAdicional();
+            return;
+
+        }
+
+        lista.forEach(
+            contacto =>
+                agregarContactoAdicional(contacto)
+        );
+
+    }
+
+
+    function obtenerContactosAdicionalesFormulario() {
+
+        if (!contactosAdicionalesContenedor) {
+            return [];
+        }
+
+        return [
+            ...contactosAdicionalesContenedor
+                .querySelectorAll(
+                    ".contacto-adicional-item-admin"
+                )
+        ]
+            .map(
+                item => ({
+
+                    nombre:
+                        item.querySelector(
+                            ".contacto-adicional-nombre"
+                        )?.value.trim() || "",
+
+                    cargo:
+                        item.querySelector(
+                            ".contacto-adicional-cargo"
+                        )?.value.trim() || "",
+
+                    telefono:
+                        item.querySelector(
+                            ".contacto-adicional-telefono"
+                        )?.value.trim() || "",
+
+                    correo:
+                        item.querySelector(
+                            ".contacto-adicional-correo"
+                        )?.value.trim() || ""
+
+                })
+            )
+            .filter(
+                contacto =>
+                    contacto.nombre ||
+                    contacto.cargo ||
+                    contacto.telefono ||
+                    contacto.correo
+            );
+
+    }
+
+
+    function obtenerContactosRegistro(registro) {
+
+        if (
+            Array.isArray(registro.contactosAdicionales) &&
+            registro.contactosAdicionales.length > 0
+        ) {
+
+            return registro.contactosAdicionales;
+
+        }
+
+        const contactoLegado = {
+
+            nombre:
+                registro.contactoAdicional || "",
+
+            cargo:
+                registro.contactoAdicionalCargo || "",
+
+            telefono:
+                registro.contactoAdicionalTelefono || "",
+
+            correo: ""
+
+        };
+
+        if (
+            contactoLegado.nombre ||
+            contactoLegado.cargo ||
+            contactoLegado.telefono
+        ) {
+
+            return [contactoLegado];
+
+        }
+
+        return [];
+
+    }
+
+
+    if (btnAgregarContactoAdicional) {
+
+        btnAgregarContactoAdicional.addEventListener(
+            "click",
+            () => agregarContactoAdicional()
+        );
 
     }
 
@@ -1425,6 +1727,9 @@ renderizarRegistros(
         activoRegistro.checked =
             true;
 
+
+        cargarContactosAdicionales([]);
+
     }
 
 
@@ -1524,19 +1829,9 @@ renderizarRegistros(
             "";
 
 
-        contactoAdicionalRegistro.value =
-            registro.contactoAdicional ||
-            "";
-
-
-        contactoAdicionalCargoRegistro.value =
-            registro.contactoAdicionalCargo ||
-            "";
-
-
-        contactoAdicionalTelefonoRegistro.value =
-            registro.contactoAdicionalTelefono ||
-            "";
+        cargarContactosAdicionales(
+            obtenerContactosRegistro(registro)
+        );
 
 
         activoRegistro.checked =
@@ -1618,6 +1913,23 @@ renderizarRegistros(
 
 
             /* =============================================
+               CONTACTOS ADICIONALES
+            ============================================= */
+
+            const contactosAdicionales =
+                obtenerContactosAdicionalesFormulario();
+
+
+            const primerContactoAdicional =
+                contactosAdicionales[0] || {
+                    nombre: "",
+                    cargo: "",
+                    telefono: "",
+                    correo: ""
+                };
+
+
+            /* =============================================
                DATOS A GUARDAR
             ============================================= */
 
@@ -1692,22 +2004,26 @@ renderizarRegistros(
                         .trim(),
 
 
+                contactosAdicionales:
+                    contactosAdicionales,
+
+
+                /*
+                   Compatibilidad con el formato anterior:
+                   el primer contacto también se conserva
+                   en los campos antiguos.
+                */
+
                 contactoAdicional:
-                    contactoAdicionalRegistro
-                        .value
-                        .trim(),
+                    primerContactoAdicional.nombre,
 
 
                 contactoAdicionalCargo:
-                    contactoAdicionalCargoRegistro
-                        .value
-                        .trim(),
+                    primerContactoAdicional.cargo,
 
 
                 contactoAdicionalTelefono:
-                    contactoAdicionalTelefonoRegistro
-                        .value
-                        .trim(),
+                    primerContactoAdicional.telefono,
 
 
                 activo:

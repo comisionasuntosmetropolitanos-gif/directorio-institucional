@@ -1399,3 +1399,38 @@ img {
     }
 
 }
+/* =====================================================
+   BORDES UNIFORMES DEL DIRECTORIO
+===================================================== */
+
+/* Contorno exterior */
+.contenedor-tabla {
+    border: 2px solid #b8c1bf;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+
+/* Quitar bordes que Bootstrap coloca por defecto */
+.tabla-directorio > :not(caption) > * > * {
+    border-bottom-width: 0 !important;
+}
+
+
+/* Encabezado */
+.tabla-directorio thead tr {
+    border-bottom: 2px solid #b8c1bf;
+}
+
+
+/* Separación uniforme entre registros */
+.tabla-directorio tbody tr + tr {
+    border-top: 2px solid #b8c1bf;
+}
+
+
+/* Evitar líneas adicionales */
+.tabla-directorio tbody td {
+    border: 0 !important;
+}

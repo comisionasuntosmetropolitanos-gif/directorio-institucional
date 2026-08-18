@@ -1222,3 +1222,156 @@ img {
     }
 
 }
+
+/* ==========================================================
+   CONTACTOS ADICIONALES DINÁMICOS EN EL MODAL
+========================================================== */
+
+.seccion-contactos-adicionales-admin {
+    width: 100%;
+    margin-top: 4px;
+    padding: 18px;
+    border: 1px solid var(--gris-borde);
+    border-radius: 14px;
+    background: #f8faf9;
+}
+
+.encabezado-contactos-adicionales-admin {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
+}
+
+.encabezado-contactos-adicionales-admin h3 {
+    margin: 0 0 5px;
+    color: #17191b;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.encabezado-contactos-adicionales-admin h3 i {
+    margin-right: 6px;
+    color: var(--verde);
+}
+
+.encabezado-contactos-adicionales-admin p {
+    max-width: 700px;
+    margin: 0;
+    color: var(--gris-texto);
+    font-size: 0.84rem;
+    line-height: 1.5;
+}
+
+.btn-agregar-contacto-adicional {
+    flex: 0 0 auto;
+    min-height: 42px;
+    padding: 9px 14px;
+    border: 0;
+    border-radius: 9px;
+    background: var(--verde);
+    color: #ffffff;
+    font-size: 0.86rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+}
+
+.btn-agregar-contacto-adicional:hover,
+.btn-agregar-contacto-adicional:focus {
+    background: var(--verde-oscuro);
+    color: #ffffff;
+}
+
+.contactos-adicionales-contenedor {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.contacto-adicional-item-admin {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #d9e1df;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.contacto-adicional-cabecera-admin {
+    margin-bottom: 13px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #edf0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.contacto-adicional-titulo-admin {
+    color: var(--verde-oscuro);
+    font-size: 0.93rem;
+}
+
+.btn-eliminar-contacto-adicional {
+    min-height: 36px;
+    padding: 7px 10px;
+    border: 1px solid #efc5c1;
+    border-radius: 8px;
+    background: #fff4f3;
+    color: var(--rojo);
+    font-size: 0.78rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn-eliminar-contacto-adicional:hover,
+.btn-eliminar-contacto-adicional:focus {
+    background: #f8e7e5;
+    color: #a52219;
+}
+
+@media (max-width: 768px) {
+
+    .seccion-contactos-adicionales-admin {
+        padding: 14px;
+    }
+
+    .encabezado-contactos-adicionales-admin {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-agregar-contacto-adicional {
+        width: 100%;
+        min-height: 46px;
+    }
+
+    .contacto-adicional-item-admin {
+        padding: 14px;
+    }
+
+    .contacto-adicional-cabecera-admin {
+        align-items: flex-start;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .contacto-adicional-cabecera-admin {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-eliminar-contacto-adicional {
+        width: 100%;
+    }
+
+}
