@@ -1699,3 +1699,31 @@ img {
     }
 
 }
+/* =========================================================
+   TARJETA ACTIVA EN ADMIN
+   Mismo efecto visual que el Directorio
+========================================================= */
+
+.tarjeta-resumen-admin.activa {
+    background: #fffaf0;
+
+    border: 2px solid #c99a2e;
+
+    box-shadow:
+        0 0 0 4px rgba(201, 154, 46, 0.18),
+        0 8px 20px rgba(0, 0, 0, 0.08);
+
+    transform: translateY(-1px);
+}
+
+
+.tarjeta-resumen-admin.activa .icono-resumen {
+    background: #c99a2e;
+    color: #ffffff;
+}
+
+
+.tarjeta-resumen-admin.activa p,
+.tarjeta-resumen-admin.activa strong {
+    color: #1f1f1f;
+}
